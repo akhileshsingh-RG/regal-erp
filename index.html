@@ -24,6 +24,7 @@
   --retort: #34d399;
   --shadow-3d: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255,255,255,0.05);
   --shadow-inset: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  --card-shadow: 0 12px 40px -12px rgba(0,0,0,0.8);
 }
 
 body { 
@@ -98,54 +99,59 @@ body {
 
 /* DASHBOARD GRID & CARDS */
 #dashboard-page { padding: 24px; display: none; }
-.dept-summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
-.dept-summary-card { 
-  border-radius: 20px; 
-  padding: 24px 20px; 
-  text-align: center; 
-  border: 1px solid rgba(255, 255, 255, 0.08); 
-  position: relative;
-  overflow: hidden; 
+
+/* 3-COLUMN DEPARTMENT CLUSTER WRAPPER (TOP METRICS) */
+.dept-cluster-wrapper { 
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 16px; 
+  margin-bottom: 24px; 
+}
+.dept-cluster-box {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: var(--card-shadow);
+}
+.cluster-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 14px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cluster-kitchen-title { color: var(--kitchen); }
+.cluster-filling-title { color: var(--filling); }
+.cluster-retort-title { color: var(--retort); }
+
+/* 6 CARDS GRID INSIDE EACH DEPARTMENT BLOCK */
+.cluster-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.mini-m-card {
   background: var(--surface);
-  backdrop-filter: blur(10px);
-  box-shadow: var(--shadow-3d);
-  transform: translateY(0px);
-  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
 }
-.dept-summary-card:hover { transform: translateY(-5px); }
-.dept-summary-card::before { 
-  content: ''; 
-  position: absolute; 
-  top: -30px; right: -30px; 
-  width: 110px; height: 110px; 
-  border-radius: 50%; filter: blur(20px);
-}
-.dept-summary-card.kitchen { border-top: 2px solid var(--kitchen); }
-.dept-summary-card.kitchen::before { background: var(--kitchen); opacity: 0.12; }
-.dept-summary-card.kitchen:hover { box-shadow: 0 25px 50px -12px rgba(244,114,182,0.25), var(--shadow-inset); }
+.mini-m-card .m-lbl { font-size: 8px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 4px; }
+.mini-m-card .m-val { font-size: 15px; font-weight: 800; font-family: 'JetBrains Mono'; }
 
-.dept-summary-card.filling { border-top: 2px solid var(--filling); }
-.dept-summary-card.filling::before { background: var(--filling); opacity: 0.12; }
-.dept-summary-card.filling:hover { box-shadow: 0 25px 50px -12px rgba(232,121,249,0.25), var(--shadow-inset); }
-
-.dept-summary-card.retort { border-top: 2px solid var(--retort); }
-.dept-summary-card.retort::before { background: var(--retort); opacity: 0.12; }
-.dept-summary-card.retort:hover { box-shadow: 0 25px 50px -12px rgba(52,211,153,0.25), var(--shadow-inset); }
-
-.dept-summary-card .dept-label { font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
-.dept-summary-card.kitchen .dept-label { color: var(--kitchen); }
-.dept-summary-card.filling .dept-label { color: var(--filling); }
-.dept-summary-card.retort .dept-label { color: var(--retort); }
-
-.dept-summary-card .dept-total { font-size: 32px; font-weight: 800; font-family: 'JetBrains Mono'; line-height: 1.1; margin-bottom: 14px; letter-spacing: -0.03em; }
-
-.dept-inner-stats { display: flex; flex-direction: column; gap: 10px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 12px; font-size: 11px; }
-.stats-row { display: flex; justify-content: space-between; width: 100%; }
-.sub-lbl { font-size: 9px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 2px; }
-.sub-val { font-weight: 700; font-family: 'JetBrains Mono'; font-size: 12px; }
+.mini-m-card.pln .m-val { color: #ffffff; }
+.mini-m-card.act .m-val { color: var(--green); }
+.mini-m-card.dif .m-val { color: var(--amber); }
+.mini-m-card.co .m-val { color: var(--blue); }
+.mini-m-card.cot .m-val { color: #a78bfa; }
+.mini-m-card.rej .m-val { color: var(--red); }
 
 /* CHARTS ROW */
-.charts-row-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
+.charts-row-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
 .custom-chart-box { 
   border: 1px solid rgba(255,255,255,0.06); 
   border-radius: 20px; padding: 18px; 
@@ -180,7 +186,7 @@ body {
 .dash-section.retort .dot { background: var(--retort); box-shadow: 0 0 10px var(--retort); }
 
 .tbl-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+table { width: 100%; border-collapse: collapse; min-width: 950px; }
 th { 
   padding: 14px 20px; font-size: 10px; color: #64748b; 
   border-bottom: 1px solid rgba(255,255,255,0.06); text-align: left; 
@@ -199,8 +205,8 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
 .filling .actual-val { color: var(--filling); }
 .retort .actual-val { color: var(--retort); }
 
-/* Rejection Color Rule */
-.rej-val { font-family: 'JetBrains Mono'; font-weight: 700; color: var(--red); font-size: 14px; }
+.co-badge-yes { background: rgba(56, 189, 248, 0.15); color: var(--blue); padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.co-badge-no { color: #475569; font-size: 11px; }
 
 .dash-hdr-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
 .dash-title { font-size: 22px; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
@@ -233,8 +239,9 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
 #toast-wrap { position: fixed; top: 75px; right: 24px; z-index: 1000; }
 .toast { background: #151f32; padding: 14px 22px; border-radius: 10px; border-left: 4px solid var(--blue); margin-bottom: 8px; color: white; font-size: 13px; font-weight: 600; box-shadow: var(--shadow-3d); }
 
-@media (max-width: 900px) {
-  .dept-summary-grid, .charts-row-grid { grid-template-columns: 1fr; gap: 14px; }
+@media (max-width: 1140px) {
+  .dept-cluster-wrapper { grid-template-columns: 1fr; gap: 16px; }
+  .charts-row-grid { grid-template-columns: 1fr; gap: 14px; }
 }
 </style>
 </head>
@@ -274,55 +281,40 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
     <button class="dash-refresh-btn" onclick="fetchAllData()">⟳ Refresh Live</button>
   </div>
 
-  <div class="dept-summary-grid">
-    <div class="dept-summary-card kitchen">
-      <div class="dept-label">Kitchen M</div>
-      <div class="sub-lbl">Actual Sum</div>
-      <div class="dept-total" id="total-kitchen">0</div>
-      <div class="dept-inner-stats">
-        <div class="stats-row">
-          <div><span class="sub-lbl">Plan</span><span class="sub-val" id="plan-kitchen" style="color:white">0</span></div>
-          <div><span class="sub-lbl">Difference</span><span class="sub-val" id="diff-kitchen" style="color:var(--amber)">0</span></div>
-          <div><span class="sub-lbl" style="color:var(--red);">Total Rejection</span><span class="sub-val" id="rej-kitchen" style="color:var(--red)">0</span></div>
-        </div>
-        <div class="stats-row" style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 6px;">
-          <div><span class="sub-lbl">CO Count</span><span class="sub-val" id="co-count-kitchen" style="color:var(--blue)">0</span></div>
-          <div><span class="sub-lbl">CO Total Time</span><span class="sub-val" id="co-time-kitchen" style="color:var(--blue)">00:00</span></div>
-        </div>
+  <div class="dept-cluster-wrapper">
+    <div class="dept-cluster-box">
+      <h3 class="cluster-title cluster-kitchen-title">● KITCHEN METRICS</h3>
+      <div class="cluster-cards-grid">
+        <div class="mini-m-card pln"><div class="m-lbl">Total Plan</div><div class="m-val" id="m-kitch-pln">0</div></div>
+        <div class="mini-m-card act"><div class="m-lbl">Total Actual</div><div class="m-val" id="m-kitch-act">0</div></div>
+        <div class="mini-m-card dif"><div class="m-lbl">Difference</div><div class="m-val" id="m-kitch-dif">0</div></div>
+        <div class="mini-m-card co"><div class="m-lbl">Total CO Count</div><div class="m-val" id="m-kitch-co">0</div></div>
+        <div class="mini-m-card cot"><div class="m-lbl">Total CO Time</div><div class="m-val" id="m-kitch-cot">00:00</div></div>
+        <div class="mini-m-card rej"><div class="m-lbl">Total Rejection</div><div class="m-val" id="m-kitch-rej">0</div></div>
       </div>
     </div>
     
-    <div class="dept-summary-card filling">
-      <div class="dept-label">Filling</div>
-      <div class="sub-lbl">Actual Sum</div>
-      <div class="dept-total" id="total-filling">0</div>
-      <div class="dept-inner-stats">
-        <div class="stats-row">
-          <div><span class="sub-lbl">Plan</span><span class="sub-val" id="plan-filling" style="color:white">0</span></div>
-          <div><span class="sub-lbl">Difference</span><span class="sub-val" id="diff-filling" style="color:var(--amber)">0</span></div>
-          <div><span class="sub-lbl" style="color:var(--red);">Total Rejection</span><span class="sub-val" id="rej-filling" style="color:var(--red)">0</span></div>
-        </div>
-        <div class="stats-row" style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 6px;">
-          <div><span class="sub-lbl">CO Count</span><span class="sub-val" id="co-count-filling" style="color:var(--blue)">0</span></div>
-          <div><span class="sub-lbl">CO Total Time</span><span class="sub-val" id="co-time-filling" style="color:var(--blue)">00:00</span></div>
-        </div>
+    <div class="dept-cluster-box">
+      <h3 class="cluster-title cluster-filling-title">● FILLING METRICS</h3>
+      <div class="cluster-cards-grid">
+        <div class="mini-m-card pln"><div class="m-lbl">Total Plan</div><div class="m-val" id="m-fill-pln">0</div></div>
+        <div class="mini-m-card act"><div class="m-lbl">Total Actual</div><div class="m-val" id="m-fill-act">0</div></div>
+        <div class="mini-m-card dif"><div class="m-lbl">Difference</div><div class="m-val" id="m-fill-dif">0</div></div>
+        <div class="mini-m-card co"><div class="m-lbl">Total CO Count</div><div class="m-val" id="m-fill-co">0</div></div>
+        <div class="mini-m-card cot"><div class="m-lbl">Total CO Time</div><div class="m-val" id="m-fill-cot">00:00</div></div>
+        <div class="mini-m-card rej"><div class="m-lbl">Total Rejection</div><div class="m-val" id="m-fill-rej">0</div></div>
       </div>
     </div>
-    
-    <div class="dept-summary-card retort">
-      <div class="dept-label">Retort</div>
-      <div class="sub-lbl">Actual Sum</div>
-      <div class="dept-total" id="total-retort">0</div>
-      <div class="dept-inner-stats">
-        <div class="stats-row">
-          <div><span class="sub-lbl">Plan</span><span class="sub-val" id="plan-retort" style="color:white">0</span></div>
-          <div><span class="sub-lbl">Difference</span><span class="sub-val" id="diff-retort" style="color:var(--amber)">0</span></div>
-          <div><span class="sub-lbl" style="color:var(--red);">Total Rejection</span><span class="sub-val" id="rej-retort" style="color:var(--red)">0</span></div>
-        </div>
-        <div class="stats-row" style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 6px;">
-          <div><span class="sub-lbl">CO Count</span><span class="sub-val" id="co-count-retort" style="color:var(--blue)">0</span></div>
-          <div><span class="sub-lbl">CO Total Time</span><span class="sub-val" id="co-time-retort" style="color:var(--blue)">—</span></div>
-        </div>
+
+    <div class="dept-cluster-box">
+      <h3 class="cluster-title cluster-retort-title">● RETORT METRICS</h3>
+      <div class="cluster-cards-grid">
+        <div class="mini-m-card pln"><div class="m-lbl">Total Plan</div><div class="m-val" id="m-ret-pln">0</div></div>
+        <div class="mini-m-card act"><div class="m-lbl">Total Actual</div><div class="m-val" id="m-ret-act">0</div></div>
+        <div class="mini-m-card dif"><div class="m-lbl">Difference</div><div class="m-val" id="m-ret-dif">0</div></div>
+        <div class="mini-m-card co"><div class="m-lbl">Total CO Count</div><div class="m-val" id="m-ret-co">0</div></div>
+        <div class="mini-m-card cot"><div class="m-lbl">Total CO Time</div><div class="m-val" id="m-ret-cot">00:00</div></div>
+        <div class="mini-m-card rej"><div class="m-lbl">Total Rejection</div><div class="m-val" id="m-ret-rej">0</div></div>
       </div>
     </div>
   </div>
@@ -330,45 +322,43 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
   <div class="charts-row-grid">
     <div id="cb-box-kitchen" class="custom-chart-box kitchen-bg" style="display:none;">
       <h4 class="chart-title">Kitchen Trend</h4>
-      <div style="position: relative; height:140px; width:100%;"><canvas id="canvasKitchen"></canvas></div>
+      <div style="position: relative; height:130px; width:100%;"><canvas id="canvasKitchen"></canvas></div>
     </div>
-
     <div id="cb-box-filling" class="custom-chart-box filling-bg" style="display:none;">
       <h4 class="chart-title">Filling Trend</h4>
-      <div style="position: relative; height:140px; width:100%;"><canvas id="canvasFilling"></canvas></div>
+      <div style="position: relative; height:130px; width:100%;"><canvas id="canvasFilling"></canvas></div>
     </div>
-
     <div id="cb-box-retort" class="custom-chart-box retort-bg" style="display:none;">
       <h4 class="chart-title">Retort Trend</h4>
-      <div style="position: relative; height:140px; width:100%;"><canvas id="canvasRetort"></canvas></div>
+      <div style="position: relative; height:130px; width:100%;"><canvas id="canvasRetort"></canvas></div>
     </div>
   </div>
 
   <div id="db-kitchen-section" class="dash-section kitchen" style="display:none">
-    <div class="dash-section-hdr"><span class="dot"></span> KITCHEN — Live Line Status</div>
+    <div class="dash-section-hdr"><span class="dot"></span> KITCHEN — Line Status</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Line</th><th>Product</th><th>Plan Qty</th><th>Actual Qty</th><th>CO Time</th><th>CO Count</th><th>Rejection</th></tr></thead>
+      <thead><tr><th>Line</th><th>Product</th><th>Plan Qty</th><th>Actual Qty</th><th>Rejection Qty</th><th>CO Status</th><th>CO Time</th></tr></thead>
       <tbody id="tbody-kitchen"></tbody>
     </table></div>
   </div>
 
   <div id="db-filling-section" class="dash-section filling" style="display:none">
-    <div class="dash-section-hdr"><span class="dot"></span> FILLING — Live Line Status</div>
+    <div class="dash-section-hdr"><span class="dot"></span> FILLING — Line Status</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Line</th><th>Product</th><th>Plan Qty</th><th>Actual Qty</th><th>CO Time</th><th>CO Count</th><th>Rejection</th></tr></thead>
+      <thead><tr><th>Line</th><th>Product</th><th>Plan Qty</th><th>Actual Qty</th><th>Rejection Qty</th><th>CO Status</th><th>CO Time</th></tr></thead>
       <tbody id="tbody-filling"></tbody>
     </table></div>
   </div>
 
   <div id="db-retort-section" class="dash-section retort" style="display:none">
-    <div class="dash-section-hdr"><span class="dot"></span> RETORT — Live Line Status</div>
+    <div class="dash-section-hdr"><span class="dot"></span> RETORT — Line Status</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Line</th><th>Product</th><th>Plan Qty</th><th>Actual Qty</th><th>CO Time</th><th>CO Count</th><th>Rejection</th></tr></thead>
+      <thead><tr><th>Line</th><th>Product</th><th>Plan Qty</th><th>Actual Qty</th><th>Rejection Qty</th><th>CO Status</th><th>CO Time</th></tr></thead>
       <tbody id="tbody-retort"></tbody>
     </table></div>
   </div>
 
-  <div id="db-nodata" class="no-data">No data found in sheet for selected Date &amp; Shift.</div>
+  <div id="db-nodata" class="no-data">No records found for selected Date &amp; Shift.</div>
   <div class="last-update" id="last-update-time"></div>
 </div>
 
@@ -426,6 +416,26 @@ function formatCleanTime(timeVal) {
   return cleanStr;
 }
 
+function minutesToHHMM(totalMinutes) {
+  if (isNaN(totalMinutes) || totalMinutes <= 0) return "00:00";
+  let hours = Math.floor(totalMinutes / 60);
+  let mins = totalMinutes % 60;
+  return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+}
+
+function parseTimeToMinutes(timeStr) {
+  if (!timeStr) return 0;
+  let cleanStr = String(timeStr).trim();
+  let parts = cleanStr.split(':');
+  if (parts.length >= 2) {
+    let hrs = parseInt(parts[0], 10) || 0;
+    let mns = parseInt(parts[1], 10) || 0;
+    return (hrs * 60) + mns;
+  }
+  let numVal = parseInt(cleanStr, 10);
+  return isNaN(numVal) ? 0 : numVal;
+}
+
 function getColumnJProduct(row) {
   return String(row['Final Product'] || row['Product_J'] || row['Product'] || '—').trim();
 }
@@ -440,11 +450,9 @@ async function fetchAllData() {
 
     const dRes = await fetch(`${SCRIPT_URL}?action=getDatabase`);
     const dData = await dRes.json();
-    
     dbData = (dData.rows || []).map(r => {
       let rawCO = r['Change Over'] || r['ChangeOver'] || r['CO'] || '';
       let rawTime = r['CO Time'] || r['CO_Time'] || r['EntryTime'] || r['Time'] || '';
-      // Map Rejection/Wastage both fields dynamically
       let rawRej = r['Rejection/Wastage'] || r['Rejection'] || r['Wastage'] || 0;
       return {
         ...r,
@@ -453,22 +461,23 @@ async function fetchAllData() {
         Plan: Number(r.Plan) || 0,
         Rejection: Number(rawRej) || 0,
         ChangeOver: String(rawCO).toUpperCase().trim(),
-        CO_Time_Raw: rawTime,
         EntryTime: formatCleanTime(rawTime)
       };
     });
-
+    
     savedMap = {};
     dbData.forEach(r => {
       savedMap[`${r.Date}|${r.Shift}|${r.Department}|${r.Line}`] = r;
     });
-
+    
     if (planData.length) {
-      const dates = [...new Set(planData.map(r => r.Date))].sort((a,b)=>new Date(b)-new Date(a));
-      document.getElementById('f-date').innerHTML = dates.map(d => `<option>${d}</option>`).join('');
-      
-      const depts = [...new Set(planData.map(r => r.Department))].sort();
-      document.getElementById('f-dept').innerHTML = '<option value="">All Depts</option>' + depts.map(d => `<option>${d}</option>`).join('');
+      if (!document.getElementById('f-date').value) {
+        const dates = [...new Set(planData.map(r => r.Date))].sort((a,b)=>new Date(b)-new Date(a));
+        document.getElementById('f-date').innerHTML = dates.map(d => `<option>${d}</option>`).join('');
+        
+        const depts = [...new Set(planData.map(r => r.Department))].sort();
+        document.getElementById('f-dept').innerHTML = '<option value="">All Depts</option>' + depts.map(d => `<option>${d}</option>`).join('');
+      }
       
       updateLineFilter();
       render();
@@ -488,8 +497,8 @@ function createDeptChart(key, canvasId, labels, plans, actuals, colorHex) {
     dashboardCharts[key].destroy();
   }
   
-  let fillGradient = ctx.createLinearGradient(0, 0, 0, 140);
-  fillGradient.addColorStop(0, colorHex + '18');
+  let fillGradient = ctx.createLinearGradient(0, 0, 0, 130);
+  fillGradient.addColorStop(0, colorHex + '15');
   fillGradient.addColorStop(1, 'transparent');
 
   dashboardCharts[key] = new Chart(ctx, {
@@ -497,69 +506,19 @@ function createDeptChart(key, canvasId, labels, plans, actuals, colorHex) {
     data: {
       labels: labels,
       datasets: [
-        {
-          label: 'Plan',
-          data: plans,
-          borderColor: 'rgba(255, 255, 255, 0.15)',
-          borderDash: [4, 4],
-          backgroundColor: 'transparent',
-          borderWidth: 1.5,
-          pointRadius: 0,
-          tension: 0.2
-        },
-        {
-          label: 'Actual',
-          data: actuals,
-          borderColor: colorHex,
-          backgroundColor: fillGradient,
-          fill: true,
-          borderWidth: 2.5,
-          pointRadius: 4,
-          pointBackgroundColor: colorHex,
-          pointBorderColor: '#080c14',
-          pointBorderWidth: 2,
-          tension: 0.2
-        }
+        { label: 'Plan', data: plans, borderColor: 'rgba(255, 255, 255, 0.15)', borderDash: [5, 5], backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, tension: 0.2 },
+        { label: 'Actual', data: actuals, borderColor: colorHex, backgroundColor: fillGradient, fill: true, borderWidth: 2.5, pointRadius: 3.5, pointBackgroundColor: colorHex, pointBorderColor: '#080c14', pointBorderWidth: 1.5, tension: 0.2 }
       ]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top',
-          align: 'end',
-          labels: { color: '#64748b', boxWidth: 6, usePointStyle: true, font: { family: 'Plus Jakarta Sans', size: 9, weight: '700' } }
-        }
-      },
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: true, position: 'top', align: 'end', labels: { color: '#64748b', boxWidth: 6, usePointStyle: true, font: { family: 'Plus Jakarta Sans', size: 9, weight: '600' } } } },
       scales: {
-        x: {
-          grid: { display: false },
-          ticks: { color: '#64748b', font: { family: 'Plus Jakarta Sans', size: 9, weight: '700' } }
-        },
-        y: {
-          grid: { color: 'rgba(255, 255, 255, 0.03)' },
-          ticks: { color: '#475569', font: { family: 'JetBrains Mono', size: 8 } }
-        }
+        x: { grid: { display: false }, ticks: { color: '#64748b', font: { family: 'Plus Jakarta Sans', size: 9, weight: '600' } } },
+        y: { grid: { color: 'rgba(255, 255, 255, 0.03)' }, ticks: { color: '#475569', font: { family: 'JetBrains Mono', size: 8 } } }
       }
     }
   });
-}
-
-function calculateTotalTime(timeArray) {
-  let totalMinutes = 0;
-  timeArray.forEach(t => {
-    if (t && t.includes(':')) {
-      const parts = t.split(':');
-      const hrs = parseInt(parts[0], 10) || 0;
-      const mins = parseInt(parts[1], 10) || 0;
-      totalMinutes += (hrs * 60) + mins;
-    }
-  });
-  const finalHrs = Math.floor(totalMinutes / 60);
-  const finalMins = totalMinutes % 60;
-  return `${String(finalHrs).padStart(2, '0')}:${String(finalMins).padStart(2, '0')}`;
 }
 
 function updateDashboard() {
@@ -569,37 +528,40 @@ function updateDashboard() {
   const masterPlanRows = planData.filter(r => r.Date === selectedDate && r.Shift === selectedShift);
   
   const TARGET_DEPTS = [
-    { key: 'kitchen', matchKey: 'KITCHEN', totalId: 'total-kitchen', planId: 'plan-kitchen', diffId: 'diff-kitchen', rejId: 'rej-kitchen', tbodyId: 'tbody-kitchen', secId: 'db-kitchen-section', cbBoxId: 'cb-box-kitchen', canvasId: 'canvasKitchen', color: '#f472b6', coCountId: 'co-count-kitchen', coTimeId: 'co-time-kitchen' },
-    { key: 'filling', matchKey: 'FILLING', totalId: 'total-filling', planId: 'plan-filling', diffId: 'diff-filling', rejId: 'rej-filling', tbodyId: 'tbody-filling', secId: 'db-filling-section', cbBoxId: 'cb-box-filling', canvasId: 'canvasFilling', color: '#e879f9', coCountId: 'co-count-filling', coTimeId: 'co-time-filling' },
-    { key: 'retort',  matchKey: 'RETORT',  totalId: 'total-retort',  planId: 'plan-retort',  diffId: 'diff-retort',  rejId: 'rej-retort',  tbodyId: 'tbody-retort',  secId: 'db-retort-section',  cbBoxId: 'cb-box-retort',  canvasId: 'canvasRetort',  color: '#34d399', coCountId: 'co-count-retort', coTimeId: 'co-time-retort' }
+    { key: 'kitchen', matchKey: 'KITCHEN', tbodyId: 'tbody-kitchen', secId: 'db-kitchen-section', cbBoxId: 'cb-box-kitchen', canvasId: 'canvasKitchen', color: '#f472b6', prefix: 'm-kitch' },
+    { key: 'filling', matchKey: 'FILLING', tbodyId: 'tbody-filling', secId: 'db-filling-section', cbBoxId: 'cb-box-filling', canvasId: 'canvasFilling', color: '#e879f9', prefix: 'm-fill' },
+    { key: 'retort',  matchKey: 'RETORT',  tbodyId: 'tbody-retort',  secId: 'db-retort-section',  cbBoxId: 'cb-box-retort',  canvasId: 'canvasRetort',  color: '#34d399', prefix: 'm-ret' }
   ];
+  
   let totalRecordsFound = false;
 
-  TARGET_DEPTS.forEach(({ key, matchKey, totalId, planId, diffId, rejId, tbodyId, secId, cbBoxId, canvasId, color, coCountId, coTimeId }) => {
+  TARGET_DEPTS.forEach(({ key, matchKey, tbodyId, secId, cbBoxId, canvasId, color, prefix }) => {
     const rows = filteredRows.filter(r => String(r.Department).toUpperCase().includes(matchKey));
     const deptPlanSum = masterPlanRows.filter(r => String(r.Department).toUpperCase().includes(matchKey)).reduce((a,c) => a + (Number(c.Plan)||0), 0);
 
+    let dActual = 0;
+    let dPlan = deptPlanSum;
+    let dRejection = 0;
+    let deptTotalCoCount = 0;
+    let deptTotalCoMinutes = 0;
+
     if (rows.length === 0 && deptPlanSum === 0) {
-      document.getElementById(totalId).textContent = '0';
-      document.getElementById(planId).textContent = '0';
-      document.getElementById(diffId).textContent = '0';
-      document.getElementById(rejId).textContent = '0';
-      document.getElementById(coCountId).textContent = '0';
-      document.getElementById(coTimeId).textContent = key === 'retort' ? '—' : '00:00';
       document.getElementById(secId).style.display = 'none';
       document.getElementById(cbBoxId).style.display = 'none';
       document.getElementById(tbodyId).innerHTML = '';
+      
+      document.getElementById(`${prefix}-pln`).textContent = '0';
+      document.getElementById(`${prefix}-act`).textContent = '0';
+      document.getElementById(`${prefix}-dif`).textContent = '0';
+      document.getElementById(`${prefix}-co`).textContent = '0';
+      document.getElementById(`${prefix}-cot`).textContent = '00:00';
+      document.getElementById(`${prefix}-rej`).textContent = '0';
       return;
     }
 
     totalRecordsFound = true;
     let html = '';
-    let labelsArr = [];
-    let plansArr = [];
-    let actualsArr = [];
-    let coTimesList = [];
-    let totalDeptCoCount = 0;
-    let totalDeptRejection = 0;
+    let labelsArr = []; let plansArr = []; let actualsArr = [];
 
     const distinctLines = [...new Set([
       ...masterPlanRows.filter(r => String(r.Department).toUpperCase().includes(matchKey)).map(r => r.Line),
@@ -609,64 +571,55 @@ function updateDashboard() {
     distinctLines.forEach(line => {
       const liveItem = rows.find(r => r.Line === line);
       const planItem = masterPlanRows.find(r => String(r.Department).toUpperCase().includes(matchKey) && r.Line === line);
-
       const pVal = planItem ? (Number(planItem.Plan) || 0) : 0;
       const aVal = liveItem ? (Number(liveItem.Actual) || 0) : 0;
       const rVal = liveItem ? (Number(liveItem.Rejection) || 0) : 0;
       const pName = planItem ? getColumnJProduct(planItem) : (liveItem ? liveItem.Product : '—');
       
-      totalDeptRejection += rVal;
-      let coDisplay = '—';
-      let rowCoCount = 0;
-      
-      if (liveItem && liveItem.ChangeOver === 'YES') {
-        rowCoCount = 1;
-        totalDeptCoCount++;
-        let cTime = liveItem.EntryTime; 
-        coDisplay = `<span style="color:var(--blue); font-weight:700;">YES</span> (${cTime || '00:00'})`;
-        if (cTime) coTimesList.push(cTime);
-      } else if (liveItem && liveItem.ChangeOver === 'NO') {
-        coDisplay = 'NO';
-        rowCoCount = 0;
+      dActual += aVal;
+      dRejection += rVal;
+
+      let lineCoStatus = '—';
+      let lineCoTime = '—';
+
+      if (liveItem) {
+        lineCoStatus = liveItem.ChangeOver || 'NO';
+        if (String(liveItem.ChangeOver).toUpperCase() === 'YES') {
+          deptTotalCoCount += 1;
+        }
+        if (liveItem.EntryTime) {
+          lineCoTime = liveItem.EntryTime;
+          deptTotalCoMinutes += parseTimeToMinutes(liveItem.EntryTime);
+        }
       }
 
-      labelsArr.push(line);
-      plansArr.push(pVal);
-      actualsArr.push(aVal);
+      labelsArr.push(line); plansArr.push(pVal); actualsArr.push(aVal);
 
       html += `<tr>
         <td><span class="line-badge">${line}</span></td>
-        <td style="color:#e2e8f0; font-size:12px; font-weight:500;">${pName}</td>
+        <td style="color:#94a3b8; font-size:12px;">${pName}</td>
         <td style="font-family:'JetBrains Mono'; color:#64748b;">${pVal.toLocaleString('en-IN')}</td>
         <td><span class="actual-val">${aVal.toLocaleString('en-IN')}</span></td>
-        <td style="font-size:12px; color:#94a3b8;">${coDisplay}</td>
-        <td style="font-family:'JetBrains Mono'; font-weight:700; color:${rowCoCount > 0 ? 'var(--blue)' : '#475569'}">${rowCoCount}</td>
-        <td><span class="rej-val">${rVal > 0 ? rVal.toLocaleString('en-IN') : '0'}</span></td>
+        <td style="font-family:'JetBrains Mono'; color:var(--red); font-weight:700;">${rVal > 0 ? rVal.toLocaleString('en-IN') : '0'}</td>
+        <td>${lineCoStatus === 'YES' ? '<span class="co-badge-yes">YES</span>' : '<span class="co-badge-no">NO</span>'}</td>
+        <td style="font-family:'JetBrains Mono'; color:var(--text2);">${lineCoTime}</td>
       </tr>`;
     });
-    
-    const sumActuals = actualsArr.reduce((x, y) => x + y, 0);
-    let totalDiff = deptPlanSum - sumActuals;
 
-    document.getElementById(totalId).textContent = sumActuals.toLocaleString('en-IN');
-    document.getElementById(planId).textContent = deptPlanSum.toLocaleString('en-IN');
-    document.getElementById(diffId).textContent = totalDiff.toLocaleString('en-IN');
-    document.getElementById(diffId).style.color = totalDiff > 0 ? 'var(--amber)' : (totalDiff < 0 ? 'var(--blue)' : 'var(--green)');
-    
-    // Set Live Rejection Summary Sum
-    document.getElementById(rejId).textContent = totalDeptRejection.toLocaleString('en-IN');
-    
-    document.getElementById(coCountId).textContent = totalDeptCoCount;
-    if (key !== 'retort') {
-      document.getElementById(coTimeId).textContent = calculateTotalTime(coTimesList);
-    } else {
-      document.getElementById(coTimeId).textContent = '—';
-    }
-    
     document.getElementById(tbodyId).innerHTML = html;
     document.getElementById(secId).style.display = 'block';
     document.getElementById(cbBoxId).style.display = 'block';
     createDeptChart(key, canvasId, labelsArr, plansArr, actualsArr, color);
+
+    let dDiff = dPlan - dActual;
+    document.getElementById(`${prefix}-pln`).textContent = dPlan.toLocaleString('en-IN');
+    document.getElementById(`${prefix}-act`).textContent = dActual.toLocaleString('en-IN');
+    document.getElementById(`${prefix}-dif`).textContent = dDiff.toLocaleString('en-IN');
+    document.getElementById(`${prefix}-co`).textContent = deptTotalCoCount;
+    document.getElementById(`${prefix}-cot`).textContent = minutesToHHMM(deptTotalCoMinutes);
+    document.getElementById(`${prefix}-rej`).textContent = dRejection.toLocaleString('en-IN');
+    
+    document.getElementById(`${prefix}-dif`).style.color = dDiff > 0 ? 'var(--amber)' : (dDiff < 0 ? 'var(--blue)' : 'var(--green)');
   });
 
   document.getElementById('db-nodata').style.display = totalRecordsFound ? 'none' : 'block';
@@ -677,7 +630,8 @@ function updateLineFilter() {
   const d = document.getElementById('f-date').value, s = document.getElementById('f-shift').value, dp = document.getElementById('f-dept').value;
   const filtered = planData.filter(r => r.Date === d && r.Shift === s && (!dp || r.Department === dp));
   const lines = [...new Set(filtered.map(r => r.Line))].sort();
-  document.getElementById('f-line').innerHTML = '<option value="">All Lines</option>' + lines.map(l => `<option>${l}</option>`).join('');
+  const currentLine = document.getElementById('f-line').value;
+  document.getElementById('f-line').innerHTML = '<option value="">All Lines</option>' + lines.map(l => `<option ${l===currentLine?'selected':''}>${l}</option>`).join('');
 }
 
 function render() {
@@ -694,16 +648,17 @@ function render() {
     
     rows.forEach(r => {
       const key = `${r.Date}|${r.Shift}|${r.Department}|${r.Line}`, safeKey = key.replace(/[|\s-]/g, '_'), sv = savedMap[key] || {};
-      const cleanTime = formatCleanTime(sv.CO_Time_Raw);
+      const cleanTime = formatCleanTime(sv.EntryTime);
       const finalProdName = getColumnJProduct(r);
       const currentCO = sv.ChangeOver || 'NO';
+      const currentRej = sv.Rejection || sv.Wastage || '';
       
       h += `<tr>
         <td style="color:var(--blue);font-weight:700">${r.Line}</td>
         <td style="font-size:11px; max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#e2e8f0" title="${finalProdName}">${finalProdName}</td>
         <td style="font-family:'JetBrains Mono'; color:#64748b">${r.Plan}</td>
         <td><input type="number" id="qty-${safeKey}" class="ti ti-qty" value="${sv.Actual||''}" oninput="updateRowStatus()"></td>
-        <td><input type="number" id="rej-${safeKey}" class="ti ti-rej" value="${sv.Rejection||sv.Wastage||''}"></td>`;
+        <td><input type="number" id="rej-${safeKey}" class="ti ti-rej" value="${currentRej}"></td>`;
       
       if (isKitchenOrFilling) {
         h += `<td>
@@ -714,8 +669,7 @@ function render() {
         </td>
         <td><input type="text" id="tm-${safeKey}" class="ti" style="width:65px; font-family:'JetBrains Mono';" value="${cleanTime}" placeholder="hh:mm"></td>`;
       } else {
-        h += `<td class="disabled-cell">—</td>
-              <td class="disabled-cell">—</td>`;
+        h += `<td class="disabled-cell">—</td><td class="disabled-cell">—</td>`;
       }
         
       h += `<td><select id="op-${safeKey}" class="ti"><option value="">--</option>${operatorList.map(o=>`<option ${sv.Operator===o?'selected':''}>${o}</option>`).join('')}</select></td>
@@ -724,7 +678,7 @@ function render() {
     h += `</tbody></table></div></div>`;
   });
   document.getElementById('display-area').innerHTML = h || '<p style="text-align:center;padding:50px;color:var(--text2)">No Plan Found</p>';
-  document.getElementById('ready-count').textContent = '0';
+  updateRowStatus();
 }
 
 function updateRowStatus() {
@@ -733,11 +687,19 @@ function updateRowStatus() {
 
 async function saveAll() {
   const d = document.getElementById('f-date').value, s = document.getElementById('f-shift').value;
-  const rows = planData.filter(r => {
+  
+  const targetKeys = [];
+  const targetedPlanRows = planData.filter(r => {
     const k = `${r.Date}|${r.Shift}|${r.Department}|${r.Line}`.replace(/[|\s-]/g, '_');
     const q = document.getElementById('qty-' + k);
-    return r.Date === d && r.Shift === s && q && q.value !== '';
-  }).map(r => {
+    if (r.Date === d && r.Shift === s && q && q.value !== '') {
+      targetKeys.push(k); 
+      return true;
+    }
+    return false;
+  });
+
+  const rows = targetedPlanRows.map(r => {
     const k = `${r.Date}|${r.Shift}|${r.Department}|${r.Line}`.replace(/[|\s-]/g, '_');
     const finalProdName = getColumnJProduct(r);
     
@@ -746,12 +708,7 @@ async function saveAll() {
     const rejEl = document.getElementById('rej-'+k);
     
     return { 
-      Date: r.Date, 
-      Shift: r.Shift, 
-      Department: r.Department, 
-      Line: r.Line, 
-      Product: finalProdName, 
-      Plan: r.Plan, 
+      Date: r.Date, Shift: r.Shift, Department: r.Department, Line: r.Line, Product: finalProdName, Plan: r.Plan, 
       Actual: document.getElementById('qty-'+k).value,
       Wastage: rejEl ? rejEl.value : '',
       ChangeOver: coEl ? coEl.value : 'NO', 
@@ -759,16 +716,72 @@ async function saveAll() {
       Operator: document.getElementById('op-'+k).value 
     };
   });
+
   if (!rows.length) return toast('⚠️ Enter some actual quantities first');
   showLoader(true, 'Saving to Cloud...');
+  
   try {
     await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ action: 'batchSave', data: rows }) });
     toast('✅ Saved Successfully!');
+
+    // local array data update logic
+    rows.forEach(r => {
+      const mapKey = `${r.Date}|${r.Shift}|${r.Department}|${r.Line}`;
+      const formattedItem = {
+        ...r,
+        Actual: Number(r.Actual) || 0,
+        Plan: Number(r.Plan) || 0,
+        Rejection: Number(r.Wastage) || 0,
+        ChangeOver: String(r.ChangeOver).toUpperCase().trim(),
+        EntryTime: formatCleanTime(r.EntryTime)
+      };
+
+      const existingIdx = dbData.findIndex(item => item.Date === r.Date && item.Shift === r.Shift && item.Department === r.Department && item.Line === r.Line);
+      if (existingIdx > -1) {
+        dbData[existingIdx] = formattedItem;
+      } else {
+        dbData.push(formattedItem);
+      }
+      savedMap[mapKey] = formattedItem;
+    });
+
+    // CRITICAL FIX: UI inputs ko local save ke baad turant blank kiya ja raha hai
+    targetKeys.forEach(k => {
+      const qtyEl = document.getElementById('qty-' + k);
+      const rejEl = document.getElementById('rej-' + k);
+      const coEl  = document.getElementById('co-' + k);
+      const tmEl  = document.getElementById('tm-' + k);
+      const opEl  = document.getElementById('op-' + k);
+
+      if (qtyEl) qtyEl.value = '';
+      if (rejEl) rejEl.value = '';
+      if (coEl)  coEl.value  = 'NO';
+      if (tmEl)  tmEl.value  = '';
+      if (opEl)  opEl.value  = '';
+    });
+
+    document.getElementById('ready-count').textContent = '0';
+    if (currentTab === 'dash') updateDashboard();
+    showLoader(false);
     
-    savedMap = {}; 
-    render(); 
-    
-    setTimeout(() => { fetchAllData(); }, 1000);
+    // Background sheet data re-fetch validation 
+    setTimeout(() => { 
+      fetch(`${SCRIPT_URL}?action=getDatabase`)
+        .then(res => res.json())
+        .then(dData => {
+          dbData = (dData.rows || []).map(r => {
+            let rawCO = r['Change Over'] || r['ChangeOver'] || r['CO'] || '';
+            let rawTime = r['CO Time'] || r['CO_Time'] || r['EntryTime'] || r['Time'] || '';
+            let rawRej = r['Rejection/Wastage'] || r['Rejection'] || r['Wastage'] || 0;
+            return {
+              ...r, Date: formatDate(r.Date), Actual: Number(r.Actual) || 0, Plan: Number(r.Plan) || 0, Rejection: Number(rawRej) || 0, ChangeOver: String(rawCO).toUpperCase().trim(), EntryTime: formatCleanTime(rawTime)
+            };
+          });
+          dbData.forEach(r => { savedMap[`${r.Date}|${r.Shift}|${r.Department}|${r.Line}`] = r; });
+          if (currentTab === 'dash') updateDashboard();
+        }).catch(err => console.log("Verification error:", err));
+    }, 2000);
+
   } catch (e) { 
     toast('❌ Error Saving Data');
     showLoader(false);
@@ -783,8 +796,7 @@ function showLoader(v, m) {
 function toast(msg) {
   const w = document.getElementById('toast-wrap');
   const t = document.createElement('div');
-  t.className = 'toast';
-  t.textContent = msg;
+  t.className = 'toast'; t.textContent = msg;
   w.appendChild(t);
   setTimeout(() => t.remove(), 3500);
 }
