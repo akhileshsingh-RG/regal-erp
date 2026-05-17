@@ -3,195 +3,313 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Regal ERP Turbo | Live Production Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<title>Regal Kitchen Foods | Global Corporate System & Enterprise Resource Planning</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root {
-  --bg: #080c14; 
-  --bg2: #0f172a; 
-  --surface: rgba(21, 31, 50, 0.7);
-  --border: rgba(255, 255, 255, 0.06); 
+  --bg: #030712; 
+  --bg2: #0b1528; 
+  --surface: rgba(13, 24, 43, 0.55);
+  --glass: rgba(17, 34, 64, 0.45);
+  --border: rgba(255, 255, 255, 0.05); 
   --blue: #38bdf8;
+  --cyan: #06b6d4;
+  --emerald: #10b981;
   --blue-grad: linear-gradient(135deg, #38bdf8 0%, #0369a1 100%);
-  --green: #10b981; 
-  --amber: #f59e0b; 
-  --red: #ef4444;
+  --cyan-grad: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+  --emerald-grad: linear-gradient(135deg, #10b981 0%, #047857 100%);
   --text: #f8fafc; 
   --text2: #94a3b8;
   --kitchen: #f472b6; 
   --filling: #e879f9; 
   --retort: #34d399;
-  --shadow-3d: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255,255,255,0.05);
-  --shadow-inset: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  --shadow-3d: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255,255,255,0.03);
+  --shadow-inset: inset 0 1px 2px rgba(255, 255, 255, 0.05);
   --card-shadow: 0 12px 40px -12px rgba(0,0,0,0.8);
 }
 
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body { 
-  font-family: 'Plus Jakarta Sans', sans-serif; 
-  background: radial-gradient(circle at 50% 0%, #111c30 0%, var(--bg) 70%); 
+  font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', sans-serif; 
+  background: radial-gradient(circle at 50% 0%, #0f2444 0%, var(--bg) 60%); 
   color: var(--text); 
-  margin: 0; 
-  padding-bottom: 90px; 
+  padding-bottom: 0px; 
   overflow-x: hidden;
   letter-spacing: -0.01em;
+  scroll-behavior: smooth;
 }
 
-/* PREMIUM TAB BAR */
+/* TRANSLATION CONTAINER TRANSITION DECORATION */
+.translatable-node {
+  transition: opacity 0.25s ease-in-out;
+}
+.translatable-node.fading {
+  opacity: 0;
+}
+
+/* PREMIUM LANGUAGE SELECTOR SWITCH CONTAINER */
+.lang-switch-panel {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 24px 0 0;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1100;
+}
+.lang-pill-container {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(13, 24, 43, 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 4px;
+  border-radius: 30px;
+  box-shadow: var(--shadow-3d), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+.lang-pill-container svg {
+  width: 14px;
+  height: 14px;
+  margin: 0 8px;
+  color: var(--cyan);
+  filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.6));
+}
+.lang-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text2);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.lang-toggle-btn.active {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(56, 189, 248, 0.2));
+  color: #ffffff;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+/* GLOBAL BACKGROUND ANIMATED LIGHT PARTICLES PLACEHOLDER FRAME */
+.glow-bg-layer { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+.glowing-orb { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.15; animation: pulseOrb 12s infinite ease-in-out; }
+.orb-1 { top: -10%; left: 10%; width: 500px; height: 500px; background: var(--blue); }
+.orb-2 { top: 40%; right: -5%; width: 600px; height: 600px; background: var(--cyan); animation-delay: -3s; }
+.orb-3 { bottom: 10%; left: -5%; width: 450px; height: 450px; background: var(--emerald); animation-delay: -6s; }
+@keyframes pulseOrb { 0%, 100% { transform: scale(1) translate(0, 0); } 50% { transform: scale(1.15) translate(30px, 40px); } }
+
+/* PREMIUM TAB BAR STICKY HEADER FRAME */
 .tab-bar { 
   display: flex; 
-  background: rgba(8, 12, 20, 0.85); 
-  backdrop-filter: blur(20px);
+  background: rgba(3, 7, 18, 0.85); 
+  backdrop-filter: blur(25px);
   border-bottom: 1px solid var(--border); 
   position: sticky; 
   top: 0; 
-  z-index: 200; 
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  z-index: 2000; 
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  padding: 0 24px;
+  align-items: center;
+  justify-content: space-between;
 }
+.tab-logo-area { font-weight: 800; font-size: 19px; color: #ffffff; tracking: -0.5px; }
+.tab-logo-area span { color: var(--blue); }
+.tabs-inner-btns { display: flex; }
 .tab-btn { 
-  flex: 1; 
-  padding: 18px; 
+  padding: 22px 24px; 
   border: none;
   background: none; 
   color: var(--text2); 
   font-weight: 700; 
-  font-size: 13px;
-  letter-spacing: 0.05em;
+  font-size: 12px;
+  letter-spacing: 0.08em;
   cursor: pointer; 
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  border-bottom: 3px solid transparent;
 }
+.tab-btn:hover { color: #ffffff; }
 .tab-btn.active { 
   color: var(--blue); 
   border-bottom: 3px solid var(--blue); 
-  background: linear-gradient(to top, rgba(56, 189, 248, 0.05), transparent);
-  text-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
+  background: linear-gradient(to top, rgba(56, 189, 248, 0.06), transparent);
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
 }
 
-/* FILTERS BAR */
+/* FILTERS ACCENT LAYER - DEFAULT INITIALIZED STYLED AS HIDDEN FOR HOME PAGE */
 #filter-bar { 
+  display: none; 
   padding: 14px 24px; 
-  display: flex;
   gap: 14px; 
   overflow-x: auto; 
-  background: rgba(8, 12, 20, 0.65); 
+  background: rgba(3, 7, 18, 0.65); 
   backdrop-filter: blur(15px);
   position: sticky; 
-  top: 55px; 
-  z-index: 150;
+  top: 61px; 
+  z-index: 1500;
   border-bottom: 1px solid var(--border); 
   box-shadow: 0 10px 25px -10px rgba(0,0,0,0.5);
+  align-items: center;
 }
 .fg { display: flex; flex-direction: column; gap: 6px; min-width: 120px; }
 .fg label { font-size: 9px; color: #64748b; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
-.fg select { 
-  background: #111a2e; 
-  border: 1px solid rgba(255,255,255,0.1);
-  color: white; 
-  padding: 9px 14px; 
-  border-radius: 8px; 
-  font-size: 12px; 
-  font-weight: 600;
-  outline: none; 
-  transition: all 0.2s;
-  box-shadow: var(--shadow-inset);
+.fg select, .fg input[type="date"] { 
+  background: #0d1627; border: 1px solid rgba(255,255,255,0.08); color: white; padding: 9px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; outline: none; transition: all 0.2s; box-shadow: var(--shadow-inset); font-family: inherit;
 }
-.fg select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25); }
+.fg input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
+.fg select:focus, .fg input[type="date"]:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25); }
 
-/* DASHBOARD GRID & CARDS */
-#dashboard-page { padding: 24px; display: none; }
+/* MAIN CONTENT PAGE CONTROLLERS */
+.page-view { position: relative; z-index: 10; display: none; }
+.page-view.active { display: block; }
 
-/* 3-COLUMN DEPARTMENT CLUSTER WRAPPER (TOP METRICS) */
-.dept-cluster-wrapper { 
-  display: grid; 
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 16px; 
-  margin-bottom: 24px; 
-}
-.dept-cluster-box {
-  background: rgba(15, 23, 42, 0.4);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px;
-  box-shadow: var(--card-shadow);
-}
-.cluster-title {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin: 0 0 14px 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+/* ==========================================
+   PAGE 1: WORLD CLASS CORPORATE HOME UI
+   ========================================== */
+.corp-wrapper { max-width: 1400px; margin: 0 auto; padding: 20px 24px 40px; }
+
+/* 1. TOP HERO SECTION */
+.hero-sec { text-align: center; padding: 30px 0 80px; position: relative; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); padding: 8px 20px; border-radius: 30px; color: var(--blue); font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 28px; box-shadow: inset 0 1px 1px rgba(56, 189, 248, 0.2); }
+.hero-badge .pulse-dot { width: 6px; height: 6px; background: var(--blue); border-radius: 50%; box-shadow: 0 0 8px var(--blue); }
+.hero-title { font-size: clamp(32px, 5vw, 56px); font-weight: 800; line-height: 1.2; letter-spacing: -0.03em; margin-bottom: 24px; background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-sub { font-size: clamp(15px, 2vw, 19px); color: var(--text2); max-width: 850px; margin: 0 auto 40px; line-height: 1.6; font-weight: 400; }
+.hero-actions { display: flex; justify-content: center; gap: 16px; margin-bottom: 70px; flex-wrap: wrap; }
+.btn-premium { background: var(--blue-grad); color: white; padding: 16px 36px; border-radius: 12px; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; border: none; cursor: pointer; box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.btn-premium:hover { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(56, 189, 248, 0.5); border-color: white; }
+.btn-premium.outline { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.12); color: white; box-shadow: none; }
+.btn-premium.outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); }
+
+/* STATS BAR ROW */
+.hero-stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; text-align: left; }
+.stat-glass-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 24px; backdrop-filter: blur(20px); box-shadow: var(--shadow-3d); transition: transform 0.3s; position: relative; overflow: hidden; }
+.stat-glass-card:hover { transform: translateY(-4px); border-color: rgba(56, 189, 248, 0.2); }
+.stat-glass-card::before { content: ''; position: absolute; top: 0; left: 0; width: 40px; height: 3px; background: var(--blue-grad); }
+.stat-glass-card.emerald::before { background: var(--emerald-grad); }
+.stat-num { font-size: 36px; font-weight: 800; font-family: 'JetBrains Mono'; color: #ffffff; margin-bottom: 4px; display: flex; align-items: center; background: linear-gradient(90deg, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.stat-lbl { font-size: 11px; color: var(--text2); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; }
+
+/* 2. FOUNDER SECTION */
+.founder-sec { padding: 60px 0; display: grid; grid-template-columns: 320px 1fr; gap: 40px; align-items: start; }
+.founder-glass-card { background: var(--glass); border: 1px solid var(--border); border-radius: 24px; padding: 36px 24px; text-align: center; backdrop-filter: blur(20px); box-shadow: var(--shadow-3d); }
+.founder-frame { width: 180px; height: 180px; border-radius: 50%; margin: 0 auto 24px; overflow: hidden; border: 4px solid var(--blue); box-shadow: 0 0 35px rgba(56,189,248,0.25); background: #0d1627; position: relative; }
+.founder-frame img { width: 100%; height: 100%; object-fit: cover; }
+.founder-name { font-size: 22px; font-weight: 800; color: #ffffff; margin-bottom: 6px; }
+.founder-title { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+.founder-badge { background: rgba(56,189,248,0.08); color: var(--blue); border: 1px solid rgba(56,189,248,0.15); padding: 6px 16px; border-radius: 30px; font-size: 11px; font-weight: 700; display: inline-block; }
+
+.founder-quote-pane { display: flex; flex-direction: column; justify-content: center; height: 100%; }
+.corp-section-title { font-size: 12px; font-weight: 800; color: var(--cyan); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.corp-section-title::after { content: ''; height: 1px; flex: 1; background: rgba(255,255,255,0.07); }
+.corp-headline { font-size: 32px; font-weight: 800; color: #ffffff; margin-bottom: 24px; letter-spacing: -0.02em; }
+.quote-box { background: rgba(16, 185, 129, 0.04); border-left: 4px solid var(--emerald); padding: 24px; border-radius: 0 16px 16px 0; margin-bottom: 24px; color: #e2e8f0; font-style: italic; font-size: 16px; line-height: 1.6; }
+.founder-desc { font-size: 15px; color: var(--text2); line-height: 1.7; font-weight: 400; }
+
+/* 3. CERTIFICATIONS SHOWCASE GRID */
+.sec-spacing { padding: 70px 0; }
+.grid-6-col { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.cert-card { background: var(--glass); border: 1px solid var(--border); border-radius: 16px; padding: 24px; backdrop-filter: blur(20px); box-shadow: var(--shadow-3d); transition: all 0.3s ease; position: relative; overflow: hidden; }
+.cert-card:hover { transform: translateY(-3px); border-color: rgba(6, 182, 212, 0.25); background: rgba(17, 34, 64, 0.6); }
+.cert-icon-placeholder { width: 44px; height: 44px; border-radius: 10px; background: rgba(6, 182, 212, 0.08); border: 1px solid rgba(6, 182, 212, 0.2); display: flex; align-items: center; justify-content: center; color: var(--cyan); font-weight: 800; font-size: 12px; margin-bottom: 18px; font-family: 'JetBrains Mono'; }
+.cert-card:nth-child(even) .cert-icon-placeholder { background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.2); color: var(--emerald); }
+.cert-name { font-size: 15px; font-weight: 700; color: #ffffff; margin-bottom: 8px; }
+.cert-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+/* 4. BRANDS SHOWCASE CARDS */
+.grid-3-col { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px; }
+.brand-lux-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 32px; backdrop-filter: blur(20px); box-shadow: var(--shadow-3d); transition: all 0.3s; position: relative; overflow: hidden; }
+.brand-lux-card:hover { transform: translateY(-4px); border-color: rgba(56, 189, 248, 0.25); }
+.brand-meta-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.brand-logo-sim { font-size: 18px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px; display: flex; align-items: center; gap: 6px; }
+.brand-logo-sim span { width: 8px; height: 8px; background: var(--blue); border-radius: 50%; }
+.brand-cat-badge { background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 4px 12px; border-radius: 30px; font-size: 10px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; }
+.brand-lux-card:hover .brand-logo-sim { color: var(--blue); }
+
+/* 5. PRODUCT CATEGORIES ARR */
+.grid-4-col { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+.prod-cat-card { background: linear-gradient(180deg, rgba(17, 34, 64, 0.3) 0%, rgba(8, 15, 30, 0.6) 100%); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; backdrop-filter: blur(20px); box-shadow: var(--shadow-3d); text-align: left; transition: all 0.3s ease; position: relative; overflow: hidden; }
+.prod-cat-card:hover { transform: translateY(-3px); border-color: rgba(16, 185, 129, 0.25); }
+.prod-visual-indicator { height: 4px; width: 50px; background: var(--emerald-grad); border-radius: 10px; margin-bottom: 18px; }
+.prod-cat-card:nth-child(even) .prod-visual-indicator { background: var(--blue-grad); }
+
+/* 6. GLOBAL EXPORT MAP GRAPHIC SECTION */
+.export-sec { text-align: center; background: radial-gradient(circle at 50% 50%, rgba(13, 24, 43, 0.4) 0%, transparent 70%); border-radius: 30px; padding: 60px 40px; border: 1px solid var(--border); }
+.map-chip-container { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 32px 0; }
+.country-chip { background: var(--surface); border: 1px solid var(--border); padding: 8px 20px; border-radius: 30px; font-size: 13px; font-weight: 700; color: white; display: flex; align-items: center; gap: 8px; box-shadow: var(--shadow-inset); transition: 0.2s; }
+.country-chip::before { content: ''; width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; box-shadow: 0 0 8px var(--cyan); }
+.country-chip:hover { border-color: var(--cyan); transform: scale(1.05); }
+
+/* 7. MANUFACTURING SUBSTRUCTURE & WHY CHOOSE US GRID */
+.facility-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 20px; }
+.facility-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 28px; backdrop-filter: blur(20px); display: flex; gap: 20px; }
+.facility-metric-pill { font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 700; color: var(--blue); background: rgba(56, 189, 248, 0.08); padding: 4px 10px; border-radius: 6px; height: fit-content; white-space: nowrap; }
+
+/* 8. CORPORATE VISION MISSION STRUTS */
+.vm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.vm-box { background: var(--glass); border: 1px solid var(--border); border-radius: 24px; padding: 40px; backdrop-filter: blur(20px); box-shadow: var(--shadow-3d); position: relative; }
+.vm-box::after { content: ''; position: absolute; left: 40px; top: 0; width: 60px; height: 4px; background: var(--blue-grad); border-radius: 0 0 4px 4px; }
+.vm-box.mission::after { background: var(--emerald-grad); }
+
+/* 9. PREMIUM FOOTER STRUCT */
+.corp-footer { background: #02050c; border-top: 1px solid var(--border); padding: 60px 24px 30px; position: relative; margin-top: 8px; }
+.footer-top-accent { position: absolute; top: -1px; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--blue), var(--emerald), transparent); }
+.footer-grid { max-width: 1400px; margin: 0 auto 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; }
+.footer-col-title { font-size: 12px; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px; }
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 12px; }
+.footer-links a { color: var(--text2); font-size: 13px; text-decoration: none; transition: 0.2s; font-weight: 500; }
+.footer-links a:hover { color: var(--blue); padding-left: 4px; }
+.footer-desc-text { font-size: 13px; color: var(--text2); line-height: 1.6; margin-bottom: 16px; }
+.footer-bottom { max-width: 1400px; margin: 0 auto; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.04); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 12px; color: #475569; font-weight: 600; }
+
+/* ==========================================
+   PAGE 2, 3, 4: RETAINED CORE SYSTEMS STYLES
+   ========================================== */
+.dept-cluster-wrapper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+.dept-cluster-box { background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: var(--card-shadow); }
+.cluster-title { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 14px 0; display: flex; align-items: center; gap: 6px; }
 .cluster-kitchen-title { color: var(--kitchen); }
 .cluster-filling-title { color: var(--filling); }
 .cluster-retort-title { color: var(--retort); }
-
-/* 6 CARDS GRID INSIDE EACH DEPARTMENT BLOCK */
-.cluster-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-.mini-m-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px;
-}
+.cluster-cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.mini-m-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px; backdrop-filter: blur(10px); }
 .mini-m-card .m-lbl { font-size: 8px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 4px; }
 .mini-m-card .m-val { font-size: 15px; font-weight: 800; font-family: 'JetBrains Mono'; }
-
-.mini-m-card.pln .m-val { color: #ffffff; }
-.mini-m-card.act .m-val { color: var(--green); }
-.mini-m-card.dif .m-val { color: var(--amber); }
+.mini-m-card.pln .m-val, .mini-m-card.prs .m-val { color: #ffffff; }
+.mini-m-card.act .m-val { color: var(--emerald); }
+.mini-m-card.dif .m-val { color: #f59e0b; }
 .mini-m-card.co .m-val { color: var(--blue); }
 .mini-m-card.cot .m-val { color: #a78bfa; }
-.mini-m-card.rej .m-val { color: var(--red); }
+.mini-m-card.rej .m-val, .mini-m-card.lev .m-val { color: #ef4444; }
 
-/* CHARTS ROW */
 .charts-row-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
-.custom-chart-box { 
-  border: 1px solid rgba(255,255,255,0.06); 
-  border-radius: 20px; padding: 18px; 
-  display: flex; flex-direction: column;
-  background: var(--surface); box-shadow: var(--shadow-3d);
-}
+.custom-chart-box { border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 18px; display: flex; flex-direction: column; background: var(--surface); box-shadow: var(--shadow-3d); backdrop-filter: blur(15px); }
 .chart-title { margin: 0 0 14px 0; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 800; display: flex; align-items: center; gap: 6px; }
 .kitchen-bg .chart-title { color: var(--kitchen); }
 .filling-bg .chart-title { color: var(--filling); }
 .retort-bg .chart-title { color: var(--retort); }
 
-/* SECTIONS & TABLES */
-.dash-section { 
-  background: var(--surface); backdrop-filter: blur(15px);
-  border-radius: 20px; border: 1px solid rgba(255,255,255,0.07); 
-  margin-bottom: 30px; overflow: hidden; 
-  box-shadow: var(--shadow-3d), var(--shadow-inset); 
-}
-.dash-section-hdr { 
-  padding: 16px 24px; font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; 
-  border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 10px;
-}
+.dash-section { background: var(--surface); backdrop-filter: blur(15px); border-radius: 20px; border: 1px solid rgba(255,255,255,0.07); margin-bottom: 30px; overflow: hidden; box-shadow: var(--shadow-3d), var(--shadow-inset); }
+.dash-section-hdr { padding: 16px 24px; font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 10px; }
 .dash-section-hdr .dot { width: 8px; height: 8px; border-radius: 50%; }
-
 .dash-section.kitchen .dash-section-hdr { color: var(--kitchen); background: rgba(244,114,182,0.04); border-bottom: 1px solid rgba(244,114,182,0.15); }
 .dash-section.kitchen .dot { background: var(--kitchen); box-shadow: 0 0 10px var(--kitchen); }
-
 .dash-section.filling .dash-section-hdr { color: var(--filling); background: rgba(232,121,249,0.04); border-bottom: 1px solid rgba(232,121,249,0.15); }
 .dash-section.filling .dot { background: var(--filling); box-shadow: 0 0 10px var(--filling); }
-
 .dash-section.retort .dash-section-hdr { color: var(--retort); background: rgba(52,211,153,0.04); border-bottom: 1px solid rgba(52,211,153,0.15); }
 .dash-section.retort .dot { background: var(--retort); box-shadow: 0 0 10px var(--retort); }
+.dash-section.all-shift .dash-section-hdr { color: var(--blue); background: rgba(56,189,248,0.04); border-bottom: 1px solid rgba(56,189,248,0.15); }
+.dash-section.all-shift .dot { background: var(--blue); box-shadow: 0 0 10px var(--blue); }
 
 .tbl-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; min-width: 950px; }
-th { 
-  padding: 14px 20px; font-size: 10px; color: #64748b; 
-  border-bottom: 1px solid rgba(255,255,255,0.06); text-align: left; 
-  background: rgba(11, 18, 32, 0.5); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 800; 
-}
+th { padding: 14px 20px; font-size: 10px; color: #64748b; border-bottom: 1px solid rgba(255,255,255,0.06); text-align: left; background: rgba(11, 18, 32, 0.5); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 800; }
 td { padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 13px; font-weight: 600; transition: background 0.2s; }
 tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
@@ -199,86 +317,305 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
 .kitchen .line-badge { background: rgba(244,114,182,0.12); color: var(--kitchen); border: 1px solid rgba(244,114,182,0.2); }
 .filling .line-badge { background: rgba(232,121,249,0.12); color: var(--filling); border: 1px solid rgba(232,121,249,0.2); }
 .retort .line-badge { background: rgba(52,211,153,0.12); color: var(--retort); border: 1px solid rgba(52,211,153,0.2); }
-
 .actual-val { font-family: 'JetBrains Mono'; font-weight: 700; font-size: 15px; }
 .kitchen .actual-val { color: var(--kitchen); }
 .filling .actual-val { color: var(--filling); }
 .retort .actual-val { color: var(--retort); }
-
 .co-badge-yes { background: rgba(56, 189, 248, 0.15); color: var(--blue); padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 700; }
 .co-badge-no { color: #475569; font-size: 11px; }
+.status-badge-present { background: rgba(16, 185, 129, 0.15); color: var(--emerald); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; }
+.status-badge-leave { background: rgba(239, 68, 68, 0.15); color: #ef4444; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; }
 
-.dash-hdr-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.dash-hdr-row { display: flex; justify-content: space-between; align-items: center; margin: 20px 0 24px; }
 .dash-title { font-size: 22px; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-.dash-refresh-btn { background: #111a2e; color: white; border: 1px solid rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600; transition: 0.2s; box-shadow: var(--shadow-inset); }
+.dash-refresh-btn { background: #0d1627; color: white; border: 1px solid rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600; transition: 0.2s; box-shadow: var(--shadow-inset); }
 .dash-refresh-btn:hover { background: rgba(56, 189, 248, 0.12); border-color: var(--blue); transform: translateY(-1px); }
-
 .last-update { text-align: center; font-size: 10px; color: #475569; padding: 20px 0; font-weight: 600; }
 .no-data { text-align: center; padding: 50px; color: var(--text2); font-size: 14px; background: var(--surface); border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-3d); }
 
-/* DATA ENTRY STYLES */
-#entry-page { padding: 0 0 20px; }
-#header { padding: 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-.dept-card { background: var(--surface); margin: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.06); overflow: hidden; box-shadow: var(--shadow-3d); }
+#entry-page { padding: 24px; }
+#header { padding: 0 0 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+.dept-card { background: var(--surface); margin: 24px 0; border-radius: 20px; border: 1px solid rgba(255,255,255,0.06); overflow: hidden; box-shadow: var(--shadow-3d); backdrop-filter: blur(15px); }
 .dept-hdr { padding: 14px 24px; background: rgba(255,255,255,0.02); color: var(--blue); font-weight: 800; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
-
-.ti { background: #0b111e; border: 1px solid rgba(255,255,255,0.1); color: white; padding: 10px 12px; border-radius: 8px; font-size: 12px; width: 100%; outline: none; box-sizing: border-box; transition: 0.2s; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
+.ti { background: #030712; border: 1px solid rgba(255,255,255,0.1); color: white; padding: 10px 12px; border-radius: 8px; font-size: 12px; width: 100%; outline: none; box-sizing: border-box; transition: 0.2s; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
 .ti:focus { border-color: var(--blue); box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2); }
-.ti-qty { font-family: 'JetBrains Mono'; font-weight: 700; color: var(--green); text-align: right; width: 95px; font-size: 13px; }
-.ti-rej { font-family: 'JetBrains Mono'; font-weight: 700; color: var(--red); text-align: right; width: 95px; font-size: 13px; }
-.ti-co { background: #111a2e; color: white; width: 85px; font-size: 12px; font-weight: 600; }
+.ti-qty { font-family: 'JetBrains Mono'; font-weight: 700; color: var(--emerald); text-align: right; width: 95px; font-size: 13px; }
+.ti-rej { font-family: 'JetBrains Mono'; font-weight: 700; color: #ef4444; text-align: right; width: 95px; font-size: 13px; }
+.ti-co { background: #0d1627; color: white; width: 85px; font-size: 12px; font-weight: 600; }
 .disabled-cell { color: #475569 !important; font-family: 'JetBrains Mono'; font-size: 12px; text-align: center; opacity: 0.5; }
 
-#footer { position: fixed; bottom: 0; width: 100%; background: rgba(8, 12, 20, 0.9); backdrop-filter: blur(20px); padding: 16px 24px; display: flex; justify-content: space-between; border-top: 1px solid var(--border); box-sizing: border-box; align-items: center; z-index: 100; box-shadow: 0 -10px 30px rgba(0,0,0,0.5); }
+#footer { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(3, 7, 18, 0.9); backdrop-filter: blur(25px); padding: 16px 24px; display: none; justify-content: space-between; border-top: 1px solid var(--border); box-sizing: border-box; align-items: center; z-index: 1000; box-shadow: 0 -10px 30px rgba(0,0,0,0.5); }
 .btn-save { background: var(--blue-grad); color: white; border: none; padding: 14px 36px; border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer; letter-spacing: 0.02em; box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3); transition: 0.2s; }
 .btn-save:hover { transform: translateY(-1px); box-shadow: 0 6px 25px rgba(56, 189, 248, 0.45); }
 
-#loader { position: fixed; inset: 0; background: rgba(8, 12, 20, 0.9); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 9999; flex-direction: column; }
+#loader { position: fixed; inset: 0; background: rgba(3, 7, 18, 0.9); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 99999; flex-direction: column; }
 .spin { width: 40px; height: 40px; border: 4px solid rgba(56, 189, 248, 0.1); border-top-color: var(--blue); border-radius: 50%; animation: s .8s linear infinite; }
 @keyframes s { to { transform: rotate(360deg); } }
-#toast-wrap { position: fixed; top: 75px; right: 24px; z-index: 1000; }
-.toast { background: #151f32; padding: 14px 22px; border-radius: 10px; border-left: 4px solid var(--blue); margin-bottom: 8px; color: white; font-size: 13px; font-weight: 600; box-shadow: var(--shadow-3d); }
+#toast-wrap { position: fixed; top: 75px; right: 24px; z-index: 10000; }
+.toast { background: #0d1627; padding: 14px 22px; border-radius: 10px; border-left: 4px solid var(--blue); margin-bottom: 8px; color: white; font-size: 13px; font-weight: 600; box-shadow: var(--shadow-3d); }
 
+/* RESPONSIVE OVERLAYS */
 @media (max-width: 1140px) {
+  .founder-sec { grid-template-columns: 1fr; }
   .dept-cluster-wrapper { grid-template-columns: 1fr; gap: 16px; }
   .charts-row-grid { grid-template-columns: 1fr; gap: 14px; }
+  .vm-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .tab-bar { padding: 10px 16px; flex-direction: column; gap: 10px; }
+  .tabs-inner-btns { width: 100%; overflow-x: auto; }
+  .tab-btn { padding: 14px 16px; width: 100%; text-align: center; }
+  #filter-bar { top: 115px; }
 }
 </style>
 </head>
 <body>
 
-<div id="loader"><div class="spin"></div><p id="loader-msg" style="color:white;margin-top:10px;font-size:12px;font-weight:600;">Loading...</p></div>
-
-<div class="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('entry')">DATA ENTRY</button>
-  <button class="tab-btn" onclick="switchTab('dash')">LIVE DASHBOARD</button>
+<div class="glow-bg-layer">
+  <div class="glowing-orb orb-1"></div>
+  <div class="glowing-orb orb-2"></div>
+  <div class="glowing-orb orb-3"></div>
 </div>
+
+<div id="loader"><div class="spin"></div><p id="loader-msg" style="color:white;margin-top:10px;font-size:12px;font-weight:600;">Loading System Engine...</p></div>
+
+<header class="tab-bar">
+  <div class="tab-logo-area">REGAL <span>KITCHEN FOODS</span></div>
+  <div class="tabs-inner-btns">
+    <button class="tab-btn active" onclick="switchTab('info')">Corporate Home</button>
+    <button class="tab-btn" onclick="switchTab('entry')">Data Entry Engine</button>
+    <button class="tab-btn" onclick="switchTab('dash')">Live Analytics</button>
+    <button class="tab-btn" onclick="switchTab('shift')">Presence Monitor</button>
+  </div>
+</header>
 
 <div id="filter-bar">
-  <div class="fg"><label>Date</label><select id="f-date" onchange="handleFilterChange()"></select></div>
-  <div class="fg"><label>Shift</label><select id="f-shift" onchange="handleFilterChange()"><option>Day</option><option>Night</option></select></div>
-  <div id="entry-only-filters" style="display:flex;gap:10px;">
-    <div class="fg"><label>Dept</label><select id="f-dept" onchange="updateLineFilter();render();"></select></div>
-    <div class="fg"><label>Line</label><select id="f-line" onchange="render()"></select></div>
+  <div class="fg"><label>Select Calendar Date</label><input type="date" id="f-date" onchange="handleFilterChange()"></div>
+  <div class="fg"><label>Production Shift</label><select id="f-shift" onchange="handleFilterChange()"><option value="Day">Day Shift</option><option value="Night">Night Shift</option><option value="All">All Shifts Overview</option></select></div>
+  <div id="entry-only-filters" style="display:none;gap:10px;">
+    <div class="fg"><label>Department Group</label><select id="f-dept" onchange="updateLineFilter();render();"></select></div>
+    <div class="fg"><label>Operation Line</label><select id="f-line" onchange="render()"></select></div>
   </div>
 </div>
 
-<div id="entry-page">
+<div id="info-page" class="page-view active">
+  
+  <div class="lang-switch-panel">
+    <div class="lang-pill-container">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+      <button class="lang-toggle-btn active" id="btn-lang-en" onclick="setLanguage('en')">English</button>
+      <button class="lang-toggle-btn" id="btn-lang-hi" onclick="setLanguage('hi')">हिन्दी</button>
+    </div>
+  </div>
+
+  <div class="corp-wrapper">
+    
+    <section class="hero-sec">
+      <div class="hero-badge"><span class="pulse-dot"></span> BRCGS Plant-Based Certified Manufacturer</div>
+      <h1 class="hero-title translatable-node" id="tx-hero-title">Revolutionising Global Ready-To-Eat<br>Culinary Excellence</h1>
+      <p class="hero-sub translatable-node" id="tx-hero-sub">India’s leading ready-to-eat and plant-based food manufacturer trusted across global markets with internationally certified food safety and quality systems.</p>
+      <div class="hero-actions">
+        <button class="btn-premium translatable-node" id="tx-btn-explore" onclick="document.getElementById('cert-showcase').scrollIntoView();">Explore Certifications</button>
+        <button class="btn-premium outline translatable-node" id="tx-btn-brands" onclick="document.getElementById('brand-showcase').scrollIntoView();">View Global Brands</button>
+      </div>
+      
+      <div class="hero-stats-row">
+        <div class="stat-glass-card">
+          <div class="stat-num">470+</div>
+          <div class="stat-lbl translatable-node" id="tx-stat-1">Expert Workforce</div>
+        </div>
+        <div class="stat-glass-card emerald">
+          <div class="stat-num">20+</div>
+          <div class="stat-lbl translatable-node" id="tx-stat-2">International Certifications</div>
+        </div>
+        <div class="stat-glass-card">
+          <div class="stat-num">50+</div>
+          <div class="stat-lbl translatable-node" id="tx-stat-3">Premium Export Products</div>
+        </div>
+        <div class="stat-glass-card emerald">
+          <div class="stat-num">Global</div>
+          <div class="stat-lbl translatable-node" id="tx-stat-4">Export Presence Assured</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="founder-sec">
+      <div class="founder-glass-card">
+        <div class="founder-frame">
+          <img src="hq720.jpg" alt="Mr. Manish Madan">
+        </div>
+        <div class="founder-name">Mr. Manish Madan</div>
+        <div class="founder-title">Founder & CEO</div>
+        <div class="founder-badge">Regal Kitchen Foods</div>
+      </div>
+      <div class="founder-quote-pane">
+        <div class="corp-section-title translatable-node" id="tx-founder-section-title">Leadership Philosophy</div>
+        <h2 class="corp-headline translatable-node" id="tx-founder-headline">Pioneering Visionary Infrastructure</h2>
+        <div class="quote-box translatable-node" id="tx-founder-quote">
+          "Being the first company in India to receive the BRCGS Plant-Based Certification reflects our commitment toward innovation, sustainability, food safety, and global culinary excellence."
+        </div>
+        <p class="founder-desc translatable-node" id="tx-founder-desc">
+          Established in 2008, Regal Kitchen Foods has transformed the ready-to-eat food industry through innovation, premium quality, global food safety standards, and customer-centric manufacturing systems.
+        </p>
+      </div>
+    </section>
+
+    <section class="sec-spacing" id="cert-showcase">
+      <div class="corp-section-title translatable-node" id="tx-cert-section-title">Enterprise Standards</div>
+      <h2 class="corp-headline translatable-node" id="tx-cert-headline" style="margin-bottom:32px;">Global Certifications & Compliance Standards</h2>
+      <div class="grid-6-col">
+        <div class="cert-card"><div class="cert-icon-placeholder">BRCGS</div><div class="cert-name">BRCGS Food Safety</div><div class="cert-desc translatable-node" id="tx-cert-d1">Highest tier global safety system compliance rating benchmark.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">VEG</div><div class="cert-name">BRCGS Plant-Based</div><div class="cert-desc translatable-node" id="tx-cert-d2">India's premier certified compliance seal for green standards.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">USDA</div><div class="cert-name">USDA Organic</div><div class="cert-desc translatable-node" id="tx-cert-d3">Certified ecological organic agricultural cultivation protocols.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">HALAL</div><div class="cert-name">Halal Certified</div><div class="cert-desc translatable-node" id="tx-cert-d4">100% verified Islamic dietary processing execution criteria.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">KSHR</div><div class="cert-name">Kosher Certified</div><div class="cert-desc translatable-node" id="tx-cert-d5">Supervised orthodox manufacturing purity verification seals.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">ISO</div><div class="cert-name">ISO 22000</div><div class="cert-desc translatable-node" id="tx-cert-d6">International food safety management orchestration protocols.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">SQF</div><div class="cert-name">SQF Certified</div><div class="cert-desc translatable-node" id="tx-cert-d7">Safe Quality Food rigorous farm-to-fork auditing parameters.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">IFS</div><div class="cert-name">IFS Standard</div><div class="cert-desc translatable-node" id="tx-cert-d8">International Featured Standards distributor safety matrices.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">GMO</div><div class="cert-name">Non-GMO Verified</div><div class="cert-desc translatable-node" id="tx-cert-d9">Genetically un-modified pure organism ingredient structures.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">GF</div><div class="cert-name">Gluten-Free</div><div class="cert-desc translatable-node" id="tx-cert-d10">Dedicated processing isolation checks protecting allergenic rows.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">GMP</div><div class="cert-name">GMP Compliance</div><div class="cert-desc translatable-node" id="tx-cert-d11">Good Manufacturing Practice standard operating system guidelines.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">GHP</div><div class="cert-name">GHP Standards</div><div class="cert-desc translatable-node" id="tx-cert-d12">Good Hygiene Practices workspace ecosystem maintenance controls.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">SDX</div><div class="cert-name">SEDEX SMETA 4-Pillar</div><div class="cert-desc translatable-node" id="tx-cert-d13">Advanced corporate social ethical accountability audits.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">WRP</div><div class="cert-name">WRAP Certification</div><div class="cert-desc translatable-node" id="tx-cert-d14">Worldwide Responsible Accredited Production social mandates.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">SGS</div><div class="cert-name">SGS Organic</div><div class="cert-desc translatable-node" id="tx-cert-d15">Independently monitored organic batch cultivation tracking.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">FDA</div><div class="cert-name">US FDA Registered</div><div class="cert-desc translatable-node" id="tx-cert-d16">United States Food & Drug Administration bio-secure facility logs.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">FSMA</div><div class="cert-name">FSMA Compliance</div><div class="cert-desc translatable-node" id="tx-cert-d17">Food Safety Modernization Act preventive threat evaluations.</div></div>
+        <div class="cert-card"><div class="cert-icon-placeholder">FSSAI</div><div class="cert-name">FSSAI Approved</div><div class="cert-desc translatable-node" id="tx-cert-d18">Food Safety and Standards Authority of India apex license node.</div></div>
+      </div>
+    </section>
+
+    <section class="sec-spacing" id="brand-showcase">
+      <div class="corp-section-title translatable-node" id="tx-brand-section-title">Brand Portfolio</div>
+      <h2 class="corp-headline translatable-node" id="tx-brand-headline" style="margin-bottom:32px;">Meticulously Crafted Specialized Labels</h2>
+      <div class="grid-3-col">
+        <div class="brand-lux-card"><div class="brand-meta-row"><div class="brand-logo-sim">Eat Regal<span></span></div><span class="brand-cat-badge translatable-node" id="tx-brand-b1-badge">Ready meals</span></div><p class="cert-desc translatable-node" id="tx-brand-b1-desc">Flagship line representing convenience, legacy, and genuine premium textures.</p></div>
+        <div class="brand-lux-card"><div class="brand-meta-row"><div class="brand-logo-sim">Plantlicious<span></span></div><span class="brand-cat-badge translatable-node" id="tx-brand-b2-badge">Vegan / Plant</span></div><p class="cert-desc translatable-node" id="tx-brand-b2-desc">Next-generation plant-based matrices catering to green dietary groups.</p></div>
+        <div class="brand-lux-card"><div class="brand-meta-row"><div class="brand-logo-sim">Meal Delight<span></span></div><span class="brand-cat-badge translatable-node" id="tx-brand-b3-badge">Quick Meals</span></div><p class="cert-desc translatable-node" id="tx-brand-b3-desc">Perfect companion meals designed for dynamic fast lifestyle environments.</p></div>
+        <div class="brand-lux-card"><div class="brand-meta-row"><div class="brand-logo-sim">Pasta Zing<span></span></div><span class="brand-cat-badge translatable-node" id="tx-brand-b4-badge">Sauces & Italian</span></div><p class="cert-desc translatable-node" id="tx-brand-b4-desc">Italian gourmet inspired recipes using sterile pouch parameters.</p></div>
+        <div class="brand-lux-card"><div class="brand-meta-row"><div class="brand-logo-sim">Reganic<span></span></div><span class="brand-cat-badge translatable-node" id="tx-brand-b5-badge">Pure Organic</span></div><p class="cert-desc translatable-node" id="tx-brand-b5-desc">100% clean-label organic ingredients farmed via eco-supervised channels.</p></div>
+        <div class="brand-lux-card"><div class="brand-meta-row"><div class="brand-logo-sim">Regal Kitchen<span></span></div><span class="brand-cat-badge translatable-node" id="tx-brand-b6-badge">Core Solutions</span></div><p class="cert-desc translatable-node" id="tx-brand-b6-desc">Gourmet hospitality HORECA institutional specialized processing segments.</p></div>
+      </div>
+    </section>
+
+    <section class="sec-spacing">
+      <div class="corp-section-title translatable-node" id="tx-prod-section-title">Product Architecture</div>
+      <h2 class="corp-headline translatable-node" id="tx-prod-headline" style="margin-bottom:32px;">Diverse Culinary Solutions Categories</h2>
+      <div class="grid-4-col">
+        <div class="prod-cat-card"><div class="prod-visual-indicator"></div><div class="cert-name translatable-node" id="tx-cat-n1">Ready To Eat Meals</div><p class="cert-desc translatable-node" id="tx-cat-d1">Sterilized ambient storage multi-layered long shelf life packages.</p></div>
+        <div class="prod-cat-card"><div class="prod-visual-indicator"></div><div class="cert-name translatable-node" id="tx-cat-n2">Plant-Based Foods</div><p class="cert-desc translatable-node" id="tx-cat-d2">Ethical meat-alternative items with premium global taste standards.</p></div>
+        <div class="prod-cat-card"><div class="prod-visual-indicator"></div><div class="cert-name translatable-node" id="tx-cat-n3">Organic Foods</div><p class="cert-desc translatable-node" id="tx-cat-d3">Free from artificial additives or synthesis components parameters.</p></div>
+        <div class="prod-cat-card"><div class="prod-visual-indicator"></div><div class="cert-name translatable-node" id="tx-cat-n4">Retort Foods</div><p class="cert-desc translatable-node" id="tx-cat-d4">No preservation chemicals added, zero thermal-leak processing.</p></div>
+        <div class="prod-cat-card"><div class="prod-visual-indicator"></div><div class="cert-name translatable-node" id="tx-cat-n5">Pasta & Sauces</div><p class="cert-desc translatable-node" id="tx-cat-d5">Authentic thick gourmet recipes formulated via automated vessels.</p></div>
+        <div class="prod-cat-card"><div class="prod-visual-indicator"></div><div class="cert-name translatable-node" id="tx-cat-n6">Indian Cuisine</div><p class="cert-desc translatable-node" id="tx-cat-d6">True rich ethnic traditional recipes standardized for world exports.</p></div>
+        <div class="prod-cat-card"><div class="prod-visual-indicator"></div><div class="cert-name translatable-node" id="tx-cat-n7">Frozen Foods</div><p class="cert-desc translatable-node" id="tx-cat-d7">IQF blast chilling methods maintaining cell walls integrity.</p></div>
+        <div class="prod-cat-card"><div class="prod-visual-indicator"></div><div class="cert-name translatable-node" id="tx-cat-n8">Export Food Solutions</div><p class="cert-desc translatable-node" id="tx-cat-d8">Private labeling customization options matching world market systems.</p></div>
+      </div>
+    </section>
+
+    <section class="sec-spacing export-sec">
+      <div class="corp-section-title translatable-node" id="tx-exp-section-title" style="justify-content:center;">Global Operations Map</div>
+      <h2 class="corp-headline translatable-node" id="tx-exp-headline">Trusted Across Global Markets</h2>
+      <p class="cert-desc translatable-node" id="tx-exp-desc" style="max-width:650px; margin:0 auto;">Regal Kitchen Foods exports internationally certified ready-to-eat and plant-based food products to global retail, horeca, and private label markets.</p>
+      <div class="map-chip-container">
+        <div class="country-chip translatable-node" id="tx-country-1">United States of America</div>
+        <div class="country-chip translatable-node" id="tx-country-2">Canada Retail Channels</div>
+        <div class="country-chip translatable-node" id="tx-country-3">United Kingdom Supply Nodes</div>
+        <div class="country-chip translatable-node" id="tx-country-4">Australia Distribution</div>
+        <div class="country-chip translatable-node" id="tx-country-5">Europe Mainlands</div>
+        <div class="country-chip translatable-node" id="tx-country-6">Middle East Markets</div>
+        <div class="country-chip translatable-node" id="tx-country-7">Asia Pacific Retailers</div>
+      </div>
+    </section>
+
+    <section class="sec-spacing">
+      <div class="corp-section-title translatable-node" id="tx-fac-section-title">Industrial Intelligence</div>
+      <h2 class="corp-headline translatable-node" id="tx-fac-headline" style="margin-bottom:32px;">Manufacturing Facility Overview & Industrial Metrics</h2>
+      <div class="facility-grid">
+        <div class="facility-card"><div class="facility-metric-pill">RETORT TECH</div><div><div class="cert-name translatable-node" id="tx-fac-n1">Advanced Retort Technology</div><p class="cert-desc translatable-node" id="tx-fac-d1">Precision thermal overpressure sterilization safeguarding nutritive traits flawlessly.</p></div></div>
+        <div class="facility-card"><div class="facility-metric-pill">AUTO FILL</div><div><div class="cert-name translatable-node" id="tx-fac-n2">Automated Filling Lines</div><p class="cert-desc translatable-node" id="tx-fac-d2">High-speed contactless mechanical dispensing ensuring zero atmospheric exposure elements.</p></div></div>
+        <div class="facility-card"><div class="facility-metric-pill">HYGIENE</div><div><div class="cert-name translatable-node" id="tx-fac-n3">Hygienic Production Systems</div><p class="cert-desc translatable-node" id="tx-fac-d3">Positive air pressures micro-filtration matching stringent medical standards zones.</p></div></div>
+        <div class="facility-card"><div class="facility-metric-pill">QA LABS</div><div><div class="cert-name translatable-node" id="tx-fac-n4">Quality Assurance Labs</div><p class="cert-desc translatable-node" id="tx-fac-d4">In-house continuous incubation chemical/microbiological real-time monitoring blocks.</p></div></div>
+        <div class="facility-card"><div class="facility-metric-pill">CRITICAL CONTROL</div><div><div class="cert-name translatable-node" id="tx-fac-n5">Food Safety Monitoring</div><p class="cert-desc translatable-node" id="tx-fac-d5">Multi-point automated checkpoints preventing system variations across workflows.</p></div></div>
+        <div class="facility-card"><div class="facility-metric-pill">SUSTAINABLE</div><div><div class="cert-name translatable-node" id="tx-fac-n6">Sustainable Manufacturing</div><p class="cert-desc translatable-node" id="tx-fac-d6">Eco-friendly heat recovery architectures lowering processing footprints systematically.</p></div></div>
+      </div>
+    </section>
+
+    <section class="sec-spacing">
+      <div class="corp-section-title translatable-node" id="tx-why-section-title">Value Propositions</div>
+      <h2 class="corp-headline translatable-node" id="tx-why-headline" style="margin-bottom:32px;">Why Industry Leaders Partner With Us</h2>
+      <div class="grid-4-col">
+        <div class="stat-glass-card"><div class="cert-name translatable-node" id="tx-why-n1">Global Standards</div><p class="cert-desc translatable-node" id="tx-why-d1">Strict execution of absolute international food auditing matrices.</p></div>
+        <div class="stat-glass-card"><div class="cert-name translatable-node" id="tx-why-n2">Export Infrastructure</div><p class="cert-desc translatable-node" id="tx-why-d2">High capacity scalable facilities built for large international demand fulfillment.</p></div>
+        <div class="stat-glass-card"><div class="cert-name translatable-node" id="tx-why-n3">Advanced Technology</div><p class="cert-desc translatable-node" id="tx-why-d3">Modern processing methods keeping food fresh without using preservatives.</p></div>
+        <div class="stat-glass-card"><div class="cert-name translatable-node" id="tx-why-n4">Ethical Sourcing</div><p class="cert-desc translatable-node" id="tx-why-d4">Transparent supply chain practices following complete fair trade ethics.</p></div>
+      </div>
+    </section>
+
+    <section class="sec-spacing vm-grid">
+      <div class="vm-box">
+        <div class="cert-name translatable-node" id="tx-vm-vtitle" style="font-size:22px; margin-bottom:14px; color:var(--blue)">Our Vision</div>
+        <p class="founder-desc translatable-node" id="tx-vm-vtext" style="font-size:16px;">“To become a globally trusted leader in innovative ready-to-eat and sustainable food solutions.”</p>
+      </div>
+      <div class="vm-box mission">
+        <div class="cert-name translatable-node" id="tx-vm-mtitle" style="font-size:22px; margin-bottom:14px; color:var(--emerald)">Our Mission</div>
+        <p class="founder-desc translatable-node" id="tx-vm-mtext" style="font-size:16px;">“To deliver safe, premium, and globally certified food products while maintaining innovation, sustainability, and customer excellence.”</p>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="corp-footer">
+    <div class="footer-top-accent"></div>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-col-title">REGAL KITCHEN FOODS</div>
+        <p class="footer-desc-text translatable-node" id="tx-foot-desc">Pioneering processing benchmarks, creating authentic meal models, and driving culinary innovations since 2008 across global markets.</p>
+      </div>
+      <div>
+        <div class="footer-col-title translatable-node" id="tx-foot-links-title">Quick Links</div>
+        <ul class="footer-links">
+          <li><a href="#" class="translatable-node" id="tx-flink-1" onclick="switchTab('info')">Corporate Home</a></li>
+          <li><a href="#" class="translatable-node" id="tx-flink-2" onclick="switchTab('entry')">Data Entry Engine</a></li>
+          <li><a href="#" class="translatable-node" id="tx-flink-3" onclick="switchTab('dash')">Live Analytics Control</a></li>
+          <li><a href="#" class="translatable-node" id="tx-flink-4" onclick="switchTab('shift')">Presence Monitor</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title translatable-node" id="tx-foot-brands-title">Key Core Brands</div>
+        <ul class="footer-links">
+          <li><a href="#brand-showcase">Eat Regal</a></li>
+          <li><a href="#brand-showcase">Plantlicious</a></li>
+          <li><a href="#brand-showcase">Meal Delight</a></li>
+          <li><a href="#brand-showcase">Pasta Zing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title translatable-node" id="tx-foot-contact-title">Enterprise Contact</div>
+        <p class="footer-desc-text" style="margin-bottom:8px;"><span class="translatable-node" id="tx-fcont-hq"><b>HQ Facility:</b> Haryana, India</span></p>
+        <p class="footer-desc-text" style="margin-bottom:8px;"><span class="translatable-node" id="tx-fcont-inq"><b>Inquiries:</b> compliance@regalkitchens.com</span></p>
+        <p class="footer-desc-text"><span class="translatable-node" id="tx-fcont-sys"><b>System Node:</b> ERP Global Cloud Secure</span></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="translatable-node" id="tx-foot-copy">&copy; 2026 Regal Kitchen Foods. All Enterprise Rights Reserved. Optimized via Secure Glassmorphism Framework Node.</div>
+      <div>ISO 22000 | BRCGS CERTIFIED SYSTEM STACK</div>
+    </div>
+  </footer>
+</div>
+
+<div id="entry-page" class="page-view">
   <div id="header">
-    <div style="font-weight:800;font-size:20px;color:white;letter-spacing:-0.03em;">REGAL <span style="color:var(--blue)">ERP</span></div>
-    <button onclick="fetchAllData()" style="background:#111a2e;color:white;border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;box-shadow:var(--shadow-inset);">Refresh</button>
+    <div style="font-weight:800;font-size:20px;color:white;letter-spacing:-0.03em;">REGAL <span style="color:var(--blue)">ERP SYSTEM</span></div>
+    <button onclick="fetchAllData()" style="background:#0d1627;color:white;border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;box-shadow:var(--shadow-inset);">Refresh Engine Sync</button>
   </div>
   <div id="display-area"></div>
-  <div id="footer">
-    <div style="font-size:13px;color:var(--text2);font-weight:600;">Items to Save: <b id="ready-count" style="color:white;font-family:'JetBrains Mono'">0</b></div>
-    <button class="btn-save" onclick="saveAll()">SAVE TO CLOUD</button>
-  </div>
 </div>
 
-<div id="dashboard-page">
+<div id="dashboard-page" class="page-view" style="padding:24px;">
   <div class="dash-hdr-row">
-    <div class="dash-title">Production Dashboard</div>
-    <button class="dash-refresh-btn" onclick="fetchAllData()">⟳ Refresh Live</button>
+    <div class="dash-title">Production Metrics Analytics Hub</div>
+    <button class="dash-refresh-btn" onclick="fetchAllData()">⟳ Refresh Analytics</button>
   </div>
 
   <div class="dept-cluster-wrapper">
@@ -321,45 +658,92 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
   <div class="charts-row-grid">
     <div id="cb-box-kitchen" class="custom-chart-box kitchen-bg" style="display:none;">
-      <h4 class="chart-title">Kitchen Trend</h4>
+      <h4 class="chart-title">Kitchen Linear Trend</h4>
       <div style="position: relative; height:130px; width:100%;"><canvas id="canvasKitchen"></canvas></div>
     </div>
     <div id="cb-box-filling" class="custom-chart-box filling-bg" style="display:none;">
-      <h4 class="chart-title">Filling Trend</h4>
+      <h4 class="chart-title">Filling Linear Trend</h4>
       <div style="position: relative; height:130px; width:100%;"><canvas id="canvasFilling"></canvas></div>
     </div>
     <div id="cb-box-retort" class="custom-chart-box retort-bg" style="display:none;">
-      <h4 class="chart-title">Retort Trend</h4>
+      <h4 class="chart-title">Retort Linear Trend</h4>
       <div style="position: relative; height:130px; width:100%;"><canvas id="canvasRetort"></canvas></div>
     </div>
   </div>
 
   <div id="db-kitchen-section" class="dash-section kitchen" style="display:none">
-    <div class="dash-section-hdr"><span class="dot"></span> KITCHEN — Line Status</div>
+    <div class="dash-section-hdr"><span class="dot"></span> KITCHEN — Line Output State</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Line</th><th>Product</th><th>Plan Qty</th><th>Actual Qty</th><th>Rejection Qty</th><th>CO Status</th><th>CO Time</th></tr></thead>
+      <thead><tr><th>Line Badge</th><th>Target Product</th><th>Plan Size</th><th>Actual Entry</th><th>Rejection Qty</th><th>CO Status</th><th>CO Duration</th></tr></thead>
       <tbody id="tbody-kitchen"></tbody>
     </table></div>
   </div>
 
   <div id="db-filling-section" class="dash-section filling" style="display:none">
-    <div class="dash-section-hdr"><span class="dot"></span> FILLING — Line Status</div>
+    <div class="dash-section-hdr"><span class="dot"></span> FILLING — Line Output State</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Line</th><th>Product</th><th>Plan Qty</th><th>Actual Qty</th><th>Rejection Qty</th><th>CO Status</th><th>CO Time</th></tr></thead>
+      <thead><tr><th>Line Badge</th><th>Target Product</th><th>Plan Size</th><th>Actual Entry</th><th>Rejection Qty</th><th>CO Status</th><th>CO Duration</th></tr></thead>
       <tbody id="tbody-filling"></tbody>
     </table></div>
   </div>
 
   <div id="db-retort-section" class="dash-section retort" style="display:none">
-    <div class="dash-section-hdr"><span class="dot"></span> RETORT — Line Status</div>
+    <div class="dash-section-hdr"><span class="dot"></span> RETORT — Line Output State</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Line</th><th>Product</th><th>Plan Qty</th><th>Actual Qty</th><th>Rejection Qty</th><th>CO Status</th><th>CO Time</th></tr></thead>
+      <thead><tr><th>Line Badge</th><th>Target Product</th><th>Plan Size</th><th>Actual Entry</th><th>Rejection Qty</th><th>CO Status</th><th>CO Duration</th></tr></thead>
       <tbody id="tbody-retort"></tbody>
     </table></div>
   </div>
 
-  <div id="db-nodata" class="no-data">No records found for selected Date &amp; Shift.</div>
+  <div id="db-nodata" class="no-data">No records found for specified parameter intersections.</div>
   <div class="last-update" id="last-update-time"></div>
+</div>
+
+<div id="shift-page" class="page-view" style="padding:24px;">
+  <div class="dash-hdr-row">
+    <div class="dash-title">Shift Presence Tracker Framework</div>
+    <button class="dash-refresh-btn" onclick="fetchAllData()">⟳ Refresh Roster</button>
+  </div>
+
+  <div class="dept-cluster-wrapper">
+    <div class="dept-cluster-box">
+      <h3 class="cluster-title cluster-kitchen-title">● COOK / KITCHEN ATTENDANCE</h3>
+      <div class="cluster-cards-grid">
+        <div class="mini-m-card prs"><div class="m-lbl">Total Present</div><div class="m-val" id="s-kitch-pres">0</div></div>
+        <div class="mini-m-card lev"><div class="m-lbl">Total Leave</div><div class="m-val" id="s-kitch-leav">0</div></div>
+      </div>
+    </div>
+    
+    <div class="dept-cluster-box">
+      <h3 class="cluster-title cluster-filling-title">● FILLING OPERATOR ATTENDANCE</h3>
+      <div class="cluster-cards-grid">
+        <div class="mini-m-card prs"><div class="m-lbl">Total Present</div><div class="m-val" id="s-fill-pres">0</div></div>
+        <div class="mini-m-card lev"><div class="m-lbl">Total Leave</div><div class="m-val" id="s-fill-leav">0</div></div>
+      </div>
+    </div>
+
+    <div class="dept-cluster-box">
+      <h3 class="cluster-title cluster-retort-title">● RETORT OPERATOR ATTENDANCE</h3>
+      <div class="cluster-cards-grid">
+        <div class="mini-m-card prs"><div class="m-lbl">Total Present</div><div class="m-val" id="s-ret-pres">0</div></div>
+        <div class="mini-m-card lev"><div class="m-lbl">Total Leave</div><div class="m-val" id="s-ret-leav">0</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="shift-details-section" class="dash-section all-shift">
+    <div class="dash-section-hdr"><span class="dot"></span> Active Roster Log Registrations</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Operating Department</th><th>Assigned Functional Role</th><th>Employee Identity Name</th><th>Roster Status</th></tr></thead>
+      <tbody id="tbody-shift"></tbody>
+    </table></div>
+  </div>
+  <div id="shift-nodata" class="no-data" style="display:none;">No rosters tracked for designated parameters.</div>
+</div>
+
+<div id="footer">
+  <div style="font-size:13px;color:var(--text2);font-weight:600;">Pending Buffer Queue: <b id="ready-count" style="color:white;font-family:'JetBrains Mono'">0</b></div>
+  <button class="btn-save" onclick="saveAll()">SAVE TO CLOUD STORAGE</button>
 </div>
 
 <div id="toast-wrap"></div>
@@ -367,34 +751,327 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
 <script>
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwSl1tlPtnqT4HiZ1e4F_SCBSGwubosYnHvrk1zPIw_Koy0lPCoDxCp2xj1hzGJx0YFgA/exec';
 
-let planData = [], operatorList = [], dbData = [], savedMap = {};
-let currentTab = 'entry';
+let planData = [], operatorList = [], dbData = [], savedMap = {}, shiftPlanData = [];
+let currentTab = 'info';
 let dashboardCharts = { kitchen: null, filling: null, retort: null };
+
+// MULTILINGUAL DICTIONARY FOR CONTENT DOM NODES
+let currentLang = 'en';
+const TRANSLATION_MAP = {
+  en: {
+    "tx-hero-title": "Revolutionising Global Ready-To-Eat<br>Culinary Excellence",
+    "tx-hero-sub": "India’s leading ready-to-eat and plant-based food manufacturer trusted across global markets with internationally certified food safety and quality systems.",
+    "tx-btn-explore": "Explore Certifications",
+    "tx-btn-brands": "View Global Brands",
+    "tx-stat-1": "Expert Workforce",
+    "tx-stat-2": "International Certifications",
+    "tx-stat-3": "Premium Export Products",
+    "tx-stat-4": "Export Presence Assured",
+    "tx-founder-section-title": "Leadership Philosophy",
+    "tx-founder-headline": "Pioneering Visionary Infrastructure",
+    "tx-founder-quote": `"Being the first company in India to receive the BRCGS Plant-Based Certification reflects our commitment toward innovation, sustainability, food safety, and global culinary excellence."`,
+    "tx-founder-desc": "Established in 2008, Regal Kitchen Foods has transformed the ready-to-eat food industry through innovation, premium quality, global food safety standards, and customer-centric manufacturing systems.",
+    "tx-cert-section-title": "Enterprise Standards",
+    "tx-cert-headline": "Global Certifications & Compliance Standards",
+    "tx-cert-d1": "Highest tier global safety system compliance rating benchmark.",
+    "tx-cert-d2": "India's premier certified compliance seal for green standards.",
+    "tx-cert-d3": "Certified ecological organic agricultural cultivation protocols.",
+    "tx-cert-d4": "100% verified Islamic dietary processing execution criteria.",
+    "tx-cert-d5": "Supervised orthodox manufacturing purity verification seals.",
+    "tx-cert-d6": "International food safety management orchestration protocols.",
+    "tx-cert-d7": "Safe Quality Food rigorous farm-to-fork auditing parameters.",
+    "tx-cert-d8": "International Featured Standards distributor safety matrices.",
+    "tx-cert-d9": "Genetically un-modified pure organism ingredient structures.",
+    "tx-cert-d10": "Dedicated processing isolation checks protecting allergenic rows.",
+    "tx-cert-d11": "Good Manufacturing Practice standard operating system guidelines.",
+    "tx-cert-d12": "Good Hygiene Practices workspace ecosystem maintenance controls.",
+    "tx-cert-d13": "Advanced corporate social ethical accountability audits.",
+    "tx-cert-d14": "Worldwide Responsible Accredited Production social mandates.",
+    "tx-cert-d15": "Independently monitored organic batch cultivation tracking.",
+    "tx-cert-d16": "United States Food & Drug Administration bio-secure facility logs.",
+    "tx-cert-d17": "Food Safety Modernization Act preventive threat evaluations.",
+    "tx-cert-d18": "Food Safety and Standards Authority of India apex license node.",
+    "tx-brand-section-title": "Brand Portfolio",
+    "tx-brand-headline": "Meticulously Crafted Specialized Labels",
+    "tx-brand-b1-badge": "Ready meals",
+    "tx-brand-b1-desc": "Flagship line representing convenience, legacy, and genuine premium textures.",
+    "tx-brand-b2-badge": "Vegan / Plant",
+    "tx-brand-b2-desc": "Next-generation plant-based matrices catering to green dietary groups.",
+    "tx-brand-b3-badge": "Quick Meals",
+    "tx-brand-b3-desc": "Perfect companion meals designed for dynamic fast lifestyle environments.",
+    "tx-brand-b4-badge": "Sauces & Italian",
+    "tx-brand-b4-desc": "Italian gourmet inspired recipes using sterile pouch parameters.",
+    "tx-brand-b5-badge": "Pure Organic",
+    "tx-brand-b5-desc": "100% clean-label organic ingredients farmed via eco-supervised channels.",
+    "tx-brand-b6-badge": "Core Solutions",
+    "tx-brand-b6-desc": "Gourmet hospitality HORECA institutional specialized processing segments.",
+    "tx-prod-section-title": "Product Architecture",
+    "tx-prod-headline": "Diverse Culinary Solutions Categories",
+    "tx-cat-n1": "Ready To Eat Meals",
+    "tx-cat-d1": "Sterilized ambient storage multi-layered long shelf life packages.",
+    "tx-cat-n2": "Plant-Based Foods",
+    "tx-cat-d2": "Ethical meat-alternative items with premium global taste standards.",
+    "tx-cat-n3": "Organic Foods",
+    "tx-cat-d3": "Free from artificial additives or synthesis components parameters.",
+    "tx-cat-n4": "Retort Foods",
+    "tx-cat-d4": "No preservation chemicals added, zero thermal-leak processing.",
+    "tx-cat-n5": "Pasta & Sauces",
+    "tx-cat-d5": "Authentic thick gourmet recipes formulated via automated vessels.",
+    "tx-cat-n6": "Indian Cuisine",
+    "tx-cat-d6": "True rich ethnic traditional recipes standardized for world exports.",
+    "tx-cat-n7": "Frozen Foods",
+    "tx-cat-d7": "IQF blast chilling methods maintaining cell walls integrity.",
+    "tx-cat-n8": "Export Food Solutions",
+    "tx-cat-d8": "Private labeling customization options matching world market systems.",
+    "tx-exp-section-title": "Global Operations Map",
+    "tx-exp-headline": "Trusted Across Global Markets",
+    "tx-exp-desc": "Regal Kitchen Foods exports internationally certified ready-to-eat and plant-based food products to global retail, horeca, and private label markets.",
+    "tx-country-1": "United States of America",
+    "tx-country-2": "Canada Retail Channels",
+    "tx-country-3": "United Kingdom Supply Nodes",
+    "tx-country-4": "Australia Distribution",
+    "tx-country-5": "Europe Mainlands",
+    "tx-country-6": "Middle East Markets",
+    "tx-country-7": "Asia Pacific Retailers",
+    "tx-fac-section-title": "Industrial Intelligence",
+    "tx-fac-headline": "Manufacturing Facility Overview & Industrial Metrics",
+    "tx-fac-n1": "Advanced Retort Technology",
+    "tx-fac-d1": "Precision thermal overpressure sterilization safeguarding nutritive traits flawlessly.",
+    "tx-fac-n2": "Automated Filling Lines",
+    "tx-fac-d2": "High-speed contactless mechanical dispensing ensuring zero atmospheric exposure elements.",
+    "tx-fac-n3": "Hygienic Production Systems",
+    "tx-fac-d3": "Positive air pressures micro-filtration matching stringent medical standards zones.",
+    "tx-fac-n4": "Quality Assurance Labs",
+    "tx-fac-d4": "In-house continuous incubation chemical/microbiological real-time monitoring blocks.",
+    "tx-fac-n5": "Food Safety Monitoring",
+    "tx-fac-d5": "Multi-point automated checkpoints preventing system variations across workflows.",
+    "tx-fac-n6": "Sustainable Manufacturing",
+    "tx-fac-d6": "Eco-friendly heat recovery architectures lowering processing footprints systematically.",
+    "tx-why-section-title": "Value Propositions",
+    "tx-why-headline": "Why Industry Leaders Partner With Us",
+    "tx-why-n1": "Global Standards",
+    "tx-why-d1": "Strict execution of absolute international food auditing matrices.",
+    "tx-why-n2": "Export Infrastructure",
+    "tx-why-d2": "High capacity scalable facilities built for large international demand fulfillment.",
+    "tx-why-n3": "Advanced Technology",
+    "tx-why-d3": "Modern processing methods keeping food fresh without using preservatives.",
+    "tx-why-n4": "Ethical Sourcing",
+    "tx-why-d4": "Transparent supply chain practices following complete fair trade ethics.",
+    "tx-vm-vtitle": "Our Vision",
+    "tx-vm-vtext": "“To become a globally trusted leader in innovative ready-to-eat and sustainable food solutions.”",
+    "tx-vm-mtitle": "Our Mission",
+    "tx-vm-mtext": "“To deliver safe, premium, and globally certified food products while maintaining innovation, sustainability, and customer excellence.”",
+    "tx-foot-desc": "Pioneering processing benchmarks, creating authentic meal models, and driving culinary innovations since 2008 across global markets.",
+    "tx-foot-links-title": "Quick Links",
+    "tx-flink-1": "Corporate Home",
+    "tx-flink-2": "Data Entry Engine",
+    "tx-flink-3": "Live Analytics Control",
+    "tx-flink-4": "Presence Monitor",
+    "tx-foot-brands-title": "Key Core Brands",
+    "tx-foot-contact-title": "Enterprise Contact",
+    "tx-fcont-hq": "<b>HQ Facility:</b> Haryana, India",
+    "tx-fcont-inq": "<b>Inquiries:</b> compliance@regalkitchens.com",
+    "tx-fcont-sys": "<b>System Node:</b> ERP Global Cloud Secure",
+    "tx-foot-copy": "&copy; 2026 Regal Kitchen Foods. All Enterprise Rights Reserved. Optimized via Secure Glassmorphism Framework Node."
+  },
+  hi: {
+    "tx-hero-title": "वैश्विक रेडी-टू-ईट पाक उत्कृष्टता में<br>क्रांति लाना",
+    "tx-hero-sub": "भारत का अग्रणी रेडी-टू-ईट और प्लांट-बेस्ड खाद्य निर्माता, जो अंतरराष्ट्रीय स्तर पर प्रमाणित खाद्य सुरक्षा और गुणवत्ता प्रणालियों के साथ वैश्विक बाजारों में विश्वसनीय है।",
+    "tx-btn-explore": "प्रमाणन देखें",
+    "tx-btn-brands": "वैश्विक ब्रांड देखें",
+    "tx-stat-1": "विशेषज्ञ कार्यबल",
+    "tx-stat-2": "अंतर्राष्ट्रीय प्रमाणन",
+    "tx-stat-3": "प्रीमियम निर्यात उत्पाद",
+    "tx-stat-4": "वैश्विक निर्यात उपस्थिति",
+    "tx-founder-section-title": "नेतृत्व का दृष्टिकोण",
+    "tx-founder-headline": "अग्रणी दूरदर्शी बुनियादी ढांचा",
+    "tx-founder-quote": `"भारत में BRCGS Plant-Based प्रमाणन प्राप्त करने वाली पहली कंपनी होना नवाचार, स्थिरता, खाद्य सुरक्षा और वैश्विक पाक उत्कृष्टता के प्रति हमारी प्रतिबद्धता को दर्शाता है।"`,
+    "tx-founder-desc": "2008 में स्थापित, Regal Kitchen Foods ने नवाचार, प्रीमियम गुणवत्ता, वैश्विक खाद्य सुरक्षा मानकों और ग्राहक-केंद्रित विनिर्माण प्रणालियों के माध्यम से रेडी-टू-ईट खाद्य उद्योग को बदल दिया है।",
+    "tx-cert-section-title": "उद्यम मानक",
+    "tx-cert-headline": "वैश्विक प्रमाणन एवं अनुपालन मानक",
+    "tx-cert-d1": "उच्चतम स्तर की वैश्विक सुरक्षा प्रणाली अनुपालन रेटिंग मानदंड।",
+    "tx-cert-d2": "हरित मानकों के लिए भारत की अग्रणी प्रमाणित अनुपालन मुहर।",
+    "tx-cert-d3": "प्रमाणित पारिस्थितिक जैविक कृषि खेती प्रक्रियाएं।",
+    "tx-cert-d4": "100% सत्यापित इस्लामी आहार प्रसंस्करण निष्पादन मानदंड।",
+    "tx-cert-d5": "पर्यवेक्षित रूढ़िवादी विनिर्माण शुद्धता सत्यापन मुहर।",
+    "tx-cert-d6": "अंतर्राष्ट्रीय खाद्य सुरक्षा प्रबंधन समन्वय प्रणाली।",
+    "tx-cert-d7": "सुरक्षित गुणवत्तापूर्ण खाद्य कठोर कृषि-से-उपभोक्ता ऑडिटिंग पैरामीटर।",
+    "tx-cert-d8": "अंतर्राष्ट्रीय विशेष रुप से प्रदर्शित मानक वितरक सुरक्षा मैट्रिसेस।",
+    "tx-cert-d9": "आनुवंशिक रूप से अपरिवर्तित शुद्ध जीव घटक संरचनाएं।",
+    "tx-cert-d10": "एलर्जेनिक पंक्तियों की सुरक्षा के लिए समर्पित प्रसंस्करण अलगाव जांच।",
+    "tx-cert-d11": "अच्छे विनिर्माण अभ्यास मानक संचालन प्रणाली दिशानिर्देश।",
+    "tx-cert-d12": "अच्छी स्वच्छता प्रथाएं कार्यक्षेत्र पारिस्थितिकी तंत्र रखरखाव नियंत्रण।",
+    "tx-cert-d13": "उन्नत कॉर्पोरेट सामाजिक नैतिक जवाबदेही ऑडिट।",
+    "tx-cert-d14": "विश्वव्यापी जिम्मेदार मान्यता प्राप्त उत्पादन सामाजिक जनादेश।",
+    "tx-cert-d15": "स्वतंत्र रूप से निगरानी की जाने वाली जैविक बैच खेती ट्रैकिंग।",
+    "tx-cert-d16": "संयुक्त राज्य अमेरिका खाद्य एवं औषधि प्रशासन जैव-सुरक्षित सुविधा लॉग।",
+    "tx-cert-d17": "खाद्य सुरक्षा आधुनिकीकरण अधिनियम निवारक खतरा मूल्यांकन।",
+    "tx-cert-d18": "भारतीय खाद्य सुरक्षा और मानक प्राधिकरण शीर्ष लाइसेंस नोड।",
+    "tx-brand-section-title": "ब्रांड पोर्टफोलियो",
+    "tx-brand-headline": "बारीकी से तैयार किए गए विशेष लेबल",
+    "tx-brand-b1-badge": "रेडी मील्स",
+    "tx-brand-b1-desc": "सुविधा, विरासत और वास्तविक प्रीमियम बनावट का प्रतिनिधित्व करने वाली प्रमुख श्रृंखला।",
+    "tx-brand-b2-badge": "शाकाहारी / प्लांट",
+    "tx-brand-b2-desc": "हरित आहार समूहों को सेवा प्रदान करने वाली अगली पीढ़ी के प्लांट-बेस्ड उत्पाद।",
+    "tx-brand-b3-badge": "त्वरित भोजन",
+    "tx-brand-b3-desc": "गतिशील और तेज जीवन शैली के वातावरण के लिए डिज़ाइन किए गए सटीक भोजन विकल्प।",
+    "tx-brand-b4-badge": "सॉस और इटालियन",
+    "tx-brand-b4-desc": "स्टेरिल पाउच मापदंडों का उपयोग करके तैयार की गई इटालियन पेटू प्रेरित रेसिपी।",
+    "tx-brand-b5-badge": "शुद्ध जैविक",
+    "tx-brand-b5-desc": "पर्यावरण-पर्यवेक्षित चैनलों के माध्यम से उत्पादित 100% स्वच्छ-लेबल जैविक सामग्री।",
+    "tx-brand-b6-badge": "मुख्य समाधान",
+    "tx-brand-b6-desc": "गॉरमेट आतिथ्य HORECA संस्थागत विशेष प्रसंस्करण खंड।",
+    "tx-prod-section-title": "उत्पाद वास्तुकला",
+    "tx-prod-headline": "विविध पाक समाधान श्रेणियां",
+    "tx-cat-n1": "Ready To Eat Meals",
+    "tx-cat-d1": "स्टरलाइज्ड एम्बिएंट स्टोरेज बहुस्तरीय लंबी शेल्फ लाइफ पैकेज।",
+    "tx-cat-n2": "Plant-Based Foods",
+    "tx-cat-d2": "प्रीमियम वैश्विक स्वाद मानकों के साथ नैतिक मांस-विकल्प उत्पाद।",
+    "tx-cat-n3": "Organic Foods",
+    "tx-cat-d3": "कृत्रिम योजक या संश्लेषण घटकों के मापदंडों से पूरी तरह मुक्त।",
+    "tx-cat-n4": "Retort Foods",
+    "tx-cat-d4": "बिना किसी परिरक्षण रसायनों के, शून्य थर्मल-लीक प्रसंस्करण।",
+    "tx-cat-n5": "Pasta & Sauces",
+    "tx-cat-d5": "स्वचालित जहाजों के माध्यम से तैयार की गई प्रामाणिक गाढ़ी पेटू रेसिपी।",
+    "tx-cat-n6": "Indian Cuisine",
+    "tx-cat-d6": "विश्व निर्यात के लिए मानकीकृत सच्ची समृद्ध जातीय पारंपरिक रेसिपी।",
+    "tx-cat-n7": "Frozen Foods",
+    "tx-cat-d7": "कोशिका भित्ति की अखंडता को बनाए रखने वाली IQF ब्लास्ट चिलिंग विधियां।",
+    "tx-cat-n8": "Export Food Solutions",
+    "tx-cat-d8": "विश्व बाजार प्रणालियों से मेल खाने वाले निजी लेबलिंग अनुकूलन विकल्प।",
+    "tx-exp-section-title": "वैश्विक संचालन मानचित्र",
+    "tx-exp-headline": "वैश्विक बाज़ारों में विश्वसनीय",
+    "tx-exp-desc": "Regal Kitchen Foods वैश्विक खुदरा, होरेका और निजी लेबल बाजारों में अंतरराष्ट्रीय स्तर पर प्रमाणित रेडी-टू-ईट और प्लांट-बेस्ड खाद्य उत्पादों का निर्यात करता है।",
+    "tx-country-1": "संयुक्त राज्य अमेरिका",
+    "tx-country-2": "कनाडा खुदरा चैनल",
+    "tx-country-3": "यूनाइटेड किंगडम आपूर्ति नोड्स",
+    "tx-country-4": "ऑस्ट्रेलिया वितरण",
+    "tx-country-5": "यूरोप मुख्य भूमि",
+    "tx-country-6": "मिडिल ईस्ट मार्केट्स",
+    "tx-country-7": "एशिया पैसिफिक रिटेलर्स",
+    "tx-fac-section-title": "औद्योगिक बुद्धिमत्ता",
+    "tx-fac-headline": "विनिर्माण सुविधा अवलोकन एवं औद्योगिक संकेतक",
+    "tx-fac-n1": "Advanced Retort Technology",
+    "tx-fac-d1": "सटीक थर्मल ओवरप्रेशर नसबंदी जो पोषक तत्वों के गुणों की त्रुटिहीन रूप से रक्षा करती है।",
+    "tx-fac-n2": "Automated Filling Lines",
+    "tx-fac-d2": "शून्य वायुमंडलीय जोखिम तत्वों को सुनिश्चित करने वाला उच्च गति संपर्क रहित यांत्रिक वितरण।",
+    "tx-fac-n3": "Hygienic Production Systems",
+    "tx-fac-d3": "सख्त चिकित्सा मानकों के क्षेत्रों से मेल खाने वाला सकारात्मक वायु दबाव माइक्रो-फिल्ट्रेशन।",
+    "tx-fac-n4": "Quality Assurance Labs",
+    "tx-fac-d4": "इन-हाउस निरंतर इन्क्यूबेशन रासायनिक/माइक्रोबायोलॉजिकल रीयल-टाइम मॉनिटरिंग ब्लॉक।",
+    "tx-fac-n5": "Food Safety Monitoring",
+    "tx-fac-d5": "वर्कफ़्लो में सिस्टम विविधताओं को रोकने वाले बहु-बिंदु स्वचालित चेकपॉइंट।",
+    "tx-fac-n6": "Sustainable Manufacturing",
+    "tx-fac-d6": "प्रसंस्करण पदचिह्नों को व्यवस्थित रूप से कम करने वाली पर्यावरण-अनुकूल गर्मी वसूली संरचनाएं।",
+    "tx-why-section-title": "मूल्य प्रस्ताव",
+    "tx-why-headline": "उद्योग जगत के नेता हमारे साथ साझेदारी क्यों करते हैं",
+    "tx-why-n1": "Global Standards",
+    "tx-why-d1": "पूर्ण अंतर्राष्ट्रीय खाद्य लेखापरीक्षा मैट्रिस का सख्त निष्पादन।",
+    "tx-why-n2": "Export Infrastructure",
+    "tx-why-d2": "बड़ी अंतरराष्ट्रीय मांग को पूरा करने के लिए निर्मित उच्च क्षमता वाले स्केलेबल बुनियादी ढांचे।",
+    "tx-why-n3": "Advanced Technology",
+    "tx-why-d3": "परिरक्षकों का उपयोग किए बिना भोजन को ताजा रखने के आधुनिक प्रसंस्करण तरीके।",
+    "tx-why-n4": "Ethical Sourcing",
+    "tx-why-d4": "पूर्ण निष्पक्ष व्यापार नैतिकता का पालन करने वाली पारदर्शी आपूर्ति श्रृंखला प्रथाएं।",
+    "tx-vm-vtitle": "हमारा दृष्टिकोण",
+    "tx-vm-vtext": "“नवाचार रेडी-टू-ईट और टिकाऊ खाद्य समाधानों में विश्व स्तर पर विश्वसनीय अग्रणी बनना।”",
+    "tx-vm-mtitle": "हमारा मिशन",
+    "tx-vm-mtext": "“नवाचार, स्थिरता और ग्राहक उत्कृष्टता को बनाए रखते हुए सुरक्षित, प्रीमियम और विश्व स्तर पर प्रमाणित खाद्य उत्पाद वितरित करना।”",
+    "tx-foot-desc": "2008 से वैश्विक बाजारों में प्रसंस्करण बेंचमार्क स्थापित करना, प्रामाणिक भोजन मॉडल बनाना और पाक नवाचारों को बढ़ावा देना।",
+    "tx-foot-links-title": "त्वरित लिंक्स",
+    "tx-flink-1": "कॉर्पोरेट होम",
+    "tx-flink-2": "डेटा प्रविष्टि इंजन",
+    "tx-flink-3": "लाइव एनालिटिक्स नियंत्रण",
+    "tx-flink-4": "उपस्थिति मॉनिटर",
+    "tx-foot-brands-title": "प्रमुख मुख्य ब्रांड",
+    "tx-foot-contact-title": "उद्यम संपर्क",
+    "tx-fcont-hq": "<b>मुख्यालय सुविधा:</b> हरियाणा, भारत",
+    "tx-fcont-inq": "<b>पूछताछ:</b> compliance@regalkitchens.com",
+    "tx-fcont-sys": "<b>सिस्टम नोड:</b> ईआरपी ग्लोबल क्लाउड सिक्योर",
+    "tx-foot-copy": "&copy; 2026 Regal Kitchen Foods. सभी उद्यम अधिकार सुरक्षित हैं। सुरक्षित ग्लासमॉर्फिज्म फ्रेमवर्क नोड द्वारा अनुकूलित।"
+  }
+};
+
+function setLanguage(lang) {
+  currentLang = lang;
+  
+  // Update toggle layout UI state
+  document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-lang-hi').classList.toggle('active', lang === 'hi');
+  
+  // Fade out transition animation applied to components
+  const nodes = document.querySelectorAll('.translatable-node');
+  nodes.forEach(node => node.classList.add('fading'));
+  
+  setTimeout(() => {
+    const dictionary = TRANSLATION_MAP[lang];
+    for (const key in dictionary) {
+      const el = document.getElementById(key);
+      if (el) { el.innerHTML = dictionary[key]; }
+    }
+    // Fade back in smoothly
+    nodes.forEach(node => node.classList.remove('fading'));
+  }, 25000 / 100); // 250ms sync transition gap matching standard layout animations
+}
 
 function switchTab(t) {
   currentTab = t;
-  document.querySelectorAll('.tab-btn').forEach((b, i) => {
-    b.classList.toggle('active', (i === 0 && t === 'entry') || (i === 1 && t === 'dash'));
+  document.querySelectorAll('.tab-btn').forEach((b) => {
+    const isMatched = (b.textContent.trim() === 'CORPORATE HOME' && t === 'info') ||
+                      (b.textContent.trim() === 'DATA ENTRY ENGINE' && t === 'entry') || 
+                      (b.textContent.trim() === 'LIVE ANALYTICS' && t === 'dash') ||
+                      (b.textContent.trim() === 'PRESENCE MONITOR' && t === 'shift');
+    b.classList.toggle('active', isMatched);
   });
+  
+  document.getElementById('info-page').style.display       = t === 'info'  ? 'block' : 'none';
   document.getElementById('entry-page').style.display      = t === 'entry' ? 'block' : 'none';
   document.getElementById('dashboard-page').style.display  = t === 'dash'  ? 'block' : 'none';
+  document.getElementById('shift-page').style.display      = t === 'shift' ? 'block' : 'none';
+  
+  // REMOVE FILTER BAR FROM CORPORATE HOME TAB EXCLUSIVELY
+  // Displays bar flexibly for entry data structures and calculations, sets display none for corporate landing layout
+  document.getElementById('filter-bar').style.display = t === 'info' ? 'none' : 'flex';
+  
+  // Floating database panel visible exclusively inside entry dashboard sheet tab boundaries
+  document.getElementById('footer').style.display = t === 'entry' ? 'flex' : 'none';
   document.getElementById('entry-only-filters').style.display = t === 'entry' ? 'flex' : 'none';
+  
   if (t === 'dash') updateDashboard();
+  if (t === 'shift') updateShiftDashboard();
+  else render();
 }
 
 function handleFilterChange() {
   if (currentTab === 'entry') { updateLineFilter(); render(); }
-  else updateDashboard();
+  else if (currentTab === 'dash') updateDashboard();
+  else if (currentTab === 'shift') updateShiftDashboard();
 }
 
-function formatDate(val) {
-  if (!val) return '';
-  let str = String(val).trim();
-  if (/^\d{1,2}-[A-Za-z]{3}-\d{4}$/.test(str)) return str;
-  const d = new Date(val);
-  if (isNaN(d)) return str;
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  return `${d.getDate()}-${months[d.getMonth()]}-${d.getFullYear()}`;
+function getNormalizedKey(dateVal) {
+  if (!dateVal) return '';
+  let str = String(dateVal).trim().replace(/[\s]+/g, ' ');
+  if (!str || str === 'undefined' || str === 'null') return '';
+  if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+  let dMmmYMatch = str.match(/^(\d{1,2})[-/]([A-Za-z]{3,9})[-/](\d{4})$/);
+  if (dMmmYMatch) {
+    let d = String(dMmmYMatch[1]).padStart(2, '0');
+    let y = dMmmYMatch[3];
+    let mStr = dMmmYMatch[2].toLowerCase().substring(0, 3);
+    const months = { jan:'01', feb:'02', mar:'03', apr:'04', may:'05', jun:'06', jul:'07', aug:'08', sep:'09', oct:'10', nov:'11', dec:'12' };
+    if (months[mStr]) return `${y}-${months[mStr]}-${d}`;
+  }
+  let mdYMatch = str.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
+  if (mdYMatch) {
+    let part1 = parseInt(mdYMatch[1], 10); let part2 = parseInt(mdYMatch[2], 10); let year = mdYMatch[3];
+    if (part1 > 12) { return `${year}-${String(part2).padStart(2, '0')}-${String(part1).padStart(2, '0')}`; } 
+    else { return `${year}-${String(part1).padStart(2, '0')}-${String(part2).padStart(2, '0')}`; }
+  }
+  let parsed = new Date(str);
+  if (!isNaN(parsed.getTime())) {
+    return `${parsed.getFullYear()}-${String(parsed.getMonth()+1).padStart(2, '0')}-${String(parsed.getDate()).padStart(2, '0')}`;
+  }
+  return str;
 }
 
 function formatCleanTime(timeVal) {
@@ -418,8 +1095,7 @@ function formatCleanTime(timeVal) {
 
 function minutesToHHMM(totalMinutes) {
   if (isNaN(totalMinutes) || totalMinutes <= 0) return "00:00";
-  let hours = Math.floor(totalMinutes / 60);
-  let mins = totalMinutes % 60;
+  let hours = Math.floor(totalMinutes / 60); let mins = totalMinutes % 60;
   return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
 }
 
@@ -428,8 +1104,7 @@ function parseTimeToMinutes(timeStr) {
   let cleanStr = String(timeStr).trim();
   let parts = cleanStr.split(':');
   if (parts.length >= 2) {
-    let hrs = parseInt(parts[0], 10) || 0;
-    let mns = parseInt(parts[1], 10) || 0;
+    let hrs = parseInt(parts[0], 10) || 0; let mns = parseInt(parts[1], 10) || 0;
     return (hrs * 60) + mns;
   }
   let numVal = parseInt(cleanStr, 10);
@@ -441,11 +1116,11 @@ function getColumnJProduct(row) {
 }
 
 async function fetchAllData() {
-  showLoader(true, 'Fetching Live Data...');
+  showLoader(true, 'Fetching Enterprise Core Nodes...');
   try {
     const pRes = await fetch(`${SCRIPT_URL}?action=getPlan`);
     const pData = await pRes.json();
-    planData = (pData.rows || []).map(r => ({ ...r, Date: formatDate(r.Date) }));
+    planData = (pData.rows || []).map(r => ({ ...r, NormDate: getNormalizedKey(r.Date) }));
     operatorList = pData.operators || [];
 
     const dRes = await fetch(`${SCRIPT_URL}?action=getDatabase`);
@@ -455,59 +1130,59 @@ async function fetchAllData() {
       let rawTime = r['CO Time'] || r['CO_Time'] || r['EntryTime'] || r['Time'] || '';
       let rawRej = r['Rejection/Wastage'] || r['Rejection'] || r['Wastage'] || 0;
       return {
-        ...r,
-        Date: formatDate(r.Date),
-        Actual: Number(r.Actual) || 0,
-        Plan: Number(r.Plan) || 0,
-        Rejection: Number(rawRej) || 0,
-        ChangeOver: String(rawCO).toUpperCase().trim(),
-        EntryTime: formatCleanTime(rawTime)
+        ...r, NormDate: getNormalizedKey(r.Date), Actual: Number(r.Actual) || 0, Plan: Number(r.Plan) || 0, Rejection: Number(rawRej) || 0, ChangeOver: String(rawCO).toUpperCase().trim(), EntryTime: formatCleanTime(rawTime)
       };
     });
     
     savedMap = {};
-    dbData.forEach(r => {
-      savedMap[`${r.Date}|${r.Shift}|${r.Department}|${r.Line}`] = r;
-    });
+    dbData.forEach(r => { savedMap[`${r.NormDate}|${r.Shift}|${r.Department}|${r.Line}`] = r; });
+
+    try {
+      const sRes = await fetch(`${SCRIPT_URL}?action=getShiftPlan`);
+      const sData = await sRes.json();
+      shiftPlanData = (sData.rows || []).map(r => ({
+        ...r,
+        NormDate: getNormalizedKey(r.Date || r.date),
+        Department: String(r.Department || r.department || '').trim(),
+        Role: String(r['Employee Role'] || r.EmployeeRole || r.Role || r.role || '').trim(),
+        Name: String(r['Employee Name'] || r.EmployeeName || r.Name || r.name || '').trim(),
+        Status: String(r.Status || r.status || 'Leave').trim()
+      }));
+    } catch(err) { console.warn("Shift sheet backend registry lookup skipped.", err); }
     
     if (planData.length) {
-      if (!document.getElementById('f-date').value) {
-        const dates = [...new Set(planData.map(r => r.Date))].sort((a,b)=>new Date(b)-new Date(a));
-        document.getElementById('f-date').innerHTML = dates.map(d => `<option>${d}</option>`).join('');
-        
-        const depts = [...new Set(planData.map(r => r.Department))].sort();
-        document.getElementById('f-dept').innerHTML = '<option value="">All Depts</option>' + depts.map(d => `<option>${d}</option>`).join('');
+      const dateEl = document.getElementById('f-date');
+      if (!dateEl.value) {
+        const uniqueNormDates = [...new Set(planData.map(r => r.NormDate))].sort((a,b) => new Date(b) - new Date(a));
+        dateEl.value = uniqueNormDates[0] || new Date().toISOString().split('T')[0];
       }
+      const depts = [...new Set(planData.map(r => r.Department))].sort();
+      document.getElementById('f-dept').innerHTML = '<option value="">All Operational Depts</option>' + depts.map(d => `<option>${d}</option>`).join('');
       
       updateLineFilter();
-      render();
-      if (currentTab === 'dash') updateDashboard();
+      if (currentTab === 'info') render(); 
+      else if (currentTab === 'entry') render();
+      else if (currentTab === 'dash') updateDashboard();
+      else if (currentTab === 'shift') updateShiftDashboard();
     }
-    toast('✅ Live Sync Complete');
-  } catch (e) {
-    console.error(e);
-    toast('❌ Sync Error');
-  }
+    toast('✅ Cloud Enterprise Synced');
+  } catch (e) { console.error(e); toast('❌ Framework Pipeline Error'); }
   showLoader(false);
 }
 
 function createDeptChart(key, canvasId, labels, plans, actuals, colorHex) {
   const ctx = document.getElementById(canvasId).getContext('2d');
-  if (dashboardCharts[key]) {
-    dashboardCharts[key].destroy();
-  }
-  
+  if (dashboardCharts[key]) { dashboardCharts[key].destroy(); }
   let fillGradient = ctx.createLinearGradient(0, 0, 0, 130);
-  fillGradient.addColorStop(0, colorHex + '15');
-  fillGradient.addColorStop(1, 'transparent');
+  fillGradient.addColorStop(0, colorHex + '18'); fillGradient.addColorStop(1, 'transparent');
 
   dashboardCharts[key] = new Chart(ctx, {
     type: 'line',
     data: {
       labels: labels,
       datasets: [
-        { label: 'Plan', data: plans, borderColor: 'rgba(255, 255, 255, 0.15)', borderDash: [5, 5], backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, tension: 0.2 },
-        { label: 'Actual', data: actuals, borderColor: colorHex, backgroundColor: fillGradient, fill: true, borderWidth: 2.5, pointRadius: 3.5, pointBackgroundColor: colorHex, pointBorderColor: '#080c14', pointBorderWidth: 1.5, tension: 0.2 }
+        { label: 'Plan Matrix', data: plans, borderColor: 'rgba(255, 255, 255, 0.12)', borderDash: [4, 4], backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, tension: 0.2 },
+        { label: 'Live Output', data: actuals, borderColor: colorHex, backgroundColor: fillGradient, fill: true, borderWidth: 2.5, pointRadius: 3.5, pointBackgroundColor: colorHex, pointBorderColor: '#030712', pointBorderWidth: 1.5, tension: 0.2 }
       ]
     },
     options: {
@@ -515,7 +1190,7 @@ function createDeptChart(key, canvasId, labels, plans, actuals, colorHex) {
       plugins: { legend: { display: true, position: 'top', align: 'end', labels: { color: '#64748b', boxWidth: 6, usePointStyle: true, font: { family: 'Plus Jakarta Sans', size: 9, weight: '600' } } } },
       scales: {
         x: { grid: { display: false }, ticks: { color: '#64748b', font: { family: 'Plus Jakarta Sans', size: 9, weight: '600' } } },
-        y: { grid: { color: 'rgba(255, 255, 255, 0.03)' }, ticks: { color: '#475569', font: { family: 'JetBrains Mono', size: 8 } } }
+        y: { grid: { color: 'rgba(255, 255, 255, 0.02)' }, ticks: { color: '#475569', font: { family: 'JetBrains Mono', size: 8 } } }
       }
     }
   });
@@ -524,44 +1199,36 @@ function createDeptChart(key, canvasId, labels, plans, actuals, colorHex) {
 function updateDashboard() {
   const selectedDate = document.getElementById('f-date').value;
   const selectedShift = document.getElementById('f-shift').value;
-  const filteredRows = dbData.filter(r => r.Date === selectedDate && r.Shift === selectedShift);
-  const masterPlanRows = planData.filter(r => r.Date === selectedDate && r.Shift === selectedShift);
+  
+  let filteredRows = dbData.filter(r => r.NormDate === selectedDate);
+  let masterPlanRows = planData.filter(r => r.NormDate === selectedDate);
+  if (selectedShift !== 'All') {
+    filteredRows = filteredRows.filter(r => r.Shift === selectedShift);
+    masterPlanRows = masterPlanRows.filter(r => r.Shift === selectedShift);
+  }
   
   const TARGET_DEPTS = [
     { key: 'kitchen', matchKey: 'KITCHEN', tbodyId: 'tbody-kitchen', secId: 'db-kitchen-section', cbBoxId: 'cb-box-kitchen', canvasId: 'canvasKitchen', color: '#f472b6', prefix: 'm-kitch' },
     { key: 'filling', matchKey: 'FILLING', tbodyId: 'tbody-filling', secId: 'db-filling-section', cbBoxId: 'cb-box-filling', canvasId: 'canvasFilling', color: '#e879f9', prefix: 'm-fill' },
     { key: 'retort',  matchKey: 'RETORT',  tbodyId: 'tbody-retort',  secId: 'db-retort-section',  cbBoxId: 'cb-box-retort',  canvasId: 'canvasRetort',  color: '#34d399', prefix: 'm-ret' }
   ];
-  
   let totalRecordsFound = false;
 
   TARGET_DEPTS.forEach(({ key, matchKey, tbodyId, secId, cbBoxId, canvasId, color, prefix }) => {
     const rows = filteredRows.filter(r => String(r.Department).toUpperCase().includes(matchKey));
     const deptPlanSum = masterPlanRows.filter(r => String(r.Department).toUpperCase().includes(matchKey)).reduce((a,c) => a + (Number(c.Plan)||0), 0);
 
-    let dActual = 0;
-    let dPlan = deptPlanSum;
-    let dRejection = 0;
-    let deptTotalCoCount = 0;
-    let deptTotalCoMinutes = 0;
+    let dActual = 0; let dPlan = deptPlanSum; let dRejection = 0; let deptTotalCoCount = 0; let deptTotalCoMinutes = 0;
 
     if (rows.length === 0 && deptPlanSum === 0) {
-      document.getElementById(secId).style.display = 'none';
-      document.getElementById(cbBoxId).style.display = 'none';
+      document.getElementById(secId).style.display = 'none'; document.getElementById(cbBoxId).style.display = 'none';
       document.getElementById(tbodyId).innerHTML = '';
-      
-      document.getElementById(`${prefix}-pln`).textContent = '0';
-      document.getElementById(`${prefix}-act`).textContent = '0';
-      document.getElementById(`${prefix}-dif`).textContent = '0';
-      document.getElementById(`${prefix}-co`).textContent = '0';
+      ['pln', 'act', 'dif', 'co', 'rej'].forEach(s => document.getElementById(`${prefix}-${s}`).textContent = '0');
       document.getElementById(`${prefix}-cot`).textContent = '00:00';
-      document.getElementById(`${prefix}-rej`).textContent = '0';
       return;
     }
-
     totalRecordsFound = true;
-    let html = '';
-    let labelsArr = []; let plansArr = []; let actualsArr = [];
+    let html = ''; let labelsArr = []; let plansArr = []; let actualsArr = [];
 
     const distinctLines = [...new Set([
       ...masterPlanRows.filter(r => String(r.Department).toUpperCase().includes(matchKey)).map(r => r.Line),
@@ -576,23 +1243,13 @@ function updateDashboard() {
       const rVal = liveItem ? (Number(liveItem.Rejection) || 0) : 0;
       const pName = planItem ? getColumnJProduct(planItem) : (liveItem ? liveItem.Product : '—');
       
-      dActual += aVal;
-      dRejection += rVal;
-
-      let lineCoStatus = '—';
-      let lineCoTime = '—';
-
+      dActual += aVal; dRejection += rVal;
+      let lineCoStatus = '—', lineCoTime = '—';
       if (liveItem) {
         lineCoStatus = liveItem.ChangeOver || 'NO';
-        if (String(liveItem.ChangeOver).toUpperCase() === 'YES') {
-          deptTotalCoCount += 1;
-        }
-        if (liveItem.EntryTime) {
-          lineCoTime = liveItem.EntryTime;
-          deptTotalCoMinutes += parseTimeToMinutes(liveItem.EntryTime);
-        }
+        if (String(liveItem.ChangeOver).toUpperCase() === 'YES') { deptTotalCoCount += 1; }
+        if (liveItem.EntryTime) { lineCoTime = liveItem.EntryTime; deptTotalCoMinutes += parseTimeToMinutes(liveItem.EntryTime); }
       }
-
       labelsArr.push(line); plansArr.push(pVal); actualsArr.push(aVal);
 
       html += `<tr>
@@ -600,15 +1257,14 @@ function updateDashboard() {
         <td style="color:#94a3b8; font-size:12px;">${pName}</td>
         <td style="font-family:'JetBrains Mono'; color:#64748b;">${pVal.toLocaleString('en-IN')}</td>
         <td><span class="actual-val">${aVal.toLocaleString('en-IN')}</span></td>
-        <td style="font-family:'JetBrains Mono'; color:var(--red); font-weight:700;">${rVal > 0 ? rVal.toLocaleString('en-IN') : '0'}</td>
+        <td style="font-family:'JetBrains Mono'; color:#ef4444; font-weight:700;">${rVal > 0 ? rVal.toLocaleString('en-IN') : '0'}</td>
         <td>${lineCoStatus === 'YES' ? '<span class="co-badge-yes">YES</span>' : '<span class="co-badge-no">NO</span>'}</td>
         <td style="font-family:'JetBrains Mono'; color:var(--text2);">${lineCoTime}</td>
       </tr>`;
     });
 
     document.getElementById(tbodyId).innerHTML = html;
-    document.getElementById(secId).style.display = 'block';
-    document.getElementById(cbBoxId).style.display = 'block';
+    document.getElementById(secId).style.display = 'block'; document.getElementById(cbBoxId).style.display = 'block';
     createDeptChart(key, canvasId, labelsArr, plansArr, actualsArr, color);
 
     let dDiff = dPlan - dActual;
@@ -618,42 +1274,86 @@ function updateDashboard() {
     document.getElementById(`${prefix}-co`).textContent = deptTotalCoCount;
     document.getElementById(`${prefix}-cot`).textContent = minutesToHHMM(deptTotalCoMinutes);
     document.getElementById(`${prefix}-rej`).textContent = dRejection.toLocaleString('en-IN');
-    
-    document.getElementById(`${prefix}-dif`).style.color = dDiff > 0 ? 'var(--amber)' : (dDiff < 0 ? 'var(--blue)' : 'var(--green)');
+    document.getElementById(`${prefix}-dif`).style.color = dDiff > 0 ? '#f59e0b' : (dDiff < 0 ? 'var(--blue)' : 'var(--emerald)');
   });
 
   document.getElementById('db-nodata').style.display = totalRecordsFound ? 'none' : 'block';
-  document.getElementById('last-update-time').textContent = 'Live Sheet Refreshed at: ' + new Date().toLocaleTimeString();
+  document.getElementById('last-update-time').textContent = 'Server Analytics Synchronization Node Stamp: ' + new Date().toLocaleTimeString();
+}
+
+function updateShiftDashboard() {
+  const selectedDate = document.getElementById('f-date').value;
+  const selectedShift = document.getElementById('f-shift').value;
+  
+  let filteredShiftRows = shiftPlanData.filter(r => r.NormDate === selectedDate);
+  if (selectedShift !== 'All') {
+    filteredShiftRows = filteredShiftRows.filter(r => String(r.Shift || r.shift || '').toUpperCase().trim() === selectedShift.toUpperCase().trim());
+  }
+  let metrics = { kitchen: { pres: 0, leav: 0 }, filling: { pres: 0, leav: 0 }, retort: { pres: 0, leav: 0 } };
+  let html = '';
+
+  if (filteredShiftRows.length === 0) {
+    document.getElementById('tbody-shift').innerHTML = ''; document.getElementById('shift-details-section').style.display = 'none';
+    document.getElementById('shift-nodata').style.display = 'block';
+    ['s-kitch', 's-fill', 's-ret'].forEach(p => { document.getElementById(`${p}-pres`).textContent = '0'; document.getElementById(`${p}-leav`).textContent = '0'; });
+    return;
+  }
+  document.getElementById('shift-nodata').style.display = 'none'; document.getElementById('shift-details-section').style.display = 'block';
+
+  filteredShiftRows.forEach(row => {
+    const rawDept = String(row.Department || '—').trim(); const deptUpper = rawDept.toUpperCase();
+    const role = String(row['Employee Role'] || row.Role || 'Operator').trim();
+    const name = String(row['Employee Name'] || row.Name || '—').trim();
+    const status = String(row.Status || '').toUpperCase().trim();
+    let isPresent = status.includes('PRESENT') || status === 'P';
+
+    if (deptUpper.includes('KITCHEN') || deptUpper.includes('COOK')) { if (isPresent) metrics.kitchen.pres++; else metrics.kitchen.leav++; } 
+    else if (deptUpper.includes('FILLING')) { if (isPresent) metrics.filling.pres++; else metrics.filling.leav++; } 
+    else if (deptUpper.includes('RETORT')) { if (isPresent) metrics.retort.pres++; else metrics.retort.leav++; }
+
+    html += `<tr>
+      <td><span class="line-badge" style="color:var(--blue); background:rgba(56,189,248,0.1);">${rawDept}</span></td>
+      <td style="color:#94a3b8;">${role}</td><td style="color:#ffffff;">${name}</td>
+      <td><span class="${isPresent ? 'status-badge-present' : 'status-badge-leave'}">${isPresent ? 'PRESENT' : 'LEAVE'}</span></td>
+    </tr>`;
+  });
+  document.getElementById('tbody-shift').innerHTML = html;
+  ['kitch', 'fill', 'ret'].forEach(k => {
+    document.getElementById(`s-${k}-pres`).textContent = metrics[k].pres;
+    document.getElementById(`s-${k}-leav`).textContent = metrics[k].leav;
+  });
 }
 
 function updateLineFilter() {
   const d = document.getElementById('f-date').value, s = document.getElementById('f-shift').value, dp = document.getElementById('f-dept').value;
-  const filtered = planData.filter(r => r.Date === d && r.Shift === s && (!dp || r.Department === dp));
+  const filtered = planData.filter(r => r.NormDate === d && (s === 'All' || r.Shift === s) && (!dp || r.Department === dp));
   const lines = [...new Set(filtered.map(r => r.Line))].sort();
   const currentLine = document.getElementById('f-line').value;
-  document.getElementById('f-line').innerHTML = '<option value="">All Lines</option>' + lines.map(l => `<option ${l===currentLine?'selected':''}>${l}</option>`).join('');
+  document.getElementById('f-line').innerHTML = '<option value="">All Dynamic Lines</option>' + lines.map(l => `<option ${l===currentLine?'selected':''}>${l}</option>`).join('');
 }
 
 function render() {
+  if (currentTab === 'info') return; // Bypass corporate layer grid computations safely
   const d = document.getElementById('f-date').value, s = document.getElementById('f-shift').value, dp = document.getElementById('f-dept').value, ln = document.getElementById('f-line').value;
-  const filtered = planData.filter(r => r.Date === d && r.Shift === s && (!dp || r.Department === dp) && (!ln || r.Line === ln));
+  const filtered = planData.filter(r => r.NormDate === d && (s === 'All' || r.Shift === s) && (!dp || r.Department === dp) && (!ln || r.Line === ln));
   const depts = [...new Set(filtered.map(r => r.Department))];
-  let h = '';
+  let htmlResult = '';
+  
   depts.forEach(dept => {
     const rows = filtered.filter(r => r.Department === dept);
     const isKitchenOrFilling = String(dept).toUpperCase().includes('KITCHEN') || String(dept).toUpperCase().includes('FILLING');
 
-    h += `<div class="dept-card"><div class="dept-hdr">${dept}</div><div class="tbl-wrap"><table>
-          <thead><tr><th>Line</th><th>Product</th><th>Plan</th><th>Actual</th><th>Rejection/Wastage</th><th>Change Over</th><th>CO Time</th><th>Operator</th></tr></thead><tbody>`;
+    htmlResult += `<div class="dept-card"><div class="dept-hdr">${dept}</div><div class="tbl-wrap"><table>
+          <thead><tr><th>Line Node</th><th>Product Blueprint</th><th>Plan Target</th><th>Actual Qty</th><th>Rejection Matrix</th><th>Change Over</th><th>CO Timestamp</th><th>Operator Node</th></tr></thead><tbody>`;
     
     rows.forEach(r => {
-      const key = `${r.Date}|${r.Shift}|${r.Department}|${r.Line}`, safeKey = key.replace(/[|\s-]/g, '_'), sv = savedMap[key] || {};
+      const key = `${r.NormDate}|${r.Shift}|${r.Department}|${r.Line}`, safeKey = key.replace(/[|\s-]/g, '_'), sv = savedMap[key] || {};
       const cleanTime = formatCleanTime(sv.EntryTime);
       const finalProdName = getColumnJProduct(r);
       const currentCO = sv.ChangeOver || 'NO';
       const currentRej = sv.Rejection || sv.Wastage || '';
       
-      h += `<tr>
+      htmlResult += `<tr>
         <td style="color:var(--blue);font-weight:700">${r.Line}</td>
         <td style="font-size:11px; max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#e2e8f0" title="${finalProdName}">${finalProdName}</td>
         <td style="font-family:'JetBrains Mono'; color:#64748b">${r.Plan}</td>
@@ -661,143 +1361,99 @@ function render() {
         <td><input type="number" id="rej-${safeKey}" class="ti ti-rej" value="${currentRej}"></td>`;
       
       if (isKitchenOrFilling) {
-        h += `<td>
+        htmlResult += `<td>
           <select id="co-${safeKey}" class="ti ti-co">
             <option value="NO" ${currentCO === 'NO' ? 'selected' : ''}>NO</option>
             <option value="YES" ${currentCO === 'YES' ? 'selected' : ''}>YES</option>
           </select>
         </td>
         <td><input type="text" id="tm-${safeKey}" class="ti" style="width:65px; font-family:'JetBrains Mono';" value="${cleanTime}" placeholder="hh:mm"></td>`;
-      } else {
-        h += `<td class="disabled-cell">—</td><td class="disabled-cell">—</td>`;
-      }
+      } else { htmlResult += `<td class="disabled-cell">—</td><td class="disabled-cell">—</td>`; }
         
-      h += `<td><select id="op-${safeKey}" class="ti"><option value="">--</option>${operatorList.map(o=>`<option ${sv.Operator===o?'selected':''}>${o}</option>`).join('')}</select></td>
+      htmlResult += `<td><select id="op-${safeKey}" class="ti"><option value="">--</option>${operatorList.map(o=>`<option ${sv.Operator===o?'selected':''}>${o}</option>`).join('')}</select></td>
       </tr>`;
     });
-    h += `</tbody></table></div></div>`;
+    htmlResult += `</tbody></table></div></div>`;
   });
-  document.getElementById('display-area').innerHTML = h || '<p style="text-align:center;padding:50px;color:var(--text2)">No Plan Found</p>';
+  document.getElementById('display-area').innerHTML = htmlResult || '<p style="text-align:center;padding:50px;color:var(--text2)">No Scheduled Run Plans Found for Selected Calendar Intersections</p>';
   updateRowStatus();
 }
 
 function updateRowStatus() {
-  document.getElementById('ready-count').textContent = Array.from(document.querySelectorAll('.ti-qty')).filter(i => i.value).length;
+  const readyEl = document.getElementById('ready-count');
+  if (readyEl) { readyEl.textContent = Array.from(document.querySelectorAll('.ti-qty')).filter(i => i.value).length; }
 }
 
 async function saveAll() {
   const d = document.getElementById('f-date').value, s = document.getElementById('f-shift').value;
-  
   const targetKeys = [];
   const targetedPlanRows = planData.filter(r => {
-    const k = `${r.Date}|${r.Shift}|${r.Department}|${r.Line}`.replace(/[|\s-]/g, '_');
+    const k = `${r.NormDate}|${r.Shift}|${r.Department}|${r.Line}`.replace(/[|\s-]/g, '_');
     const q = document.getElementById('qty-' + k);
-    if (r.Date === d && r.Shift === s && q && q.value !== '') {
-      targetKeys.push(k); 
-      return true;
-    }
+    if (r.NormDate === d && (s === 'All' || r.Shift === s) && q && q.value !== '') { targetKeys.push(k); return true; }
     return false;
   });
 
   const rows = targetedPlanRows.map(r => {
-    const k = `${r.Date}|${r.Shift}|${r.Department}|${r.Line}`.replace(/[|\s-]/g, '_');
+    const k = `${r.NormDate}|${r.Shift}|${r.Department}|${r.Line}`.replace(/[|\s-]/g, '_');
     const finalProdName = getColumnJProduct(r);
-    
-    const coEl = document.getElementById('co-'+k);
-    const tmEl = document.getElementById('tm-'+k);
-    const rejEl = document.getElementById('rej-'+k);
+    const coEl = document.getElementById('co-'+k), tmEl = document.getElementById('tm-'+k), rejEl = document.getElementById('rej-'+k);
     
     return { 
       Date: r.Date, Shift: r.Shift, Department: r.Department, Line: r.Line, Product: finalProdName, Plan: r.Plan, 
-      Actual: document.getElementById('qty-'+k).value,
-      Wastage: rejEl ? rejEl.value : '',
-      ChangeOver: coEl ? coEl.value : 'NO', 
-      EntryTime: tmEl ? tmEl.value : '',   
-      Operator: document.getElementById('op-'+k).value 
+      Actual: document.getElementById('qty-'+k).value, Wastage: rejEl ? rejEl.value : '',
+      ChangeOver: coEl ? coEl.value : 'NO', EntryTime: tmEl ? tmEl.value : '', Operator: document.getElementById('op-'+k).value 
     };
   });
 
-  if (!rows.length) return toast('⚠️ Enter some actual quantities first');
-  showLoader(true, 'Saving to Cloud...');
+  if (!rows.length) return toast('⚠️ Buffer input queue empty');
+  showLoader(true, 'Transmitting to Distributed Storage Server...');
   
   try {
     await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ action: 'batchSave', data: rows }) });
-    toast('✅ Saved Successfully!');
+    toast('   Cloud Sync Buffer Saved');
 
-    // local array data update logic
     rows.forEach(r => {
-      const mapKey = `${r.Date}|${r.Shift}|${r.Department}|${r.Line}`;
-      const formattedItem = {
-        ...r,
-        Actual: Number(r.Actual) || 0,
-        Plan: Number(r.Plan) || 0,
-        Rejection: Number(r.Wastage) || 0,
-        ChangeOver: String(r.ChangeOver).toUpperCase().trim(),
-        EntryTime: formatCleanTime(r.EntryTime)
-      };
-
-      const existingIdx = dbData.findIndex(item => item.Date === r.Date && item.Shift === r.Shift && item.Department === r.Department && item.Line === r.Line);
-      if (existingIdx > -1) {
-        dbData[existingIdx] = formattedItem;
-      } else {
-        dbData.push(formattedItem);
-      }
+      const normD = getNormalizedKey(r.Date); const mapKey = `${normD}|${r.Shift}|${r.Department}|${r.Line}`;
+      const formattedItem = { ...r, NormDate: normD, Actual: Number(r.Actual) || 0, Plan: Number(r.Plan) || 0, Rejection: Number(r.Wastage) || 0, ChangeOver: String(r.ChangeOver).toUpperCase().trim(), EntryTime: formatCleanTime(r.EntryTime) };
+      const existingIdx = dbData.findIndex(item => item.NormDate === normD && item.Shift === r.Shift && item.Department === r.Department && item.Line === r.Line);
+      if (existingIdx > -1) { dbData[existingIdx] = formattedItem; } else { dbData.push(formattedItem); }
       savedMap[mapKey] = formattedItem;
     });
 
-    // CRITICAL FIX: UI inputs ko local save ke baad turant blank kiya ja raha hai
     targetKeys.forEach(k => {
-      const qtyEl = document.getElementById('qty-' + k);
-      const rejEl = document.getElementById('rej-' + k);
-      const coEl  = document.getElementById('co-' + k);
-      const tmEl  = document.getElementById('tm-' + k);
-      const opEl  = document.getElementById('op-' + k);
-
-      if (qtyEl) qtyEl.value = '';
-      if (rejEl) rejEl.value = '';
-      if (coEl)  coEl.value  = 'NO';
-      if (tmEl)  tmEl.value  = '';
-      if (opEl)  opEl.value  = '';
+      ['qty', 'rej', 'tm', 'op'].forEach(x => { if (document.getElementById(x + '-' + k)) document.getElementById(x + '-' + k).value = ''; });
+      if (document.getElementById('co-' + k)) document.getElementById('co-' + k).value = 'NO';
     });
-
-    document.getElementById('ready-count').textContent = '0';
+    if (document.getElementById('ready-count')) document.getElementById('ready-count').textContent = '0';
+    
+    render();
     if (currentTab === 'dash') updateDashboard();
     showLoader(false);
     
-    // Background sheet data re-fetch validation 
     setTimeout(() => { 
-      fetch(`${SCRIPT_URL}?action=getDatabase`)
-        .then(res => res.json())
-        .then(dData => {
-          dbData = (dData.rows || []).map(r => {
-            let rawCO = r['Change Over'] || r['ChangeOver'] || r['CO'] || '';
-            let rawTime = r['CO Time'] || r['CO_Time'] || r['EntryTime'] || r['Time'] || '';
-            let rawRej = r['Rejection/Wastage'] || r['Rejection'] || r['Wastage'] || 0;
-            return {
-              ...r, Date: formatDate(r.Date), Actual: Number(r.Actual) || 0, Plan: Number(r.Plan) || 0, Rejection: Number(rawRej) || 0, ChangeOver: String(rawCO).toUpperCase().trim(), EntryTime: formatCleanTime(rawTime)
-            };
-          });
-          dbData.forEach(r => { savedMap[`${r.Date}|${r.Shift}|${r.Department}|${r.Line}`] = r; });
-          if (currentTab === 'dash') updateDashboard();
-        }).catch(err => console.log("Verification error:", err));
+      fetch(`${SCRIPT_URL}?action=getDatabase`).then(res => res.json()).then(dData => {
+        dbData = (dData.rows || []).map(r => {
+          let rawCO = r['Change Over'] || r['ChangeOver'] || r['CO'] || '';
+          let rawTime = r['CO Time'] || r['CO_Time'] || r['EntryTime'] || r['Time'] || '';
+          let rawRej = r['Rejection/Wastage'] || r['Rejection'] || r['Wastage'] || 0;
+          return { ...r, NormDate: getNormalizedKey(r.Date), Actual: Number(r.Actual) || 0, Plan: Number(r.Plan) || 0, Rejection: Number(rawRej) || 0, ChangeOver: String(rawCO).toUpperCase().trim(), EntryTime: formatCleanTime(r.EntryTime) };
+        });
+        dbData.forEach(r => { savedMap[`${r.NormDate}|${r.Shift}|${r.Department}|${r.Line}`] = r; });
+        render(); if (currentTab === 'dash') updateDashboard();
+      }).catch(err => console.log("Post-sync validation warning:", err));
     }, 2000);
-
-  } catch (e) { 
-    toast('❌ Error Saving Data');
-    showLoader(false);
-  }
+  } catch (e) { toast('❌ Transaction Block Failed'); showLoader(false); }
 }
 
 function showLoader(v, m) { 
   document.getElementById('loader').style.display = v ? 'flex' : 'none'; 
-  document.getElementById('loader-msg').textContent = m || 'Loading...';
+  document.getElementById('loader-msg').textContent = m || 'Processing...';
 }
 
 function toast(msg) {
-  const w = document.getElementById('toast-wrap');
-  const t = document.createElement('div');
-  t.className = 'toast'; t.textContent = msg;
-  w.appendChild(t);
+  const w = document.getElementById('toast-wrap'); const t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg; w.appendChild(t);
   setTimeout(() => t.remove(), 3500);
 }
 
