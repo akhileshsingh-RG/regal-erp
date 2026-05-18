@@ -181,115 +181,101 @@ body {
   transition: transform 0.3s ease;
 }
 
-.top-nav-item.active .dropdown-arrow {
+.top-nav-item:hover .dropdown-arrow {
   transform: rotate(180deg);
 }
 
-.menu-panel {
-  position: absolute;
-  inset: auto 24px 0 24px;
-  transform: translateY(-10px);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: all 0.32s ease-in-out;
-  background: rgba(5, 13, 26, 0.98);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 0 0 22px 22px;
-  box-shadow: 0 18px 50px rgba(0,0,0,0.35);
-  z-index: 2900;
-  overflow: hidden;
+.top-nav-item {
+  position: relative;
 }
 
-.menu-panel.open {
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(5, 13, 26, 0.98);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 0 0 12px 12px;
+  min-width: 220px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3100;
+  padding: 8px 0;
+}
+
+.top-nav-item:hover .dropdown-menu {
   opacity: 1;
   visibility: visible;
-  pointer-events: auto;
   transform: translateY(0);
 }
 
-.menu-panel-inner {
-  display: grid;
-  grid-template-columns: minmax(240px, 320px) minmax(280px, 1fr);
-  gap: 1px;
-  min-height: 320px;
-}
-
-.menu-panel-column {
-  background: rgba(10, 19, 36, 0.95);
-  padding: 24px;
-}
-
-.panel-headline {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  gap: 12px;
-}
-
-.panel-headline h3 {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #ffffff;
-}
-
-.panel-close-btn {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 999px;
-  padding: 6px 10px;
+.dropdown-item {
+  display: block;
+  padding: 12px 20px;
   color: var(--text2);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.panel-close-btn:hover {
-  color: #ffffff;
-  border-color: rgba(56,189,248,0.25);
-}
-
-.panel-category,
-.panel-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 16px 18px;
-  border-radius: 16px;
-  background: rgba(255,255,255,0.03);
-  color: var(--text2);
-  border: 1px solid transparent;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.panel-category:hover,
-.panel-item:hover,
-.panel-category.active,
-.panel-item.active {
-  background: rgba(56,189,248,0.12);
-  border-color: rgba(56,189,248,0.18);
-  color: #ffffff;
-}
-
-.panel-item small {
-  color: var(--text2);
-  font-weight: 500;
-  font-size: 11px;
-}
-
-.panel-note {
+  text-decoration: none;
+  font-weight: 600;
   font-size: 12px;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  color: #ffffff;
+  background: rgba(255,255,255,0.03);
+  border-left-color: var(--blue);
+}
+
+.dropdown-item.active {
+  color: var(--blue);
+  background: rgba(56,189,248,0.06);
+  border-left-color: var(--blue);
+}
+
+.dropdown-item.has-submenu {
+  position: relative;
+}
+
+.dropdown-item.has-submenu::after {
+  content: '›';
+  position: absolute;
+  right: 20px;
+  font-size: 14px;
   color: var(--text2);
-  line-height: 1.6;
-  margin-top: 10px;
+}
+
+.dropdown-item.has-submenu:hover::after {
+  color: var(--blue);
+}
+
+.submenu-dropdown {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background: rgba(5, 13, 26, 0.98);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  min-width: 220px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3200;
+  padding: 8px 0;
+}
+
+.dropdown-item.has-submenu:hover .submenu-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
 }
 
 .workspace-shell {
@@ -881,30 +867,88 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
   <div class="header-title">REGAL KITCHEN FOODS <span>ERP</span></div>
   <nav class="nav-container">
     <ul class="top-nav" role="menubar">
-      <li class="top-nav-item active" data-menu="corporate-home" role="none"><button class="nav-link" type="button" role="menuitem">Corporate Home <span class="dropdown-arrow">▼</span></button></li>
-      <li class="top-nav-item" data-menu="manufacturing-ops" role="none"><button class="nav-link" type="button" role="menuitem">Manufacturing & Operation <span class="dropdown-arrow">▼</span></button></li>
-      <li class="top-nav-item" data-menu="packing" role="none"><button class="nav-link" type="button" role="menuitem">Packing & Logistics <span class="dropdown-arrow">▼</span></button></li>
-      <li class="top-nav-item" data-menu="purchase" role="none"><button class="nav-link" type="button" role="menuitem">Purchase <span class="dropdown-arrow">▼</span></button></li>
-      <li class="top-nav-item" data-menu="maintenance" role="none"><button class="nav-link" type="button" role="menuitem">Maintenance <span class="dropdown-arrow">▼</span></button></li>
+      <li class="top-nav-item active" data-menu="corporate-home" role="none">
+        <button class="nav-link" type="button" role="menuitem">Corporate Home <span class="dropdown-arrow">▼</span></button>
+        <div class="dropdown-menu">
+          <a href="#hero-sec" class="dropdown-item" onclick="scrollToSection('hero-sec'); return false;">Corporate Home</a>
+          <a href="#cert-showcase" class="dropdown-item" onclick="scrollToSection('cert-showcase'); return false;">Certifications</a>
+          <a href="#brand-showcase" class="dropdown-item" onclick="scrollToSection('brand-showcase'); return false;">Brands</a>
+          <a href="#prod-sec" class="dropdown-item" onclick="scrollToSection('prod-sec'); return false;">Products</a>
+          <a href="#export-sec" class="dropdown-item" onclick="scrollToSection('export-sec'); return false;">Global Exports</a>
+          <a href="#fac-sec" class="dropdown-item" onclick="scrollToSection('fac-sec'); return false;">Facilities</a>
+          <a href="#why-sec" class="dropdown-item" onclick="scrollToSection('why-sec'); return false;">Why Choose Us</a>
+          <a href="#vm-sec" class="dropdown-item" onclick="scrollToSection('vm-sec'); return false;">Vision & Mission</a>
+        </div>
+      </li>
+      <li class="top-nav-item" data-menu="manufacturing-ops" role="none">
+        <button class="nav-link" type="button" role="menuitem">Manufacturing & Operation <span class="dropdown-arrow">▼</span></button>
+        <div class="dropdown-menu">
+          <div class="dropdown-item has-submenu">Manufacturing Unit-1
+            <div class="submenu-dropdown">
+              <div class="dropdown-item has-submenu">Production Planning
+                <div class="submenu-dropdown">
+                  <div class="dropdown-item" onclick="openModule('Monthly Plan', 'workspace');">Monthly Plan</div>
+                  <div class="dropdown-item" onclick="openModule('Weekly Plan', 'workspace');">Weekly Plan</div>
+                  <div class="dropdown-item" onclick="openModule('Daily Plan', 'workspace');">Daily Plan</div>
+                </div>
+              </div>
+              <div class="dropdown-item has-submenu">Production
+                <div class="submenu-dropdown">
+                  <div class="dropdown-item" onclick="openModule('Kitchen', 'workspace');">Kitchen</div>
+                  <div class="dropdown-item" onclick="openModule('Filling', 'workspace');">Filling</div>
+                  <div class="dropdown-item" onclick="openModule('Retort', 'workspace');">Retort</div>
+                  <div class="dropdown-item" onclick="openModule('Material Transfer to X-ray', 'workspace');">Material Transfer to X-ray</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dropdown-item has-submenu">Manufacturing Unit-2
+            <div class="submenu-dropdown">
+              <div class="dropdown-item has-submenu">Production Planning
+                <div class="submenu-dropdown">
+                  <div class="dropdown-item" onclick="openModule('Monthly Plan - Unit 2', 'workspace');">Monthly Plan</div>
+                  <div class="dropdown-item" onclick="openModule('Weekly Plan - Unit 2', 'workspace');">Weekly Plan</div>
+                  <div class="dropdown-item" onclick="openModule('Daily Plan - Unit 2', 'workspace');">Daily Plan</div>
+                </div>
+              </div>
+              <div class="dropdown-item has-submenu">Production
+                <div class="submenu-dropdown">
+                  <div class="dropdown-item" onclick="openModule('Kitchen - Unit 2', 'workspace');">Kitchen</div>
+                  <div class="dropdown-item" onclick="openModule('Filling - Unit 2', 'workspace');">Filling</div>
+                  <div class="dropdown-item" onclick="openModule('Retort - Unit 2', 'workspace');">Retort</div>
+                  <div class="dropdown-item" onclick="openModule('Material Transfer to X-ray - Unit 2', 'workspace');">Material Transfer to X-ray</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="top-nav-item" data-menu="packing" role="none">
+        <button class="nav-link" type="button" role="menuitem">Packing & Logistics <span class="dropdown-arrow">▼</span></button>
+        <div class="dropdown-menu">
+          <div class="dropdown-item" onclick="openModule('X-ray', 'workspace');">X-ray</div>
+          <div class="dropdown-item" onclick="openModule('SFG Stock (Semi-Finished Goods)', 'workspace');">SFG Stock (Semi-Finished Goods)</div>
+          <div class="dropdown-item" onclick="openModule('Packing Planning', 'workspace');">Packing Planning</div>
+          <div class="dropdown-item" onclick="openModule('Packing Line', 'workspace');">Packing Line</div>
+          <div class="dropdown-item" onclick="openModule('Dispatch & Logistics', 'workspace');">Dispatch & Logistics</div>
+        </div>
+      </li>
+      <li class="top-nav-item" data-menu="purchase" role="none">
+        <button class="nav-link" type="button" role="menuitem">Purchase <span class="dropdown-arrow">▼</span></button>
+        <div class="dropdown-menu">
+          <div class="dropdown-item" onclick="openModule('Domestic Purchase', 'workspace');">Domestic Purchase</div>
+          <div class="dropdown-item" onclick="openModule('Purchase Import', 'workspace');">Purchase Import</div>
+        </div>
+      </li>
+      <li class="top-nav-item" data-menu="maintenance" role="none">
+        <button class="nav-link" type="button" role="menuitem">Maintenance <span class="dropdown-arrow">▼</span></button>
+        <div class="dropdown-menu">
+          <div class="dropdown-item" onclick="openModule('Preventive Maintenance', 'workspace');">Preventive Maintenance</div>
+          <div class="dropdown-item" onclick="openModule('Breakdown Log', 'workspace');">Breakdown Log</div>
+          <div class="dropdown-item" onclick="openModule('General Maintenance Log', 'workspace');">General Maintenance Log</div>
+        </div>
+      </li>
     </ul>
-    <div id="menu-panel" class="menu-panel" aria-hidden="true">
-      <div class="menu-panel-inner">
-        <section class="menu-panel-column">
-          <div class="panel-headline">
-            <h3 id="panel-title">Corporate Workspace</h3>
-            <button class="panel-close-btn" type="button" onclick="closeMenuPanel();">Close</button>
-          </div>
-          <div id="panel-categories"></div>
-        </section>
-        <section class="menu-panel-column">
-          <div class="panel-headline">
-            <h3 id="panel-subtitle">Select a module</h3>
-          </div>
-          <div id="panel-items"></div>
-          <div class="panel-note">Click any final module to load the workspace below. The panel closes automatically.</div>
-        </section>
-      </div>
-    </div>
   </nav>
 </header>
 
@@ -1372,220 +1416,8 @@ function setLanguage(lang) {
 
 setLanguage('en');
 
-const MENU_STRUCTURE = {
-  'corporate-home': {
-    heading: 'Corporate Home',
-    categories: [
-      {
-        name: 'Corporate Navigation',
-        items: [
-          { label: 'Corporate Home', action: 'corporate-home', section: 'hero-sec' },
-          { label: 'Certifications', action: 'info-section', section: 'cert-showcase' },
-          { label: 'Brands', action: 'info-section', section: 'brand-showcase' },
-          { label: 'Products', action: 'info-section', section: 'prod-sec' },
-          { label: 'Global Exports', action: 'info-section', section: 'export-sec' },
-          { label: 'Facilities', action: 'info-section', section: 'fac-sec' },
-          { label: 'Why Choose Us', action: 'info-section', section: 'why-sec' },
-          { label: 'Vision & Mission', action: 'info-section', section: 'vm-sec' }
-        ]
-      }
-    ]
-  },
-  'manufacturing-ops': {
-    heading: 'Manufacturing & Operation',
-    categories: [
-      {
-        name: 'Manufacturing Unit-1',
-        subcategories: [
-          { name: 'Production Planning', items: ['Monthly Plan', 'Weekly Plan', 'Daily Plan'] },
-          { name: 'Production', items: ['Kitchen', 'Filling', 'Retort', 'Material Transfer to X-ray'] }
-        ]
-      },
-      {
-        name: 'Manufacturing Unit-2',
-        subcategories: [
-          { name: 'Production Planning', items: ['Monthly Plan', 'Weekly Plan', 'Daily Plan'] },
-          { name: 'Production', items: ['Kitchen', 'Filling', 'Retort', 'Material Transfer to X-ray'] }
-        ]
-      }
-    ]
-  },
-  'packing': {
-    heading: 'Packing & Logistics',
-    categories: [
-      { name: 'Package Operations', items: ['X-ray', 'SFG Stock (Semi-Finished Goods)', 'Packing Planning', 'Packing Line', 'Dispatch & Logistics'] }
-    ]
-  },
-  'purchase': {
-    heading: 'Purchase',
-    categories: [
-      { name: 'Purchasing Workflows', items: ['Domestic Purchase', 'Purchase Import'] }
-    ]
-  },
-  'maintenance': {
-    heading: 'Maintenance',
-    categories: [
-      { name: 'Maintenance Modules', items: ['Preventive Maintenance', 'Breakdown Log', 'General Maintenance Log'] }
-    ]
-  }
-};
-
-function initMenu() {
-  document.querySelectorAll('.top-nav-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const key = item.dataset.menu;
-      updateTopNavActive(key);
-      openMenuPanel(key);
-    });
-  });
-  document.addEventListener('click', event => {
-    const panel = document.getElementById('menu-panel');
-    if (!event.target.closest('#menu-panel') && !event.target.closest('.top-nav-item')) {
-      closeMenuPanel();
-    }
-  });
-  openMenuPanel('corporate-home');
-}
-
-function updateTopNavActive(key) {
-  document.querySelectorAll('.top-nav-item').forEach(item => {
-    item.classList.toggle('active', item.dataset.menu === key);
-  });
-}
-
-function openMenuPanel(menuKey) {
-  const menu = MENU_STRUCTURE[menuKey];
-  if (!menu) return;
-  const panel = document.getElementById('menu-panel');
-  const categories = document.getElementById('panel-categories');
-  const items = document.getElementById('panel-items');
-  const panelTitle = document.getElementById('panel-title');
-  const panelSubtitle = document.getElementById('panel-subtitle');
-
-  panelTitle.textContent = menu.heading;
-  categories.innerHTML = '';
-  items.innerHTML = '';
-
-  if (menuKey === 'corporate-home') {
-    panelSubtitle.textContent = 'Navigate the corporate dashboard and story sections.';
-    menu.categories[0].items.forEach(link => {
-      const button = document.createElement('button');
-      button.className = 'panel-item';
-      button.type = 'button';
-      button.innerHTML = `<span>${link.label}</span>`;
-      button.addEventListener('click', () => openModule(link.label, link.action, link.section));
-      categories.appendChild(button);
-    });
-    items.innerHTML = '<p class="panel-note">Choose a corporate section to scroll directly to the home page content and keep the dashboard focused.</p>';
-  } else if (menuKey === 'manufacturing-ops') {
-    panelSubtitle.textContent = 'Select a manufacturing unit and then a module to open the workspace.';
-    menu.categories.forEach((category, index) => {
-      const button = document.createElement('button');
-      button.className = 'panel-category';
-      button.type = 'button';
-      button.innerHTML = `<span>${category.name}</span><span>›</span>`;
-      button.dataset.index = index;
-      button.addEventListener('click', () => selectManufacturingUnit(index));
-      button.addEventListener('mouseenter', () => selectManufacturingUnit(index));
-      categories.appendChild(button);
-    });
-    selectManufacturingUnit(0);
-  } else {
-    panelSubtitle.textContent = 'Select a category and then a module to open the workspace.';
-    menu.categories.forEach((category, index) => {
-      const button = document.createElement('button');
-      button.className = 'panel-category';
-      button.type = 'button';
-      button.innerHTML = `<span>${category.name}</span><span>›</span>`;
-      button.dataset.index = index;
-      button.addEventListener('click', () => selectPanelCategory(menuKey, index));
-      button.addEventListener('mouseenter', () => selectPanelCategory(menuKey, index));
-      categories.appendChild(button);
-    });
-    selectPanelCategory(menuKey, 0);
-  }
-
-  panel.classList.add('open');
-  panel.setAttribute('aria-hidden', 'false');
-}
-
-function closeMenuPanel() {
-  const panel = document.getElementById('menu-panel');
-  if (!panel) return;
-  panel.classList.remove('open');
-  panel.setAttribute('aria-hidden', 'true');
-}
-
-function selectManufacturingUnit(index) {
-  const menu = MENU_STRUCTURE['manufacturing-ops'];
-  if (!menu || !menu.categories[index]) return;
-  const categories = document.querySelectorAll('.panel-category');
-  categories.forEach(category => category.classList.toggle('active', Number(category.dataset.index) === index));
-
-  const activeUnit = menu.categories[index];
-  const items = document.getElementById('panel-items');
-  items.innerHTML = '';
-
-  if (activeUnit.subcategories) {
-    activeUnit.subcategories.forEach((subcategory, subIndex) => {
-      const button = document.createElement('button');
-      button.className = 'panel-item';
-      button.type = 'button';
-      button.innerHTML = `<span>${subcategory.name}</span><small>›</small>`;
-      button.dataset.subIndex = subIndex;
-      button.addEventListener('click', () => selectManufacturingSubcategory(index, subIndex));
-      items.appendChild(button);
-    });
-  }
-}
-
-function selectManufacturingSubcategory(unitIndex, subIndex) {
-  const menu = MENU_STRUCTURE['manufacturing-ops'];
-  if (!menu || !menu.categories[unitIndex] || !menu.categories[unitIndex].subcategories[subIndex]) return;
-  const items = document.querySelectorAll('#panel-items .panel-item');
-  items.forEach(item => item.classList.toggle('active', Number(item.dataset.subIndex) === subIndex));
-
-  const activeSubcategory = menu.categories[unitIndex].subcategories[subIndex];
-  const itemsContainer = document.getElementById('panel-items');
-  itemsContainer.innerHTML = '';
-
-  activeSubcategory.items.forEach(item => {
-    const button = document.createElement('button');
-    button.className = 'panel-item';
-    button.type = 'button';
-    button.innerHTML = `<span>${item}</span>`;
-    button.addEventListener('click', () => openModule(`${menu.categories[unitIndex].name} › ${activeSubcategory.name} › ${item}`, 'workspace', item));
-    itemsContainer.appendChild(button);
-  });
-}
-
-function selectPanelCategory(menuKey, index) {
-  const menu = MENU_STRUCTURE[menuKey];
-  if (!menu || !menu.categories[index]) return;
-  const categories = document.querySelectorAll('.panel-category');
-  categories.forEach(category => category.classList.toggle('active', Number(category.dataset.index) === index));
-
-  const activeCategory = menu.categories[index];
-  const items = document.getElementById('panel-items');
-  items.innerHTML = '';
-  activeCategory.items.forEach(item => {
-    const button = document.createElement('button');
-    button.className = 'panel-item';
-    button.type = 'button';
-    button.innerHTML = `<span>${item}</span>`;
-    button.addEventListener('click', () => openModule(`${menu.heading} › ${item}`, 'workspace', item));
-    items.appendChild(button);
-  });
-}
-
 function openModule(title, action = 'workspace', section) {
-  closeMenuPanel();
-  if (action === 'corporate-home') {
-    showInfoPage();
-    return;
-  }
   if (action === 'info-section') {
-    showInfoPage();
     scrollToSection(section);
     return;
   }
@@ -1613,7 +1445,7 @@ function openModule(title, action = 'workspace', section) {
         <div id="entry-tab" class="module-section active">
           <div class="form-grid">${buildModuleFields(title)}</div>
           <div class="action-row">
-            <button class="btn-premium" type="button" onclick="toast('Saved ' + ${JSON.stringify(title)} + ' entry details.');">Save Entry</button>
+            <button class="btn-premium" type="button" onclick="toast('Saved ' + '${title}' + ' entry details.');">Save Entry</button>
             <button class="btn-premium outline" type="button" onclick="toast('Reset form fields.');">Reset Form</button>
           </div>
         </div>
@@ -1756,8 +1588,6 @@ function scrollToSection(sectionId) {
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
-
-initMenu();
 
 function toast(msg) {
   const w = document.getElementById('toast-wrap');
