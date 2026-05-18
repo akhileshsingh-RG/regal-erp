@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Regal Kitchen Foods | Global Corporate System & Enterprise Resource Planning</title>
+<title>Corporate Home | Regal Kitchen Foods ERP System</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -103,42 +103,135 @@ body {
 .orb-3 { bottom: 10%; left: -5%; width: 450px; height: 450px; background: var(--emerald); animation-delay: -6s; }
 @keyframes pulseOrb { 0%, 100% { transform: scale(1) translate(0, 0); } 50% { transform: scale(1.15) translate(30px, 40px); } }
 
-/* PREMIUM TAB BAR STICKY HEADER FRAME */
-.tab-bar { 
-  display: flex; 
-  background: rgba(3, 7, 18, 0.85); 
+/* TOP HEADER & NAVIGATION LAYOUT */
+.top-header {
+  background: rgba(3, 7, 18, 0.95);
   backdrop-filter: blur(25px);
-  border-bottom: 1px solid var(--border); 
-  position: sticky; 
-  top: 0; 
-  z-index: 2000; 
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-  padding: 0 24px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 3000;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.header-title {
+  padding: 16px 24px;
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  border-bottom: 1px solid var(--border);
+}
+
+.header-title span {
+  color: var(--blue);
+}
+
+.nav-container {
+  display: flex;
   align-items: center;
-  justify-content: space-between;
+  padding: 0 24px;
+  background: rgba(3, 7, 18, 0.85);
 }
-.tab-logo-area { font-weight: 800; font-size: 19px; color: #ffffff; tracking: -0.5px; }
-.tab-logo-area span { color: var(--blue); }
-.tabs-inner-btns { display: flex; }
-.tab-btn { 
-  padding: 22px 24px; 
-  border: none;
-  background: none; 
-  color: var(--text2); 
-  font-weight: 700; 
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  cursor: pointer; 
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  position: relative;
+  margin-right: 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  color: var(--text2);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  border-bottom: 3px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
-.tab-btn:hover { color: #ffffff; }
-.tab-btn.active { 
-  color: var(--blue); 
-  border-bottom: 3px solid var(--blue); 
-  background: linear-gradient(to top, rgba(56, 189, 248, 0.06), transparent);
-  text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+
+.nav-link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.nav-link.active {
+  color: var(--blue);
+  background: linear-gradient(to bottom, rgba(56, 189, 248, 0.08), transparent);
+  text-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+}
+
+.dropdown-arrow {
+  margin-left: 8px;
+  font-size: 10px;
+  transition: transform 0.3s ease;
+}
+
+.nav-item:hover .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(3, 7, 18, 0.98);
+  backdrop-filter: blur(25px);
+  border: 1px solid var(--border);
+  border-radius: 0 0 12px 12px;
+  min-width: 220px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3100;
+}
+
+.nav-item:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: block;
+  padding: 12px 20px;
+  color: var(--text2);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.dropdown-item:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.03);
+  border-left-color: var(--blue);
+}
+
+.dropdown-item.active {
+  color: var(--blue);
+  background: rgba(56, 189, 248, 0.06);
+  border-left-color: var(--blue);
+}
+
+.main-content-wrapper {
+  flex: 1;
+  min-height: 100vh;
 }
 
 /* FILTERS ACCENT LAYER - DEFAULT INITIALIZED STYLED AS HIDDEN FOR HOME PAGE */
@@ -195,13 +288,13 @@ body {
 .stat-lbl { font-size: 11px; color: var(--text2); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; }
 
 /* 2. FOUNDER SECTION */
-.founder-sec { padding: 60px 0; display: grid; grid-template-columns: 320px 1fr; gap: 40px; align-items: start; }
-.founder-glass-card { background: var(--glass); border: 1px solid var(--border); border-radius: 24px; padding: 36px 24px; text-align: center; backdrop-filter: blur(20px); box-shadow: var(--shadow-3d); }
-  .founder-frame { width: 100%; max-width: 340px; height: auto; border-radius: 22px; margin: 0 auto 24px; overflow: hidden; border: 4px solid var(--blue); box-shadow: 0 0 35px rgba(56,189,248,0.25); background: #0d1627; position: relative; }
+.founder-sec { padding: 30px 0; display: grid; grid-template-columns: 240px 1fr; gap: 30px; align-items: start; }
+.founder-glass-card { background: var(--glass); border: 1px solid var(--border); border-radius: 24px; padding: 24px 20px; text-align: center; backdrop-filter: blur(20px); box-shadow: var(--shadow-3d); }
+  .founder-frame { width: 100%; max-width: 200px; height: auto; border-radius: 22px; margin: 0 auto 16px; overflow: hidden; border: 3px solid var(--blue); box-shadow: 0 0 25px rgba(56,189,248,0.25); background: #0d1627; position: relative; }
   .founder-frame img { width: 100%; height: auto; object-fit: contain; display: block; }
-.founder-name { font-size: 22px; font-weight: 800; color: #ffffff; margin-bottom: 6px; }
-.founder-title { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-.founder-badge { background: rgba(56,189,248,0.08); color: var(--blue); border: 1px solid rgba(56,189,248,0.15); padding: 6px 16px; border-radius: 30px; font-size: 11px; font-weight: 700; display: inline-block; }
+.founder-name { font-size: 18px; font-weight: 800; color: #ffffff; margin-bottom: 4px; }
+.founder-title { font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+.founder-badge { background: rgba(56,189,248,0.08); color: var(--blue); border: 1px solid rgba(56,189,248,0.15); padding: 5px 12px; border-radius: 30px; font-size: 10px; font-weight: 700; display: inline-block; }
 
 .founder-quote-pane { display: flex; flex-direction: column; justify-content: center; height: 100%; }
 .corp-section-title { font-size: 12px; font-weight: 800; color: var(--cyan); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
@@ -361,6 +454,24 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
   .vm-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
+  .header-title {
+    font-size: 16px;
+    padding: 12px 16px;
+  }
+  .nav-container {
+    padding: 0 16px;
+  }
+  .nav-link {
+    padding: 12px 16px;
+    font-size: 11px;
+  }
+  .dropdown-menu {
+    min-width: 180px;
+  }
+  .dropdown-item {
+    padding: 10px 16px;
+    font-size: 11px;
+  }
   .tab-bar { padding: 10px 16px; flex-direction: column; gap: 10px; }
   .tabs-inner-btns { width: 100%; overflow-x: auto; }
   .tab-btn { padding: 14px 16px; width: 100%; text-align: center; }
@@ -378,11 +489,34 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
 <div id="loader"><div class="spin"></div><p id="loader-msg" style="color:white;margin-top:10px;font-size:12px;font-weight:600;">Loading System Engine...</p></div>
 
-<header class="tab-bar">
-  <div class="tab-logo-area">REGAL <span>KITCHEN FOODS</span></div>
+<!-- Top Header & Navigation -->
+<header class="top-header">
+  <div class="header-title">REGAL KITCHEN FOODS <span>ERP</span></div>
+  <nav class="nav-container">
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <div class="nav-link active">
+          Corporate Home
+          <span class="dropdown-arrow">▼</span>
+        </div>
+        <div class="dropdown-menu">
+          <a href="#hero-sec" class="dropdown-item" onclick="scrollToSection('hero-sec'); return false;">Corporate Home</a>
+          <a href="#cert-showcase" class="dropdown-item" onclick="scrollToSection('cert-showcase'); return false;">Certifications</a>
+          <a href="#brand-showcase" class="dropdown-item" onclick="scrollToSection('brand-showcase'); return false;">Brands</a>
+          <a href="#prod-sec" class="dropdown-item" onclick="scrollToSection('prod-sec'); return false;">Products</a>
+          <a href="#export-sec" class="dropdown-item" onclick="scrollToSection('export-sec'); return false;">Global Exports</a>
+          <a href="#fac-sec" class="dropdown-item" onclick="scrollToSection('fac-sec'); return false;">Facilities</a>
+          <a href="#why-sec" class="dropdown-item" onclick="scrollToSection('why-sec'); return false;">Why Choose Us</a>
+          <a href="#vm-sec" class="dropdown-item" onclick="scrollToSection('vm-sec'); return false;">Vision & Mission</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
 </header>
 
-<div id="info-page" class="page-view active">
+<!-- Main Content -->
+<div class="main-content-wrapper">
+  <div id="info-page" class="page-view active">
   
   <div class="lang-switch-panel">
     <div class="lang-pill-container">
@@ -394,7 +528,7 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
   <div class="corp-wrapper">
     
-    <section class="hero-sec">
+    <section class="hero-sec" id="hero-sec">
       <div class="hero-badge"><span class="pulse-dot"></span> BRCGS Plant-Based Certified Manufacturer</div>
       <h1 class="hero-title translatable-node" id="tx-hero-title">Revolutionising Global Ready-To-Eat<br>Culinary Excellence</h1>
       <p class="hero-sub translatable-node" id="tx-hero-sub">India’s leading ready-to-eat and plant-based food manufacturer trusted across global markets with internationally certified food safety and quality systems.</p>
@@ -482,7 +616,7 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
       </div>
     </section>
 
-    <section class="sec-spacing">
+    <section class="sec-spacing" id="prod-sec">
       <div class="corp-section-title translatable-node" id="tx-prod-section-title">Product Architecture</div>
       <h2 class="corp-headline translatable-node" id="tx-prod-headline" style="margin-bottom:32px;">Diverse Culinary Solutions Categories</h2>
       <div class="grid-4-col">
@@ -497,7 +631,7 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
       </div>
     </section>
 
-    <section class="sec-spacing export-sec">
+    <section class="sec-spacing export-sec" id="export-sec">
       <div class="corp-section-title translatable-node" id="tx-exp-section-title" style="justify-content:center;">Global Operations Map</div>
       <h2 class="corp-headline translatable-node" id="tx-exp-headline">Trusted Across Global Markets</h2>
       <p class="cert-desc translatable-node" id="tx-exp-desc" style="max-width:650px; margin:0 auto;">Regal Kitchen Foods exports internationally certified ready-to-eat and plant-based food products to global retail, horeca, and private label markets.</p>
@@ -512,7 +646,7 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
       </div>
     </section>
 
-    <section class="sec-spacing">
+    <section class="sec-spacing" id="fac-sec">
       <div class="corp-section-title translatable-node" id="tx-fac-section-title">Industrial Intelligence</div>
       <h2 class="corp-headline translatable-node" id="tx-fac-headline" style="margin-bottom:32px;">Manufacturing Facility Overview & Industrial Metrics</h2>
       <div class="facility-grid">
@@ -525,7 +659,7 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
       </div>
     </section>
 
-    <section class="sec-spacing">
+    <section class="sec-spacing" id="why-sec">
       <div class="corp-section-title translatable-node" id="tx-why-section-title">Value Propositions</div>
       <h2 class="corp-headline translatable-node" id="tx-why-headline" style="margin-bottom:32px;">Why Industry Leaders Partner With Us</h2>
       <div class="grid-4-col">
@@ -536,7 +670,7 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
       </div>
     </section>
 
-    <section class="sec-spacing vm-grid">
+    <section class="sec-spacing vm-grid" id="vm-sec">
       <div class="vm-box">
         <div class="cert-name translatable-node" id="tx-vm-vtitle" style="font-size:22px; margin-bottom:14px; color:var(--blue)">Our Vision</div>
         <p class="founder-desc translatable-node" id="tx-vm-vtext" style="font-size:16px;">“To become a globally trusted leader in innovative ready-to-eat and sustainable food solutions.”</p>
@@ -573,7 +707,10 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
       </div>
       <div>
         <div class="footer-col-title translatable-node" id="tx-foot-contact-title">Enterprise Contact</div>
-        <p class="footer-desc-text" style="margin-bottom:8px;"><span class="translatable-node" id="tx-fcont-hq"><b>HQ Facility:</b> Haryana, India</span></p>
+        <p class="footer-desc-text" style="margin-bottom:8px;"><span class="translatable-node" id="tx-fcont-hq"><b>Corporate HQ:</b> Plot No. ITC-07, 4th Floor, IT Park, Netsmartz Center, Sector 67, S.A.S. Nagar (Mohali), Punjab - 160062, India</span></p>
+        <p class="footer-desc-text" style="margin-bottom:8px;"><span class="translatable-node" id="tx-fcont-unit1"><b>Unit 1:</b> Plot No. 7, Barotiwala Industrial Area, Baddi, District Solan, Himachal Pradesh - 174103</span></p>
+        <p class="footer-desc-text" style="margin-bottom:8px;"><span class="translatable-node" id="tx-fcont-unit2"><b>Unit 2:</b> Khasra No. 97, Buranwala, Post Office Barotiwala, District Solan, Himachal Pradesh - 174103</span></p>
+        <p class="footer-desc-text" style="margin-bottom:8px;"><span class="translatable-node" id="tx-fcont-unit3"><b>Unit 3:</b> Plot No. 230, HPSIDC, Industrial Area, Baddi, District Solan, Himachal Pradesh - 173205</span></p>
         <p class="footer-desc-text" style="margin-bottom:8px;"><span class="translatable-node" id="tx-fcont-inq"><b>Inquiries:</b> compliance@regalkitchens.com</span></p>
         <p class="footer-desc-text"><span class="translatable-node" id="tx-fcont-sys"><b>System Node:</b> ERP Global Cloud Secure</span></p>
       </div>
@@ -583,6 +720,7 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
       <div>ISO 22000 | BRCGS CERTIFIED SYSTEM STACK</div>
     </div>
   </footer>
+  </div>
 </div>
 
 <div id="toast-wrap"></div>
@@ -697,7 +835,10 @@ const TRANSLATION_MAP = {
     "tx-foot-links-title": "Quick Links",
     "tx-foot-brands-title": "Key Core Brands",
     "tx-foot-contact-title": "Enterprise Contact",
-    "tx-fcont-hq": "<b>HQ Facility:</b> Haryana, India",
+    "tx-fcont-hq": "<b>Corporate HQ:</b> Plot No. ITC-07, 4th Floor, IT Park, Netsmartz Center, Sector 67, S.A.S. Nagar (Mohali), Punjab - 160062, India",
+    "tx-fcont-unit1": "<b>Unit 1:</b> Plot No. 7, Barotiwala Industrial Area, Baddi, District Solan, Himachal Pradesh - 174103",
+    "tx-fcont-unit2": "<b>Unit 2:</b> Khasra No. 97, Buranwala, Post Office Barotiwala, District Solan, Himachal Pradesh - 174103",
+    "tx-fcont-unit3": "<b>Unit 3:</b> Plot No. 230, HPSIDC, Industrial Area, Baddi, District Solan, Himachal Pradesh - 173205",
     "tx-fcont-inq": "<b>Inquiries:</b> compliance@regalkitchens.com",
     "tx-fcont-sys": "<b>System Node:</b> ERP Global Cloud Secure",
     "tx-foot-copy": "&copy; 2026 Regal Kitchen Foods. All Enterprise Rights Reserved. Optimized via Secure Glassmorphism Framework Node."
@@ -842,6 +983,19 @@ function toast(msg) {
   t.textContent = msg;
   w.appendChild(t);
   setTimeout(() => t.remove(), 3500);
+}
+
+function scrollToSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    // Update active state in sidebar
+    document.querySelectorAll('.sidebar-menu-item').forEach(item => {
+      item.classList.remove('active');
+    });
+    event.target.closest('.sidebar-menu-item').classList.add('active');
+  }
 }
 </script>
 </body>
