@@ -1,11 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Regal Kitchen Foods | Global Corporate System & Enterprise Resource Planning</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root {
   --bg: #030712; 
@@ -381,22 +380,7 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
 <header class="tab-bar">
   <div class="tab-logo-area">REGAL <span>KITCHEN FOODS</span></div>
-  <div class="tabs-inner-btns">
-    <button class="tab-btn active" onclick="switchTab('info')">Corporate Home</button>
-    <button class="tab-btn" onclick="switchTab('entry')">Data Entry Engine</button>
-    <button class="tab-btn" onclick="switchTab('dash')">Live Analytics</button>
-    <button class="tab-btn" onclick="switchTab('shift')">Presence Monitor</button>
-  </div>
 </header>
-
-<div id="filter-bar">
-  <div class="fg"><label>Select Calendar Date</label><input type="date" id="f-date" onchange="handleFilterChange()"></div>
-  <div class="fg"><label>Production Shift</label><select id="f-shift" onchange="handleFilterChange()"><option value="Day">Day Shift</option><option value="Night">Night Shift</option><option value="All">All Shifts Overview</option></select></div>
-  <div id="entry-only-filters" style="display:none;gap:10px;">
-    <div class="fg"><label>Department Group</label><select id="f-dept" onchange="updateLineFilter();render();"></select></div>
-    <div class="fg"><label>Operation Line</label><select id="f-line" onchange="render()"></select></div>
-  </div>
-</div>
 
 <div id="info-page" class="page-view active">
   
@@ -575,10 +559,7 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
       <div>
         <div class="footer-col-title translatable-node" id="tx-foot-links-title">Quick Links</div>
         <ul class="footer-links">
-          <li><a href="#" class="translatable-node" id="tx-flink-1" onclick="switchTab('info')">Corporate Home</a></li>
-          <li><a href="#" class="translatable-node" id="tx-flink-2" onclick="switchTab('entry')">Data Entry Engine</a></li>
-          <li><a href="#" class="translatable-node" id="tx-flink-3" onclick="switchTab('dash')">Live Analytics Control</a></li>
-          <li><a href="#" class="translatable-node" id="tx-flink-4" onclick="switchTab('shift')">Presence Monitor</a></li>
+          <li><a href="#">Corporate Home</a></li>
         </ul>
       </div>
       <div>
@@ -604,158 +585,9 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
   </footer>
 </div>
 
-<div id="entry-page" class="page-view">
-  <div id="header">
-    <div style="font-weight:800;font-size:20px;color:white;letter-spacing:-0.03em;">REGAL <span style="color:var(--blue)">ERP SYSTEM</span></div>
-    <button onclick="fetchAllData()" style="background:#0d1627;color:white;border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;box-shadow:var(--shadow-inset);">Refresh Engine Sync</button>
-  </div>
-  <div id="display-area"></div>
-</div>
-
-<div id="dashboard-page" class="page-view" style="padding:24px;">
-  <div class="dash-hdr-row">
-    <div class="dash-title">Production Metrics Analytics Hub</div>
-    <button class="dash-refresh-btn" onclick="fetchAllData()">⟳ Refresh Analytics</button>
-  </div>
-
-  <div class="dept-cluster-wrapper">
-    <div class="dept-cluster-box">
-      <h3 class="cluster-title cluster-kitchen-title">● KITCHEN METRICS</h3>
-      <div class="cluster-cards-grid">
-        <div class="mini-m-card pln"><div class="m-lbl">Total Plan</div><div class="m-val" id="m-kitch-pln">0</div></div>
-        <div class="mini-m-card act"><div class="m-lbl">Total Actual</div><div class="m-val" id="m-kitch-act">0</div></div>
-        <div class="mini-m-card dif"><div class="m-lbl">Difference</div><div class="m-val" id="m-kitch-dif">0</div></div>
-        <div class="mini-m-card co"><div class="m-lbl">Total CO Count</div><div class="m-val" id="m-kitch-co">0</div></div>
-        <div class="mini-m-card cot"><div class="m-lbl">Total CO Time</div><div class="m-val" id="m-kitch-cot">00:00</div></div>
-        <div class="mini-m-card rej"><div class="m-lbl">Total Rejection</div><div class="m-val" id="m-kitch-rej">0</div></div>
-      </div>
-    </div>
-    
-    <div class="dept-cluster-box">
-      <h3 class="cluster-title cluster-filling-title">● FILLING METRICS</h3>
-      <div class="cluster-cards-grid">
-        <div class="mini-m-card pln"><div class="m-lbl">Total Plan</div><div class="m-val" id="m-fill-pln">0</div></div>
-        <div class="mini-m-card act"><div class="m-lbl">Total Actual</div><div class="m-val" id="m-fill-act">0</div></div>
-        <div class="mini-m-card dif"><div class="m-lbl">Difference</div><div class="m-val" id="m-fill-dif">0</div></div>
-        <div class="mini-m-card co"><div class="m-lbl">Total CO Count</div><div class="m-val" id="m-fill-co">0</div></div>
-        <div class="mini-m-card cot"><div class="m-lbl">Total CO Time</div><div class="m-val" id="m-fill-cot">00:00</div></div>
-        <div class="mini-m-card rej"><div class="m-lbl">Total Rejection</div><div class="m-val" id="m-fill-rej">0</div></div>
-      </div>
-    </div>
-
-    <div class="dept-cluster-box">
-      <h3 class="cluster-title cluster-retort-title">● RETORT METRICS</h3>
-      <div class="cluster-cards-grid">
-        <div class="mini-m-card pln"><div class="m-lbl">Total Plan</div><div class="m-val" id="m-ret-pln">0</div></div>
-        <div class="mini-m-card act"><div class="m-lbl">Total Actual</div><div class="m-val" id="m-ret-act">0</div></div>
-        <div class="mini-m-card dif"><div class="m-lbl">Difference</div><div class="m-val" id="m-ret-dif">0</div></div>
-        <div class="mini-m-card co"><div class="m-lbl">Total CO Count</div><div class="m-val" id="m-ret-co">0</div></div>
-        <div class="mini-m-card cot"><div class="m-lbl">Total CO Time</div><div class="m-val" id="m-ret-cot">00:00</div></div>
-        <div class="mini-m-card rej"><div class="m-lbl">Total Rejection</div><div class="m-val" id="m-ret-rej">0</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="charts-row-grid">
-    <div id="cb-box-kitchen" class="custom-chart-box kitchen-bg" style="display:none;">
-      <h4 class="chart-title">Kitchen Linear Trend</h4>
-      <div style="position: relative; height:130px; width:100%;"><canvas id="canvasKitchen"></canvas></div>
-    </div>
-    <div id="cb-box-filling" class="custom-chart-box filling-bg" style="display:none;">
-      <h4 class="chart-title">Filling Linear Trend</h4>
-      <div style="position: relative; height:130px; width:100%;"><canvas id="canvasFilling"></canvas></div>
-    </div>
-    <div id="cb-box-retort" class="custom-chart-box retort-bg" style="display:none;">
-      <h4 class="chart-title">Retort Linear Trend</h4>
-      <div style="position: relative; height:130px; width:100%;"><canvas id="canvasRetort"></canvas></div>
-    </div>
-  </div>
-
-  <div id="db-kitchen-section" class="dash-section kitchen" style="display:none">
-    <div class="dash-section-hdr"><span class="dot"></span> KITCHEN — Line Output State</div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>Line Badge</th><th>Target Product</th><th>Plan Size</th><th>Actual Entry</th><th>Rejection Qty</th><th>CO Status</th><th>CO Duration</th></tr></thead>
-      <tbody id="tbody-kitchen"></tbody>
-    </table></div>
-  </div>
-
-  <div id="db-filling-section" class="dash-section filling" style="display:none">
-    <div class="dash-section-hdr"><span class="dot"></span> FILLING — Line Output State</div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>Line Badge</th><th>Target Product</th><th>Plan Size</th><th>Actual Entry</th><th>Rejection Qty</th><th>CO Status</th><th>CO Duration</th></tr></thead>
-      <tbody id="tbody-filling"></tbody>
-    </table></div>
-  </div>
-
-  <div id="db-retort-section" class="dash-section retort" style="display:none">
-    <div class="dash-section-hdr"><span class="dot"></span> RETORT — Line Output State</div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>Line Badge</th><th>Target Product</th><th>Plan Size</th><th>Actual Entry</th><th>Rejection Qty</th><th>CO Status</th><th>CO Duration</th></tr></thead>
-      <tbody id="tbody-retort"></tbody>
-    </table></div>
-  </div>
-
-  <div id="db-nodata" class="no-data">No records found for specified parameter intersections.</div>
-  <div class="last-update" id="last-update-time"></div>
-</div>
-
-<div id="shift-page" class="page-view" style="padding:24px;">
-  <div class="dash-hdr-row">
-    <div class="dash-title">Shift Presence Tracker Framework</div>
-    <button class="dash-refresh-btn" onclick="fetchAllData()">⟳ Refresh Roster</button>
-  </div>
-
-  <div class="dept-cluster-wrapper">
-    <div class="dept-cluster-box">
-      <h3 class="cluster-title cluster-kitchen-title">● COOK / KITCHEN ATTENDANCE</h3>
-      <div class="cluster-cards-grid">
-        <div class="mini-m-card prs"><div class="m-lbl">Total Present</div><div class="m-val" id="s-kitch-pres">0</div></div>
-        <div class="mini-m-card lev"><div class="m-lbl">Total Leave</div><div class="m-val" id="s-kitch-leav">0</div></div>
-      </div>
-    </div>
-    
-    <div class="dept-cluster-box">
-      <h3 class="cluster-title cluster-filling-title">● FILLING OPERATOR ATTENDANCE</h3>
-      <div class="cluster-cards-grid">
-        <div class="mini-m-card prs"><div class="m-lbl">Total Present</div><div class="m-val" id="s-fill-pres">0</div></div>
-        <div class="mini-m-card lev"><div class="m-lbl">Total Leave</div><div class="m-val" id="s-fill-leav">0</div></div>
-      </div>
-    </div>
-
-    <div class="dept-cluster-box">
-      <h3 class="cluster-title cluster-retort-title">● RETORT OPERATOR ATTENDANCE</h3>
-      <div class="cluster-cards-grid">
-        <div class="mini-m-card prs"><div class="m-lbl">Total Present</div><div class="m-val" id="s-ret-pres">0</div></div>
-        <div class="mini-m-card lev"><div class="m-lbl">Total Leave</div><div class="m-val" id="s-ret-leav">0</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="shift-details-section" class="dash-section all-shift">
-    <div class="dash-section-hdr"><span class="dot"></span> Active Roster Log Registrations</div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>Operating Department</th><th>Assigned Functional Role</th><th>Employee Identity Name</th><th>Roster Status</th></tr></thead>
-      <tbody id="tbody-shift"></tbody>
-    </table></div>
-  </div>
-  <div id="shift-nodata" class="no-data" style="display:none;">No rosters tracked for designated parameters.</div>
-</div>
-
-<div id="footer">
-  <div style="font-size:13px;color:var(--text2);font-weight:600;">Pending Buffer Queue: <b id="ready-count" style="color:white;font-family:'JetBrains Mono'">0</b></div>
-  <button class="btn-save" onclick="saveAll()">SAVE TO CLOUD STORAGE</button>
-</div>
-
 <div id="toast-wrap"></div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwSl1tlPtnqT4HiZ1e4F_SCBSGwubosYnHvrk1zPIw_Koy0lPCoDxCp2xj1hzGJx0YFgA/exec';
-
-let planData = [], operatorList = [], dbData = [], savedMap = {}, shiftPlanData = [];
-let currentTab = 'info';
-let dashboardCharts = { kitchen: null, filling: null, retort: null };
-
-// MULTILINGUAL DICTIONARY FOR CONTENT DOM NODES
 let currentLang = 'en';
 const TRANSLATION_MAP = {
   en: {
@@ -769,7 +601,7 @@ const TRANSLATION_MAP = {
     "tx-stat-4": "Export Presence Assured",
     "tx-founder-section-title": "Leadership Philosophy",
     "tx-founder-headline": "Pioneering Visionary Infrastructure",
-    "tx-founder-quote": `"Being the first company in India to receive the BRCGS Plant-Based Certification reflects our commitment toward innovation, sustainability, food safety, and global culinary excellence."`,
+    "tx-founder-quote": ""Being the first company in India to receive the BRCGS Plant-Based Certification reflects our commitment toward innovation, sustainability, food safety, and global culinary excellence."",
     "tx-founder-desc": "Established in 2008, Regal Kitchen Foods has transformed the ready-to-eat food industry through innovation, premium quality, global food safety standards, and customer-centric manufacturing systems.",
     "tx-cert-section-title": "Enterprise Standards",
     "tx-cert-headline": "Global Certifications & Compliance Standards",
@@ -863,10 +695,6 @@ const TRANSLATION_MAP = {
     "tx-vm-mtext": "“To deliver safe, premium, and globally certified food products while maintaining innovation, sustainability, and customer excellence.”",
     "tx-foot-desc": "Pioneering processing benchmarks, creating authentic meal models, and driving culinary innovations since 2008 across global markets.",
     "tx-foot-links-title": "Quick Links",
-    "tx-flink-1": "Corporate Home",
-    "tx-flink-2": "Data Entry Engine",
-    "tx-flink-3": "Live Analytics Control",
-    "tx-flink-4": "Presence Monitor",
     "tx-foot-brands-title": "Key Core Brands",
     "tx-foot-contact-title": "Enterprise Contact",
     "tx-fcont-hq": "<b>HQ Facility:</b> Haryana, India",
@@ -885,7 +713,7 @@ const TRANSLATION_MAP = {
     "tx-stat-4": "वैश्विक निर्यात उपस्थिति",
     "tx-founder-section-title": "नेतृत्व का दृष्टिकोण",
     "tx-founder-headline": "अग्रणी दूरदर्शी बुनियादी ढांचा",
-    "tx-founder-quote": `"भारत में BRCGS Plant-Based प्रमाणन प्राप्त करने वाली पहली कंपनी होना नवाचार, स्थिरता, खाद्य सुरक्षा और वैश्विक पाक उत्कृष्टता के प्रति हमारी प्रतिबद्धता को दर्शाता है।"`,
+    "tx-founder-quote": ""भारत में BRCGS Plant-Based प्रमाणन प्राप्त करने वाली पहली कंपनी होना नवाचार, स्थिरता, खाद्य सुरक्षा और वैश्विक पाक उत्कृष्टता के प्रति हमारी प्रतिबद्धता को दर्शाता है।"",
     "tx-founder-desc": "2008 में स्थापित, Regal Kitchen Foods ने नवाचार, प्रीमियम गुणवत्ता, वैश्विक खाद्य सुरक्षा मानकों और ग्राहक-केंद्रित विनिर्माण प्रणालियों के माध्यम से रेडी-टू-ईट खाद्य उद्योग को बदल दिया है।",
     "tx-cert-section-title": "उद्यम मानक",
     "tx-cert-headline": "वैश्विक प्रमाणन एवं अनुपालन मानक",
@@ -979,10 +807,6 @@ const TRANSLATION_MAP = {
     "tx-vm-mtext": "“नवाचार, स्थिरता और ग्राहक उत्कृष्टता को बनाए रखते हुए सुरक्षित, प्रीमियम और विश्व स्तर पर प्रमाणित खाद्य उत्पाद वितरित करना।”",
     "tx-foot-desc": "2008 से वैश्विक बाजारों में प्रसंस्करण बेंचमार्क स्थापित करना, प्रामाणिक भोजन मॉडल बनाना और पाक नवाचारों को बढ़ावा देना।",
     "tx-foot-links-title": "त्वरित लिंक्स",
-    "tx-flink-1": "कॉर्पोरेट होम",
-    "tx-flink-2": "डेटा प्रविष्टि इंजन",
-    "tx-flink-3": "लाइव एनालिटिक्स नियंत्रण",
-    "tx-flink-4": "उपस्थिति मॉनिटर",
     "tx-foot-brands-title": "प्रमुख मुख्य ब्रांड",
     "tx-foot-contact-title": "उद्यम संपर्क",
     "tx-fcont-hq": "<b>मुख्यालय सुविधा:</b> हरियाणा, भारत",
@@ -994,470 +818,32 @@ const TRANSLATION_MAP = {
 
 function setLanguage(lang) {
   currentLang = lang;
-  
-  // Update toggle layout UI state
   document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
   document.getElementById('btn-lang-hi').classList.toggle('active', lang === 'hi');
-  
-  // Fade out transition animation applied to components
   const nodes = document.querySelectorAll('.translatable-node');
   nodes.forEach(node => node.classList.add('fading'));
-  
   setTimeout(() => {
     const dictionary = TRANSLATION_MAP[lang];
     for (const key in dictionary) {
       const el = document.getElementById(key);
-      if (el) { el.innerHTML = dictionary[key]; }
+      if (el) el.innerHTML = dictionary[key];
     }
-    // Fade back in smoothly
     nodes.forEach(node => node.classList.remove('fading'));
-  }, 25000 / 100); // 250ms sync transition gap matching standard layout animations
+  }, 250);
 }
 
-function switchTab(t) {
-  currentTab = t;
-  document.querySelectorAll('.tab-btn').forEach((b) => {
-    const isMatched = (b.textContent.trim() === 'CORPORATE HOME' && t === 'info') ||
-                      (b.textContent.trim() === 'DATA ENTRY ENGINE' && t === 'entry') || 
-                      (b.textContent.trim() === 'LIVE ANALYTICS' && t === 'dash') ||
-                      (b.textContent.trim() === 'PRESENCE MONITOR' && t === 'shift');
-    b.classList.toggle('active', isMatched);
-  });
-  
-  document.getElementById('info-page').style.display       = t === 'info'  ? 'block' : 'none';
-  document.getElementById('entry-page').style.display      = t === 'entry' ? 'block' : 'none';
-  document.getElementById('dashboard-page').style.display  = t === 'dash'  ? 'block' : 'none';
-  document.getElementById('shift-page').style.display      = t === 'shift' ? 'block' : 'none';
-  
-  // REMOVE FILTER BAR FROM CORPORATE HOME TAB EXCLUSIVELY
-  // Displays bar flexibly for entry data structures and calculations, sets display none for corporate landing layout
-  document.getElementById('filter-bar').style.display = t === 'info' ? 'none' : 'flex';
-  
-  // Floating database panel visible exclusively inside entry dashboard sheet tab boundaries
-  document.getElementById('footer').style.display = t === 'entry' ? 'flex' : 'none';
-  document.getElementById('entry-only-filters').style.display = t === 'entry' ? 'flex' : 'none';
-  
-  if (t === 'dash') updateDashboard();
-  if (t === 'shift') updateShiftDashboard();
-  else render();
-}
-
-function handleFilterChange() {
-  if (currentTab === 'entry') { updateLineFilter(); render(); }
-  else if (currentTab === 'dash') updateDashboard();
-  else if (currentTab === 'shift') updateShiftDashboard();
-}
-
-function getNormalizedKey(dateVal) {
-  if (!dateVal) return '';
-  let str = String(dateVal).trim().replace(/[\s]+/g, ' ');
-  if (!str || str === 'undefined' || str === 'null') return '';
-  if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
-  let dMmmYMatch = str.match(/^(\d{1,2})[-/]([A-Za-z]{3,9})[-/](\d{4})$/);
-  if (dMmmYMatch) {
-    let d = String(dMmmYMatch[1]).padStart(2, '0');
-    let y = dMmmYMatch[3];
-    let mStr = dMmmYMatch[2].toLowerCase().substring(0, 3);
-    const months = { jan:'01', feb:'02', mar:'03', apr:'04', may:'05', jun:'06', jul:'07', aug:'08', sep:'09', oct:'10', nov:'11', dec:'12' };
-    if (months[mStr]) return `${y}-${months[mStr]}-${d}`;
-  }
-  let mdYMatch = str.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
-  if (mdYMatch) {
-    let part1 = parseInt(mdYMatch[1], 10); let part2 = parseInt(mdYMatch[2], 10); let year = mdYMatch[3];
-    if (part1 > 12) { return `${year}-${String(part2).padStart(2, '0')}-${String(part1).padStart(2, '0')}`; } 
-    else { return `${year}-${String(part1).padStart(2, '0')}-${String(part2).padStart(2, '0')}`; }
-  }
-  let parsed = new Date(str);
-  if (!isNaN(parsed.getTime())) {
-    return `${parsed.getFullYear()}-${String(parsed.getMonth()+1).padStart(2, '0')}-${String(parsed.getDate()).padStart(2, '0')}`;
-  }
-  return str;
-}
-
-function formatCleanTime(timeVal) {
-  if (!timeVal) return '';
-  let cleanStr = String(timeVal).trim();
-  if (cleanStr.includes('T') || cleanStr.includes('-') || cleanStr.includes('/')) {
-    const parsedDate = new Date(timeVal);
-    if (!isNaN(parsedDate)) {
-      let hh = String(parsedDate.getHours()).padStart(2, '0');
-      let mm = String(parsedDate.getMinutes()).padStart(2, '0');
-      return `${hh}:${mm}`;
-    }
-  }
-  let match = cleanStr.match(/(\d{1,2}:\d{2})/);
-  if (match) {
-    let parts = match[1].split(':');
-    return `${parts[0].padStart(2, '0')}:${parts[1]}`;
-  }
-  return cleanStr;
-}
-
-function minutesToHHMM(totalMinutes) {
-  if (isNaN(totalMinutes) || totalMinutes <= 0) return "00:00";
-  let hours = Math.floor(totalMinutes / 60); let mins = totalMinutes % 60;
-  return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
-}
-
-function parseTimeToMinutes(timeStr) {
-  if (!timeStr) return 0;
-  let cleanStr = String(timeStr).trim();
-  let parts = cleanStr.split(':');
-  if (parts.length >= 2) {
-    let hrs = parseInt(parts[0], 10) || 0; let mns = parseInt(parts[1], 10) || 0;
-    return (hrs * 60) + mns;
-  }
-  let numVal = parseInt(cleanStr, 10);
-  return isNaN(numVal) ? 0 : numVal;
-}
-
-function getColumnJProduct(row) {
-  return String(row['Final Product'] || row['Product_J'] || row['Product'] || '—').trim();
-}
-
-async function fetchAllData() {
-  showLoader(true, 'Fetching Enterprise Core Nodes...');
-  try {
-    const pRes = await fetch(`${SCRIPT_URL}?action=getPlan`);
-    const pData = await pRes.json();
-    planData = (pData.rows || []).map(r => ({ ...r, NormDate: getNormalizedKey(r.Date) }));
-    operatorList = pData.operators || [];
-
-    const dRes = await fetch(`${SCRIPT_URL}?action=getDatabase`);
-    const dData = await dRes.json();
-    dbData = (dData.rows || []).map(r => {
-      let rawCO = r['Change Over'] || r['ChangeOver'] || r['CO'] || '';
-      let rawTime = r['CO Time'] || r['CO_Time'] || r['EntryTime'] || r['Time'] || '';
-      let rawRej = r['Rejection/Wastage'] || r['Rejection'] || r['Wastage'] || 0;
-      return {
-        ...r, NormDate: getNormalizedKey(r.Date), Actual: Number(r.Actual) || 0, Plan: Number(r.Plan) || 0, Rejection: Number(rawRej) || 0, ChangeOver: String(rawCO).toUpperCase().trim(), EntryTime: formatCleanTime(rawTime)
-      };
-    });
-    
-    savedMap = {};
-    dbData.forEach(r => { savedMap[`${r.NormDate}|${r.Shift}|${r.Department}|${r.Line}`] = r; });
-
-    try {
-      const sRes = await fetch(`${SCRIPT_URL}?action=getShiftPlan`);
-      const sData = await sRes.json();
-      shiftPlanData = (sData.rows || []).map(r => ({
-        ...r,
-        NormDate: getNormalizedKey(r.Date || r.date),
-        Department: String(r.Department || r.department || '').trim(),
-        Role: String(r['Employee Role'] || r.EmployeeRole || r.Role || r.role || '').trim(),
-        Name: String(r['Employee Name'] || r.EmployeeName || r.Name || r.name || '').trim(),
-        Status: String(r.Status || r.status || 'Leave').trim()
-      }));
-    } catch(err) { console.warn("Shift sheet backend registry lookup skipped.", err); }
-    
-    if (planData.length) {
-      const dateEl = document.getElementById('f-date');
-      if (!dateEl.value) {
-        const uniqueNormDates = [...new Set(planData.map(r => r.NormDate))].sort((a,b) => new Date(b) - new Date(a));
-        dateEl.value = uniqueNormDates[0] || new Date().toISOString().split('T')[0];
-      }
-      const depts = [...new Set(planData.map(r => r.Department))].sort();
-      document.getElementById('f-dept').innerHTML = '<option value="">All Operational Depts</option>' + depts.map(d => `<option>${d}</option>`).join('');
-      
-      updateLineFilter();
-      if (currentTab === 'info') render(); 
-      else if (currentTab === 'entry') render();
-      else if (currentTab === 'dash') updateDashboard();
-      else if (currentTab === 'shift') updateShiftDashboard();
-    }
-    toast('✅ Cloud Enterprise Synced');
-  } catch (e) { console.error(e); toast('❌ Framework Pipeline Error'); }
-  showLoader(false);
-}
-
-function createDeptChart(key, canvasId, labels, plans, actuals, colorHex) {
-  const ctx = document.getElementById(canvasId).getContext('2d');
-  if (dashboardCharts[key]) { dashboardCharts[key].destroy(); }
-  let fillGradient = ctx.createLinearGradient(0, 0, 0, 130);
-  fillGradient.addColorStop(0, colorHex + '18'); fillGradient.addColorStop(1, 'transparent');
-
-  dashboardCharts[key] = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [
-        { label: 'Plan Matrix', data: plans, borderColor: 'rgba(255, 255, 255, 0.12)', borderDash: [4, 4], backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, tension: 0.2 },
-        { label: 'Live Output', data: actuals, borderColor: colorHex, backgroundColor: fillGradient, fill: true, borderWidth: 2.5, pointRadius: 3.5, pointBackgroundColor: colorHex, pointBorderColor: '#030712', pointBorderWidth: 1.5, tension: 0.2 }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: true, position: 'top', align: 'end', labels: { color: '#64748b', boxWidth: 6, usePointStyle: true, font: { family: 'Plus Jakarta Sans', size: 9, weight: '600' } } } },
-      scales: {
-        x: { grid: { display: false }, ticks: { color: '#64748b', font: { family: 'Plus Jakarta Sans', size: 9, weight: '600' } } },
-        y: { grid: { color: 'rgba(255, 255, 255, 0.02)' }, ticks: { color: '#475569', font: { family: 'JetBrains Mono', size: 8 } } }
-      }
-    }
-  });
-}
-
-function updateDashboard() {
-  const selectedDate = document.getElementById('f-date').value;
-  const selectedShift = document.getElementById('f-shift').value;
-  
-  let filteredRows = dbData.filter(r => r.NormDate === selectedDate);
-  let masterPlanRows = planData.filter(r => r.NormDate === selectedDate);
-  if (selectedShift !== 'All') {
-    filteredRows = filteredRows.filter(r => r.Shift === selectedShift);
-    masterPlanRows = masterPlanRows.filter(r => r.Shift === selectedShift);
-  }
-  
-  const TARGET_DEPTS = [
-    { key: 'kitchen', matchKey: 'KITCHEN', tbodyId: 'tbody-kitchen', secId: 'db-kitchen-section', cbBoxId: 'cb-box-kitchen', canvasId: 'canvasKitchen', color: '#f472b6', prefix: 'm-kitch' },
-    { key: 'filling', matchKey: 'FILLING', tbodyId: 'tbody-filling', secId: 'db-filling-section', cbBoxId: 'cb-box-filling', canvasId: 'canvasFilling', color: '#e879f9', prefix: 'm-fill' },
-    { key: 'retort',  matchKey: 'RETORT',  tbodyId: 'tbody-retort',  secId: 'db-retort-section',  cbBoxId: 'cb-box-retort',  canvasId: 'canvasRetort',  color: '#34d399', prefix: 'm-ret' }
-  ];
-  let totalRecordsFound = false;
-
-  TARGET_DEPTS.forEach(({ key, matchKey, tbodyId, secId, cbBoxId, canvasId, color, prefix }) => {
-    const rows = filteredRows.filter(r => String(r.Department).toUpperCase().includes(matchKey));
-    const deptPlanSum = masterPlanRows.filter(r => String(r.Department).toUpperCase().includes(matchKey)).reduce((a,c) => a + (Number(c.Plan)||0), 0);
-
-    let dActual = 0; let dPlan = deptPlanSum; let dRejection = 0; let deptTotalCoCount = 0; let deptTotalCoMinutes = 0;
-
-    if (rows.length === 0 && deptPlanSum === 0) {
-      document.getElementById(secId).style.display = 'none'; document.getElementById(cbBoxId).style.display = 'none';
-      document.getElementById(tbodyId).innerHTML = '';
-      ['pln', 'act', 'dif', 'co', 'rej'].forEach(s => document.getElementById(`${prefix}-${s}`).textContent = '0');
-      document.getElementById(`${prefix}-cot`).textContent = '00:00';
-      return;
-    }
-    totalRecordsFound = true;
-    let html = ''; let labelsArr = []; let plansArr = []; let actualsArr = [];
-
-    const distinctLines = [...new Set([
-      ...masterPlanRows.filter(r => String(r.Department).toUpperCase().includes(matchKey)).map(r => r.Line),
-      ...rows.map(r => r.Line)
-    ])].sort();
-    
-    distinctLines.forEach(line => {
-      const liveItem = rows.find(r => r.Line === line);
-      const planItem = masterPlanRows.find(r => String(r.Department).toUpperCase().includes(matchKey) && r.Line === line);
-      const pVal = planItem ? (Number(planItem.Plan) || 0) : 0;
-      const aVal = liveItem ? (Number(liveItem.Actual) || 0) : 0;
-      const rVal = liveItem ? (Number(liveItem.Rejection) || 0) : 0;
-      const pName = planItem ? getColumnJProduct(planItem) : (liveItem ? liveItem.Product : '—');
-      
-      dActual += aVal; dRejection += rVal;
-      let lineCoStatus = '—', lineCoTime = '—';
-      if (liveItem) {
-        lineCoStatus = liveItem.ChangeOver || 'NO';
-        if (String(liveItem.ChangeOver).toUpperCase() === 'YES') { deptTotalCoCount += 1; }
-        if (liveItem.EntryTime) { lineCoTime = liveItem.EntryTime; deptTotalCoMinutes += parseTimeToMinutes(liveItem.EntryTime); }
-      }
-      labelsArr.push(line); plansArr.push(pVal); actualsArr.push(aVal);
-
-      html += `<tr>
-        <td><span class="line-badge">${line}</span></td>
-        <td style="color:#94a3b8; font-size:12px;">${pName}</td>
-        <td style="font-family:'JetBrains Mono'; color:#64748b;">${pVal.toLocaleString('en-IN')}</td>
-        <td><span class="actual-val">${aVal.toLocaleString('en-IN')}</span></td>
-        <td style="font-family:'JetBrains Mono'; color:#ef4444; font-weight:700;">${rVal > 0 ? rVal.toLocaleString('en-IN') : '0'}</td>
-        <td>${lineCoStatus === 'YES' ? '<span class="co-badge-yes">YES</span>' : '<span class="co-badge-no">NO</span>'}</td>
-        <td style="font-family:'JetBrains Mono'; color:var(--text2);">${lineCoTime}</td>
-      </tr>`;
-    });
-
-    document.getElementById(tbodyId).innerHTML = html;
-    document.getElementById(secId).style.display = 'block'; document.getElementById(cbBoxId).style.display = 'block';
-    createDeptChart(key, canvasId, labelsArr, plansArr, actualsArr, color);
-
-    let dDiff = dPlan - dActual;
-    document.getElementById(`${prefix}-pln`).textContent = dPlan.toLocaleString('en-IN');
-    document.getElementById(`${prefix}-act`).textContent = dActual.toLocaleString('en-IN');
-    document.getElementById(`${prefix}-dif`).textContent = dDiff.toLocaleString('en-IN');
-    document.getElementById(`${prefix}-co`).textContent = deptTotalCoCount;
-    document.getElementById(`${prefix}-cot`).textContent = minutesToHHMM(deptTotalCoMinutes);
-    document.getElementById(`${prefix}-rej`).textContent = dRejection.toLocaleString('en-IN');
-    document.getElementById(`${prefix}-dif`).style.color = dDiff > 0 ? '#f59e0b' : (dDiff < 0 ? 'var(--blue)' : 'var(--emerald)');
-  });
-
-  document.getElementById('db-nodata').style.display = totalRecordsFound ? 'none' : 'block';
-  document.getElementById('last-update-time').textContent = 'Server Analytics Synchronization Node Stamp: ' + new Date().toLocaleTimeString();
-}
-
-function updateShiftDashboard() {
-  const selectedDate = document.getElementById('f-date').value;
-  const selectedShift = document.getElementById('f-shift').value;
-  
-  let filteredShiftRows = shiftPlanData.filter(r => r.NormDate === selectedDate);
-  if (selectedShift !== 'All') {
-    filteredShiftRows = filteredShiftRows.filter(r => String(r.Shift || r.shift || '').toUpperCase().trim() === selectedShift.toUpperCase().trim());
-  }
-  let metrics = { kitchen: { pres: 0, leav: 0 }, filling: { pres: 0, leav: 0 }, retort: { pres: 0, leav: 0 } };
-  let html = '';
-
-  if (filteredShiftRows.length === 0) {
-    document.getElementById('tbody-shift').innerHTML = ''; document.getElementById('shift-details-section').style.display = 'none';
-    document.getElementById('shift-nodata').style.display = 'block';
-    ['s-kitch', 's-fill', 's-ret'].forEach(p => { document.getElementById(`${p}-pres`).textContent = '0'; document.getElementById(`${p}-leav`).textContent = '0'; });
-    return;
-  }
-  document.getElementById('shift-nodata').style.display = 'none'; document.getElementById('shift-details-section').style.display = 'block';
-
-  filteredShiftRows.forEach(row => {
-    const rawDept = String(row.Department || '—').trim(); const deptUpper = rawDept.toUpperCase();
-    const role = String(row['Employee Role'] || row.Role || 'Operator').trim();
-    const name = String(row['Employee Name'] || row.Name || '—').trim();
-    const status = String(row.Status || '').toUpperCase().trim();
-    let isPresent = status.includes('PRESENT') || status === 'P';
-
-    if (deptUpper.includes('KITCHEN') || deptUpper.includes('COOK')) { if (isPresent) metrics.kitchen.pres++; else metrics.kitchen.leav++; } 
-    else if (deptUpper.includes('FILLING')) { if (isPresent) metrics.filling.pres++; else metrics.filling.leav++; } 
-    else if (deptUpper.includes('RETORT')) { if (isPresent) metrics.retort.pres++; else metrics.retort.leav++; }
-
-    html += `<tr>
-      <td><span class="line-badge" style="color:var(--blue); background:rgba(56,189,248,0.1);">${rawDept}</span></td>
-      <td style="color:#94a3b8;">${role}</td><td style="color:#ffffff;">${name}</td>
-      <td><span class="${isPresent ? 'status-badge-present' : 'status-badge-leave'}">${isPresent ? 'PRESENT' : 'LEAVE'}</span></td>
-    </tr>`;
-  });
-  document.getElementById('tbody-shift').innerHTML = html;
-  ['kitch', 'fill', 'ret'].forEach(k => {
-    document.getElementById(`s-${k}-pres`).textContent = metrics[k].pres;
-    document.getElementById(`s-${k}-leav`).textContent = metrics[k].leav;
-  });
-}
-
-function updateLineFilter() {
-  const d = document.getElementById('f-date').value, s = document.getElementById('f-shift').value, dp = document.getElementById('f-dept').value;
-  const filtered = planData.filter(r => r.NormDate === d && (s === 'All' || r.Shift === s) && (!dp || r.Department === dp));
-  const lines = [...new Set(filtered.map(r => r.Line))].sort();
-  const currentLine = document.getElementById('f-line').value;
-  document.getElementById('f-line').innerHTML = '<option value="">All Dynamic Lines</option>' + lines.map(l => `<option ${l===currentLine?'selected':''}>${l}</option>`).join('');
-}
-
-function render() {
-  if (currentTab === 'info') return; // Bypass corporate layer grid computations safely
-  const d = document.getElementById('f-date').value, s = document.getElementById('f-shift').value, dp = document.getElementById('f-dept').value, ln = document.getElementById('f-line').value;
-  const filtered = planData.filter(r => r.NormDate === d && (s === 'All' || r.Shift === s) && (!dp || r.Department === dp) && (!ln || r.Line === ln));
-  const depts = [...new Set(filtered.map(r => r.Department))];
-  let htmlResult = '';
-  
-  depts.forEach(dept => {
-    const rows = filtered.filter(r => r.Department === dept);
-    const isKitchenOrFilling = String(dept).toUpperCase().includes('KITCHEN') || String(dept).toUpperCase().includes('FILLING');
-
-    htmlResult += `<div class="dept-card"><div class="dept-hdr">${dept}</div><div class="tbl-wrap"><table>
-          <thead><tr><th>Line Node</th><th>Product Blueprint</th><th>Plan Target</th><th>Actual Qty</th><th>Rejection Matrix</th><th>Change Over</th><th>CO Timestamp</th><th>Operator Node</th></tr></thead><tbody>`;
-    
-    rows.forEach(r => {
-      const key = `${r.NormDate}|${r.Shift}|${r.Department}|${r.Line}`, safeKey = key.replace(/[|\s-]/g, '_'), sv = savedMap[key] || {};
-      const cleanTime = formatCleanTime(sv.EntryTime);
-      const finalProdName = getColumnJProduct(r);
-      const currentCO = sv.ChangeOver || 'NO';
-      const currentRej = sv.Rejection || sv.Wastage || '';
-      
-      htmlResult += `<tr>
-        <td style="color:var(--blue);font-weight:700">${r.Line}</td>
-        <td style="font-size:11px; max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#e2e8f0" title="${finalProdName}">${finalProdName}</td>
-        <td style="font-family:'JetBrains Mono'; color:#64748b">${r.Plan}</td>
-        <td><input type="number" id="qty-${safeKey}" class="ti ti-qty" value="${sv.Actual||''}" oninput="updateRowStatus()"></td>
-        <td><input type="number" id="rej-${safeKey}" class="ti ti-rej" value="${currentRej}"></td>`;
-      
-      if (isKitchenOrFilling) {
-        htmlResult += `<td>
-          <select id="co-${safeKey}" class="ti ti-co">
-            <option value="NO" ${currentCO === 'NO' ? 'selected' : ''}>NO</option>
-            <option value="YES" ${currentCO === 'YES' ? 'selected' : ''}>YES</option>
-          </select>
-        </td>
-        <td><input type="text" id="tm-${safeKey}" class="ti" style="width:65px; font-family:'JetBrains Mono';" value="${cleanTime}" placeholder="hh:mm"></td>`;
-      } else { htmlResult += `<td class="disabled-cell">—</td><td class="disabled-cell">—</td>`; }
-        
-      htmlResult += `<td><select id="op-${safeKey}" class="ti"><option value="">--</option>${operatorList.map(o=>`<option ${sv.Operator===o?'selected':''}>${o}</option>`).join('')}</select></td>
-      </tr>`;
-    });
-    htmlResult += `</tbody></table></div></div>`;
-  });
-  document.getElementById('display-area').innerHTML = htmlResult || '<p style="text-align:center;padding:50px;color:var(--text2)">No Scheduled Run Plans Found for Selected Calendar Intersections</p>';
-  updateRowStatus();
-}
-
-function updateRowStatus() {
-  const readyEl = document.getElementById('ready-count');
-  if (readyEl) { readyEl.textContent = Array.from(document.querySelectorAll('.ti-qty')).filter(i => i.value).length; }
-}
-
-async function saveAll() {
-  const d = document.getElementById('f-date').value, s = document.getElementById('f-shift').value;
-  const targetKeys = [];
-  const targetedPlanRows = planData.filter(r => {
-    const k = `${r.NormDate}|${r.Shift}|${r.Department}|${r.Line}`.replace(/[|\s-]/g, '_');
-    const q = document.getElementById('qty-' + k);
-    if (r.NormDate === d && (s === 'All' || r.Shift === s) && q && q.value !== '') { targetKeys.push(k); return true; }
-    return false;
-  });
-
-  const rows = targetedPlanRows.map(r => {
-    const k = `${r.NormDate}|${r.Shift}|${r.Department}|${r.Line}`.replace(/[|\s-]/g, '_');
-    const finalProdName = getColumnJProduct(r);
-    const coEl = document.getElementById('co-'+k), tmEl = document.getElementById('tm-'+k), rejEl = document.getElementById('rej-'+k);
-    
-    return { 
-      Date: r.Date, Shift: r.Shift, Department: r.Department, Line: r.Line, Product: finalProdName, Plan: r.Plan, 
-      Actual: document.getElementById('qty-'+k).value, Wastage: rejEl ? rejEl.value : '',
-      ChangeOver: coEl ? coEl.value : 'NO', EntryTime: tmEl ? tmEl.value : '', Operator: document.getElementById('op-'+k).value 
-    };
-  });
-
-  if (!rows.length) return toast('⚠️ Buffer input queue empty');
-  showLoader(true, 'Transmitting to Distributed Storage Server...');
-  
-  try {
-    await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ action: 'batchSave', data: rows }) });
-    toast('   Cloud Sync Buffer Saved');
-
-    rows.forEach(r => {
-      const normD = getNormalizedKey(r.Date); const mapKey = `${normD}|${r.Shift}|${r.Department}|${r.Line}`;
-      const formattedItem = { ...r, NormDate: normD, Actual: Number(r.Actual) || 0, Plan: Number(r.Plan) || 0, Rejection: Number(r.Wastage) || 0, ChangeOver: String(r.ChangeOver).toUpperCase().trim(), EntryTime: formatCleanTime(r.EntryTime) };
-      const existingIdx = dbData.findIndex(item => item.NormDate === normD && item.Shift === r.Shift && item.Department === r.Department && item.Line === r.Line);
-      if (existingIdx > -1) { dbData[existingIdx] = formattedItem; } else { dbData.push(formattedItem); }
-      savedMap[mapKey] = formattedItem;
-    });
-
-    targetKeys.forEach(k => {
-      ['qty', 'rej', 'tm', 'op'].forEach(x => { if (document.getElementById(x + '-' + k)) document.getElementById(x + '-' + k).value = ''; });
-      if (document.getElementById('co-' + k)) document.getElementById('co-' + k).value = 'NO';
-    });
-    if (document.getElementById('ready-count')) document.getElementById('ready-count').textContent = '0';
-    
-    render();
-    if (currentTab === 'dash') updateDashboard();
-    showLoader(false);
-    
-    setTimeout(() => { 
-      fetch(`${SCRIPT_URL}?action=getDatabase`).then(res => res.json()).then(dData => {
-        dbData = (dData.rows || []).map(r => {
-          let rawCO = r['Change Over'] || r['ChangeOver'] || r['CO'] || '';
-          let rawTime = r['CO Time'] || r['CO_Time'] || r['EntryTime'] || r['Time'] || '';
-          let rawRej = r['Rejection/Wastage'] || r['Rejection'] || r['Wastage'] || 0;
-          return { ...r, NormDate: getNormalizedKey(r.Date), Actual: Number(r.Actual) || 0, Plan: Number(r.Plan) || 0, Rejection: Number(rawRej) || 0, ChangeOver: String(rawCO).toUpperCase().trim(), EntryTime: formatCleanTime(r.EntryTime) };
-        });
-        dbData.forEach(r => { savedMap[`${r.NormDate}|${r.Shift}|${r.Department}|${r.Line}`] = r; });
-        render(); if (currentTab === 'dash') updateDashboard();
-      }).catch(err => console.log("Post-sync validation warning:", err));
-    }, 2000);
-  } catch (e) { toast('❌ Transaction Block Failed'); showLoader(false); }
-}
-
-function showLoader(v, m) { 
-  document.getElementById('loader').style.display = v ? 'flex' : 'none'; 
-  document.getElementById('loader-msg').textContent = m || 'Processing...';
-}
+setLanguage('en');
 
 function toast(msg) {
-  const w = document.getElementById('toast-wrap'); const t = document.createElement('div');
-  t.className = 'toast'; t.textContent = msg; w.appendChild(t);
+  const w = document.getElementById('toast-wrap');
+  if (!w) return;
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  w.appendChild(t);
   setTimeout(() => t.remove(), 3500);
 }
-
-window.onload = fetchAllData;
 </script>
 </body>
 </html>
+
