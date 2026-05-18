@@ -131,7 +131,394 @@ body {
   display: flex;
   align-items: center;
   padding: 0 24px;
-  background: rgba(3, 7, 18, 0.85);
+  background: rgba(3, 7, 18, 0.95);
+  position: relative;
+}
+
+.top-nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+  overflow-x: auto;
+  padding: 12px 0;
+}
+
+.top-nav-item {
+  list-style: none;
+  margin: 0;
+}
+
+.top-nav-item .nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 160px;
+  padding: 12px 18px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  color: var(--text2);
+  transition: all 0.25s ease;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.top-nav-item .nav-link:hover,
+.top-nav-item.active .nav-link {
+  color: #ffffff;
+  border-color: rgba(56,189,248,0.25);
+  background: rgba(56,189,248,0.14);
+  box-shadow: 0 14px 30px rgba(6,182,212,0.12);
+}
+
+.top-nav-item .dropdown-arrow {
+  margin-left: 8px;
+  font-size: 10px;
+  transition: transform 0.3s ease;
+}
+
+.top-nav-item.active .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.menu-panel {
+  position: absolute;
+  inset: auto 24px 0 24px;
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.32s ease-in-out;
+  background: rgba(5, 13, 26, 0.98);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 0 0 22px 22px;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+  z-index: 2900;
+  overflow: hidden;
+}
+
+.menu-panel.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.menu-panel-inner {
+  display: grid;
+  grid-template-columns: minmax(240px, 320px) minmax(280px, 1fr);
+  gap: 1px;
+  min-height: 320px;
+}
+
+.menu-panel-column {
+  background: rgba(10, 19, 36, 0.95);
+  padding: 24px;
+}
+
+.panel-headline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.panel-headline h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.panel-close-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.panel-close-btn:hover {
+  color: #ffffff;
+  border-color: rgba(56,189,248,0.25);
+}
+
+.panel-category,
+.panel-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.03);
+  color: var(--text2);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.panel-category:hover,
+.panel-item:hover,
+.panel-category.active,
+.panel-item.active {
+  background: rgba(56,189,248,0.12);
+  border-color: rgba(56,189,248,0.18);
+  color: #ffffff;
+}
+
+.panel-item small {
+  color: var(--text2);
+  font-weight: 500;
+  font-size: 11px;
+}
+
+.panel-note {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.6;
+  margin-top: 10px;
+}
+
+.workspace-shell {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 18px 24px 0;
+}
+
+.module-panel {
+  background: rgba(10, 18, 33, 0.95);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.module-title {
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.module-subtitle {
+  color: var(--text2);
+  font-size: 13px;
+  max-width: 680px;
+}
+
+.tab-bar {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.tab-btn {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text2);
+  padding: 14px 20px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.22s ease;
+}
+
+.tab-btn.active {
+  background: rgba(56,189,248,0.16);
+  border-color: rgba(56,189,248,0.25);
+  color: #ffffff;
+}
+
+.module-section {
+  display: none;
+}
+
+.module-section.active {
+  display: block;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field label {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #f8fafc;
+  padding: 14px 16px;
+  border-radius: 14px;
+  outline: none;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-color: rgba(56,189,248,0.35);
+  box-shadow: 0 0 0 3px rgba(56,189,248,0.12);
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.action-row .btn-premium {
+  margin-top: 6px;
+}
+
+.report-panel {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 22px;
+}
+
+.report-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.report-toolbar .filter-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.report-toolbar .filter-group label {
+  font-size: 11px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.report-toolbar input[type="date"],
+.report-toolbar select {
+  min-width: 170px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+}
+
+.data-table th,
+.data-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: #e2e8f0;
+  text-align: left;
+  font-size: 13px;
+}
+
+.data-table th {
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  background: rgba(255,255,255,0.03);
+}
+
+.data-table tbody tr:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.table-actions button {
+  border: none;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-edit {
+  background: rgba(56,189,248,0.14);
+  color: #ffffff;
+}
+
+.btn-delete {
+  background: rgba(239,68,68,0.16);
+  color: #ffffff;
+}
+
+.btn-export {
+  background: rgba(16,185,129,0.16);
+  border: 1px solid rgba(16,185,129,0.24);
+  color: #ffffff;
+}
+
+@media (max-width: 1024px) {
+  .menu-panel-inner { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .top-nav { padding: 10px 0; gap: 6px; }
+  .top-nav-item .nav-link { min-width: 140px; padding: 10px 14px; font-size: 11px; }
+  .panel-category, .panel-item { padding: 14px 16px; }
+  .module-header { flex-direction: column; align-items: stretch; }
+  .report-toolbar { flex-direction: column; align-items: stretch; }
+  .report-toolbar .filter-group { width: 100%; justify-content: space-between; }
+  .data-table { min-width: 0; }
 }
 
 .nav-menu {
@@ -493,28 +880,38 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
 <header class="top-header">
   <div class="header-title">REGAL KITCHEN FOODS <span>ERP</span></div>
   <nav class="nav-container">
-    <ul class="nav-menu">
-      <li class="nav-item">
-        <div class="nav-link active">
-          Corporate Home
-          <span class="dropdown-arrow">▼</span>
-        </div>
-        <div class="dropdown-menu">
-          <a href="#hero-sec" class="dropdown-item" onclick="scrollToSection('hero-sec'); return false;">Corporate Home</a>
-          <a href="#cert-showcase" class="dropdown-item" onclick="scrollToSection('cert-showcase'); return false;">Certifications</a>
-          <a href="#brand-showcase" class="dropdown-item" onclick="scrollToSection('brand-showcase'); return false;">Brands</a>
-          <a href="#prod-sec" class="dropdown-item" onclick="scrollToSection('prod-sec'); return false;">Products</a>
-          <a href="#export-sec" class="dropdown-item" onclick="scrollToSection('export-sec'); return false;">Global Exports</a>
-          <a href="#fac-sec" class="dropdown-item" onclick="scrollToSection('fac-sec'); return false;">Facilities</a>
-          <a href="#why-sec" class="dropdown-item" onclick="scrollToSection('why-sec'); return false;">Why Choose Us</a>
-          <a href="#vm-sec" class="dropdown-item" onclick="scrollToSection('vm-sec'); return false;">Vision & Mission</a>
-        </div>
-      </li>
+    <ul class="top-nav" role="menubar">
+      <li class="top-nav-item active" data-menu="corporate-home" role="none"><button class="nav-link" type="button" role="menuitem">Corporate Home <span class="dropdown-arrow">▼</span></button></li>
+      <li class="top-nav-item" data-menu="manufacturing-ops" role="none"><button class="nav-link" type="button" role="menuitem">Manufacturing & Operation <span class="dropdown-arrow">▼</span></button></li>
+      <li class="top-nav-item" data-menu="packing" role="none"><button class="nav-link" type="button" role="menuitem">Packing & Logistics <span class="dropdown-arrow">▼</span></button></li>
+      <li class="top-nav-item" data-menu="purchase" role="none"><button class="nav-link" type="button" role="menuitem">Purchase <span class="dropdown-arrow">▼</span></button></li>
+      <li class="top-nav-item" data-menu="maintenance" role="none"><button class="nav-link" type="button" role="menuitem">Maintenance <span class="dropdown-arrow">▼</span></button></li>
     </ul>
+    <div id="menu-panel" class="menu-panel" aria-hidden="true">
+      <div class="menu-panel-inner">
+        <section class="menu-panel-column">
+          <div class="panel-headline">
+            <h3 id="panel-title">Corporate Workspace</h3>
+            <button class="panel-close-btn" type="button" onclick="closeMenuPanel();">Close</button>
+          </div>
+          <div id="panel-categories"></div>
+        </section>
+        <section class="menu-panel-column">
+          <div class="panel-headline">
+            <h3 id="panel-subtitle">Select a module</h3>
+          </div>
+          <div id="panel-items"></div>
+          <div class="panel-note">Click any final module to load the workspace below. The panel closes automatically.</div>
+        </section>
+      </div>
+    </div>
   </nav>
 </header>
 
 <!-- Main Content -->
+<div class="workspace-shell">
+  <div id="module-page" class="page-view"></div>
+</div>
 <div class="main-content-wrapper">
   <div id="info-page" class="page-view active">
   
@@ -707,10 +1104,10 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
       </div>
       <div>
         <div class="footer-col-title translatable-node" id="tx-foot-contact-title">Enterprise Contact</div>
+        <p class="footer-desc-text" style="margin-bottom:8px;">Manufacturing Facilities (Himachal Pradesh Units): Unit 1 (Plot No. 7), Unit 2 (Khasra No. 97), Unit 3 (Plot No. 230)</p>
         <p class="footer-desc-text" style="margin-bottom:8px;"><span class="translatable-node" id="tx-fcont-hq"><b>Corporate HQ:</b> Plot No. ITC-07, 4th Floor, IT Park, Netsmartz Center, Sector 67, S.A.S. Nagar (Mohali), Punjab - 160062, India</span></p>
-        <p class="footer-desc-text" style="margin-bottom:8px;"><span class="translatable-node" id="tx-fcont-unit1"><b>Unit 1:</b> Plot No. 7, Barotiwala Industrial Area, Baddi, District Solan, Himachal Pradesh - 174103</span></p>
-        <p class="footer-desc-text" style="margin-bottom:8px;"><span class="translatable-node" id="tx-fcont-unit2"><b>Unit 2:</b> Khasra No. 97, Buranwala, Post Office Barotiwala, District Solan, Himachal Pradesh - 174103</span></p>
-        <p class="footer-desc-text" style="margin-bottom:8px;"><span class="translatable-node" id="tx-fcont-unit3"><b>Unit 3:</b> Plot No. 230, HPSIDC, Industrial Area, Baddi, District Solan, Himachal Pradesh - 173205</span></p>
+        <p class="footer-desc-text" style="margin-bottom:8px;"><span class="translatable-node" id="tx-fcont-inq"><b>Inquiries:</b> compliance@regalkitchens.com</span></p>
+        <p class="footer-desc-text"><span class="translatable-node" id="tx-fcont-sys"><b>System Node:</b> ERP Global Cloud Secure</span></p>
         <p class="footer-desc-text" style="margin-bottom:8px;"><span class="translatable-node" id="tx-fcont-inq"><b>Inquiries:</b> compliance@regalkitchens.com</span></p>
         <p class="footer-desc-text"><span class="translatable-node" id="tx-fcont-sys"><b>System Node:</b> ERP Global Cloud Secure</span></p>
       </div>
@@ -739,7 +1136,7 @@ const TRANSLATION_MAP = {
     "tx-stat-4": "Export Presence Assured",
     "tx-founder-section-title": "Leadership Philosophy",
     "tx-founder-headline": "Pioneering Visionary Infrastructure",
-    "tx-founder-quote": ""Being the first company in India to receive the BRCGS Plant-Based Certification reflects our commitment toward innovation, sustainability, food safety, and global culinary excellence."",
+    "tx-founder-quote": "Being the first company in India to receive the BRCGS Plant-Based Certification reflects our commitment toward innovation, sustainability, food safety, and global culinary excellence.",
     "tx-founder-desc": "Established in 2008, Regal Kitchen Foods has transformed the ready-to-eat food industry through innovation, premium quality, global food safety standards, and customer-centric manufacturing systems.",
     "tx-cert-section-title": "Enterprise Standards",
     "tx-cert-headline": "Global Certifications & Compliance Standards",
@@ -854,7 +1251,7 @@ const TRANSLATION_MAP = {
     "tx-stat-4": "वैश्विक निर्यात उपस्थिति",
     "tx-founder-section-title": "नेतृत्व का दृष्टिकोण",
     "tx-founder-headline": "अग्रणी दूरदर्शी बुनियादी ढांचा",
-    "tx-founder-quote": ""भारत में BRCGS Plant-Based प्रमाणन प्राप्त करने वाली पहली कंपनी होना नवाचार, स्थिरता, खाद्य सुरक्षा और वैश्विक पाक उत्कृष्टता के प्रति हमारी प्रतिबद्धता को दर्शाता है।"",
+    "tx-founder-quote": "भारत में BRCGS Plant-Based प्रमाणन प्राप्त करने वाली पहली कंपनी होना नवाचार, स्थिरता, खाद्य सुरक्षा और वैश्विक पाक उत्कृष्टता के प्रति हमारी प्रतिबद्धता को दर्शाता है।",
     "tx-founder-desc": "2008 में स्थापित, Regal Kitchen Foods ने नवाचार, प्रीमियम गुणवत्ता, वैश्विक खाद्य सुरक्षा मानकों और ग्राहक-केंद्रित विनिर्माण प्रणालियों के माध्यम से रेडी-टू-ईट खाद्य उद्योग को बदल दिया है।",
     "tx-cert-section-title": "उद्यम मानक",
     "tx-cert-headline": "वैश्विक प्रमाणन एवं अनुपालन मानक",
@@ -974,6 +1371,393 @@ function setLanguage(lang) {
 }
 
 setLanguage('en');
+
+const MENU_STRUCTURE = {
+  'corporate-home': {
+    heading: 'Corporate Home',
+    categories: [
+      {
+        name: 'Corporate Navigation',
+        items: [
+          { label: 'Corporate Home', action: 'corporate-home', section: 'hero-sec' },
+          { label: 'Certifications', action: 'info-section', section: 'cert-showcase' },
+          { label: 'Brands', action: 'info-section', section: 'brand-showcase' },
+          { label: 'Products', action: 'info-section', section: 'prod-sec' },
+          { label: 'Global Exports', action: 'info-section', section: 'export-sec' },
+          { label: 'Facilities', action: 'info-section', section: 'fac-sec' },
+          { label: 'Why Choose Us', action: 'info-section', section: 'why-sec' },
+          { label: 'Vision & Mission', action: 'info-section', section: 'vm-sec' }
+        ]
+      }
+    ]
+  },
+  'manufacturing-ops': {
+    heading: 'Manufacturing & Operation',
+    categories: [
+      {
+        name: 'Manufacturing Unit-1',
+        subcategories: [
+          { name: 'Production Planning', items: ['Monthly Plan', 'Weekly Plan', 'Daily Plan'] },
+          { name: 'Production', items: ['Kitchen', 'Filling', 'Retort', 'Material Transfer to X-ray'] }
+        ]
+      },
+      {
+        name: 'Manufacturing Unit-2',
+        subcategories: [
+          { name: 'Production Planning', items: ['Monthly Plan', 'Weekly Plan', 'Daily Plan'] },
+          { name: 'Production', items: ['Kitchen', 'Filling', 'Retort', 'Material Transfer to X-ray'] }
+        ]
+      }
+    ]
+  },
+  'packing': {
+    heading: 'Packing & Logistics',
+    categories: [
+      { name: 'Package Operations', items: ['X-ray', 'SFG Stock (Semi-Finished Goods)', 'Packing Planning', 'Packing Line', 'Dispatch & Logistics'] }
+    ]
+  },
+  'purchase': {
+    heading: 'Purchase',
+    categories: [
+      { name: 'Purchasing Workflows', items: ['Domestic Purchase', 'Purchase Import'] }
+    ]
+  },
+  'maintenance': {
+    heading: 'Maintenance',
+    categories: [
+      { name: 'Maintenance Modules', items: ['Preventive Maintenance', 'Breakdown Log', 'General Maintenance Log'] }
+    ]
+  }
+};
+
+function initMenu() {
+  document.querySelectorAll('.top-nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const key = item.dataset.menu;
+      updateTopNavActive(key);
+      openMenuPanel(key);
+    });
+  });
+  document.addEventListener('click', event => {
+    const panel = document.getElementById('menu-panel');
+    if (!event.target.closest('#menu-panel') && !event.target.closest('.top-nav-item')) {
+      closeMenuPanel();
+    }
+  });
+  openMenuPanel('corporate-home');
+}
+
+function updateTopNavActive(key) {
+  document.querySelectorAll('.top-nav-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.menu === key);
+  });
+}
+
+function openMenuPanel(menuKey) {
+  const menu = MENU_STRUCTURE[menuKey];
+  if (!menu) return;
+  const panel = document.getElementById('menu-panel');
+  const categories = document.getElementById('panel-categories');
+  const items = document.getElementById('panel-items');
+  const panelTitle = document.getElementById('panel-title');
+  const panelSubtitle = document.getElementById('panel-subtitle');
+
+  panelTitle.textContent = menu.heading;
+  categories.innerHTML = '';
+  items.innerHTML = '';
+
+  if (menuKey === 'corporate-home') {
+    panelSubtitle.textContent = 'Navigate the corporate dashboard and story sections.';
+    menu.categories[0].items.forEach(link => {
+      const button = document.createElement('button');
+      button.className = 'panel-item';
+      button.type = 'button';
+      button.innerHTML = `<span>${link.label}</span>`;
+      button.addEventListener('click', () => openModule(link.label, link.action, link.section));
+      categories.appendChild(button);
+    });
+    items.innerHTML = '<p class="panel-note">Choose a corporate section to scroll directly to the home page content and keep the dashboard focused.</p>';
+  } else if (menuKey === 'manufacturing-ops') {
+    panelSubtitle.textContent = 'Select a manufacturing unit and then a module to open the workspace.';
+    menu.categories.forEach((category, index) => {
+      const button = document.createElement('button');
+      button.className = 'panel-category';
+      button.type = 'button';
+      button.innerHTML = `<span>${category.name}</span><span>›</span>`;
+      button.dataset.index = index;
+      button.addEventListener('click', () => selectManufacturingUnit(index));
+      button.addEventListener('mouseenter', () => selectManufacturingUnit(index));
+      categories.appendChild(button);
+    });
+    selectManufacturingUnit(0);
+  } else {
+    panelSubtitle.textContent = 'Select a category and then a module to open the workspace.';
+    menu.categories.forEach((category, index) => {
+      const button = document.createElement('button');
+      button.className = 'panel-category';
+      button.type = 'button';
+      button.innerHTML = `<span>${category.name}</span><span>›</span>`;
+      button.dataset.index = index;
+      button.addEventListener('click', () => selectPanelCategory(menuKey, index));
+      button.addEventListener('mouseenter', () => selectPanelCategory(menuKey, index));
+      categories.appendChild(button);
+    });
+    selectPanelCategory(menuKey, 0);
+  }
+
+  panel.classList.add('open');
+  panel.setAttribute('aria-hidden', 'false');
+}
+
+function closeMenuPanel() {
+  const panel = document.getElementById('menu-panel');
+  if (!panel) return;
+  panel.classList.remove('open');
+  panel.setAttribute('aria-hidden', 'true');
+}
+
+function selectManufacturingUnit(index) {
+  const menu = MENU_STRUCTURE['manufacturing-ops'];
+  if (!menu || !menu.categories[index]) return;
+  const categories = document.querySelectorAll('.panel-category');
+  categories.forEach(category => category.classList.toggle('active', Number(category.dataset.index) === index));
+
+  const activeUnit = menu.categories[index];
+  const items = document.getElementById('panel-items');
+  items.innerHTML = '';
+
+  if (activeUnit.subcategories) {
+    activeUnit.subcategories.forEach((subcategory, subIndex) => {
+      const button = document.createElement('button');
+      button.className = 'panel-item';
+      button.type = 'button';
+      button.innerHTML = `<span>${subcategory.name}</span><small>›</small>`;
+      button.dataset.subIndex = subIndex;
+      button.addEventListener('click', () => selectManufacturingSubcategory(index, subIndex));
+      items.appendChild(button);
+    });
+  }
+}
+
+function selectManufacturingSubcategory(unitIndex, subIndex) {
+  const menu = MENU_STRUCTURE['manufacturing-ops'];
+  if (!menu || !menu.categories[unitIndex] || !menu.categories[unitIndex].subcategories[subIndex]) return;
+  const items = document.querySelectorAll('#panel-items .panel-item');
+  items.forEach(item => item.classList.toggle('active', Number(item.dataset.subIndex) === subIndex));
+
+  const activeSubcategory = menu.categories[unitIndex].subcategories[subIndex];
+  const itemsContainer = document.getElementById('panel-items');
+  itemsContainer.innerHTML = '';
+
+  activeSubcategory.items.forEach(item => {
+    const button = document.createElement('button');
+    button.className = 'panel-item';
+    button.type = 'button';
+    button.innerHTML = `<span>${item}</span>`;
+    button.addEventListener('click', () => openModule(`${menu.categories[unitIndex].name} › ${activeSubcategory.name} › ${item}`, 'workspace', item));
+    itemsContainer.appendChild(button);
+  });
+}
+
+function selectPanelCategory(menuKey, index) {
+  const menu = MENU_STRUCTURE[menuKey];
+  if (!menu || !menu.categories[index]) return;
+  const categories = document.querySelectorAll('.panel-category');
+  categories.forEach(category => category.classList.toggle('active', Number(category.dataset.index) === index));
+
+  const activeCategory = menu.categories[index];
+  const items = document.getElementById('panel-items');
+  items.innerHTML = '';
+  activeCategory.items.forEach(item => {
+    const button = document.createElement('button');
+    button.className = 'panel-item';
+    button.type = 'button';
+    button.innerHTML = `<span>${item}</span>`;
+    button.addEventListener('click', () => openModule(`${menu.heading} › ${item}`, 'workspace', item));
+    items.appendChild(button);
+  });
+}
+
+function openModule(title, action = 'workspace', section) {
+  closeMenuPanel();
+  if (action === 'corporate-home') {
+    showInfoPage();
+    return;
+  }
+  if (action === 'info-section') {
+    showInfoPage();
+    scrollToSection(section);
+    return;
+  }
+
+  const modulePage = document.getElementById('module-page');
+  const infoPage = document.getElementById('info-page');
+  if (infoPage) infoPage.classList.remove('active');
+  if (modulePage) {
+    modulePage.classList.add('active');
+    modulePage.innerHTML = `
+      <section class="module-panel">
+        <div class="module-header">
+          <div>
+            <div class="module-title">${title}</div>
+            <p class="module-subtitle">A dedicated ERP workspace with entry and report modules for the selected activity.</p>
+          </div>
+          <div class="action-row">
+            <button class="btn-premium btn-export" type="button" onclick="exportReportToExcel();">Export to Excel</button>
+          </div>
+        </div>
+        <div class="tab-bar">
+          <button class="tab-btn active" type="button" data-tab="entry" onclick="switchModuleTab(event);">📝 Data Entry Form</button>
+          <button class="tab-btn" type="button" data-tab="reports" onclick="switchModuleTab(event);">📊 View Reports</button>
+        </div>
+        <div id="entry-tab" class="module-section active">
+          <div class="form-grid">${buildModuleFields(title)}</div>
+          <div class="action-row">
+            <button class="btn-premium" type="button" onclick="toast('Saved ' + ${JSON.stringify(title)} + ' entry details.');">Save Entry</button>
+            <button class="btn-premium outline" type="button" onclick="toast('Reset form fields.');">Reset Form</button>
+          </div>
+        </div>
+        <div id="reports-tab" class="module-section">
+          <div class="report-panel">
+            <div class="report-toolbar">
+              <div class="filter-group">
+                <label>From</label>
+                <input type="date" id="report-from" value="${new Date().toISOString().split('T')[0]}" />
+              </div>
+              <div class="filter-group">
+                <label>To</label>
+                <input type="date" id="report-to" value="${new Date().toISOString().split('T')[0]}" />
+              </div>
+              <div class="action-row">
+                <button class="btn-premium" type="button" onclick="filterReportData();">Filter Data</button>
+              </div>
+            </div>
+            <div class="tbl-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Reference</th>
+                    <th>Team / Vendor</th>
+                    <th>Status</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="report-rows">${buildReportRows(title)}</tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+}
+
+function showInfoPage() {
+  const modulePage = document.getElementById('module-page');
+  const infoPage = document.getElementById('info-page');
+  if (modulePage) modulePage.classList.remove('active');
+  if (infoPage) infoPage.classList.add('active');
+}
+
+function switchModuleTab(event) {
+  const target = event.currentTarget;
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn === target));
+  const tab = target.dataset.tab;
+  document.querySelectorAll('.module-section').forEach(section => {
+    section.classList.toggle('active', section.id === `${tab}-tab`);
+  });
+}
+
+function buildModuleFields(title) {
+  const defaultFields = [
+    { label: 'Entry Date', type: 'date', name: 'entryDate' },
+    { label: 'Reference Code', type: 'text', name: 'referenceCode' },
+    { label: 'Supervisor / Contact', type: 'text', name: 'supervisor' },
+    { label: 'Shift', type: 'text', name: 'shift' },
+    { label: 'Planned Quantity', type: 'number', name: 'quantity' },
+    { label: 'Comments', type: 'textarea', name: 'comments' }
+  ];
+
+  if (/Plan|Maintenance|Purchase/i.test(title)) {
+    defaultFields[4] = { label: 'Planned Quantity', type: 'number', name: 'quantity' };
+    defaultFields[5] = { label: 'Action Required', type: 'textarea', name: 'comments' };
+  }
+  if (/Kitchen|Filling|Retort|X-ray|Dispatch|SFG|Material Transfer/i.test(title)) {
+    defaultFields[1] = { label: 'Batch / Lot Number', type: 'text', name: 'referenceCode' };
+    defaultFields[3] = { label: 'Production Line', type: 'text', name: 'shift' };
+    defaultFields[5] = { label: 'Quality Notes', type: 'textarea', name: 'comments' };
+  }
+
+  return defaultFields.map(field => {
+    if (field.type === 'textarea') {
+      return `<div class="form-field"><label>${field.label}</label><textarea name="${field.name}" placeholder="Enter ${field.label.toLowerCase()}..."></textarea></div>`;
+    }
+    return `<div class="form-field"><label>${field.label}</label><input type="${field.type}" name="${field.name}" placeholder="Enter ${field.label.toLowerCase()}" /></div>`;
+  }).join('');
+}
+
+function buildReportRows(title) {
+  const sampleEntries = [
+    { date: '2026-05-01', reference: 'REF-001', partner: 'Team A', status: 'Completed', quantity: '550' },
+    { date: '2026-05-05', reference: 'REF-002', partner: 'Vendor X', status: 'In Progress', quantity: '320' },
+    { date: '2026-05-09', reference: 'REF-003', partner: 'Team B', status: 'Pending Review', quantity: '190' }
+  ];
+  return sampleEntries.map(entry => `
+    <tr>
+      <td>${entry.date}</td>
+      <td>${entry.reference}</td>
+      <td>${entry.partner}</td>
+      <td>${entry.status}</td>
+      <td>${entry.quantity}</td>
+      <td class="table-actions"><button class="btn-edit" type="button" onclick="toast('Edit ${entry.reference}');">Edit</button><button class="btn-delete" type="button" onclick="toast('Delete ${entry.reference}');">Delete</button></td>
+    </tr>
+  `).join('');
+}
+
+function filterReportData() {
+  const from = document.getElementById('report-from').value;
+  const to = document.getElementById('report-to').value;
+  if (!from || !to) {
+    toast('Please select both dates to filter.');
+    return;
+  }
+  toast(`Filtered reports from ${from} to ${to}.`);
+}
+
+function exportReportToExcel() {
+  const rows = Array.from(document.querySelectorAll('#report-rows tr'));
+  if (!rows.length) {
+    toast('No report rows are available to export.');
+    return;
+  }
+  const csvRows = [['Date', 'Reference', 'Team / Vendor', 'Status', 'Quantity']];
+  rows.forEach(row => {
+    const cols = Array.from(row.querySelectorAll('td')).slice(0, 5).map(cell => cell.textContent.trim());
+    csvRows.push(cols);
+  });
+  const csvContent = csvRows.map(r => r.map(field => `"${field.replace(/"/g, '""')}"`).join(',')).join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'erp-report-export.csv';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+  toast('Exporting report to Excel.');
+}
+
+function scrollToSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+initMenu();
 
 function toast(msg) {
   const w = document.getElementById('toast-wrap');
