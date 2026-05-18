@@ -183,7 +183,7 @@ body {
   transition: transform 0.3s ease;
 }
 
-.top-nav-item:hover .dropdown-arrow {
+.top-nav-item.active .dropdown-arrow {
   transform: rotate(180deg);
 }
 
@@ -210,7 +210,7 @@ body {
   overflow: visible;
 }
 
-.top-nav-item:hover .dropdown-menu {
+.top-nav-item.active .dropdown-menu {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -253,7 +253,7 @@ body {
   color: var(--text2);
 }
 
-.dropdown-item.has-submenu:hover::after {
+.dropdown-item.has-submenu.active::after {
   color: var(--blue);
 }
 
@@ -276,7 +276,7 @@ body {
   overflow: visible;
 }
 
-.dropdown-item.has-submenu:hover .submenu-dropdown {
+.dropdown-item.has-submenu.active .submenu-dropdown {
   opacity: 1;
   visibility: visible;
   transform: translateX(0);
@@ -1419,6 +1419,74 @@ function setLanguage(lang) {
 }
 
 setLanguage('en');
+
+function initDesktopMenu() {
+  const navItems = document.querySelectorAll('.top-nav-item');
+
+  navItems.forEach(item => {
+    const link = item.querySelector('.nav-link');
+    const dropdown = item.querySelector('.dropdown-menu');
+
+    if (link && dropdown) {
+      link.addEventListener('mouseenter', () => {
+        closeAllDropdowns();
+        item.classList.add('active');
+      });
+
+      item.addEventListener('mouseleave', () => {
+        setTimeout(() => {
+          if (!item.matches(':hover')) {
+            item.classList.remove('active');
+            closeAllSubmenus(item);
+          }
+        }, 100);
+      });
+    }
+
+    const submenuItems = item.querySelectorAll('.dropdown-item.has-submenu');
+    submenuItems.forEach(submenuItem => {
+      const submenu = submenuItem.querySelector('.submenu-dropdown');
+
+      if (submenu) {
+        submenuItem.addEventListener('mouseenter', () => {
+          closeAllSubmenus(item);
+          submenuItem.classList.add('active');
+        });
+
+        submenuItem.addEventListener('mouseleave', () => {
+          setTimeout(() => {
+            if (!submenuItem.matches(':hover')) {
+              submenuItem.classList.remove('active');
+            }
+          }, 100);
+        });
+      }
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.top-nav')) {
+      closeAllDropdowns();
+    }
+  });
+}
+
+function closeAllDropdowns() {
+  document.querySelectorAll('.top-nav-item').forEach(item => {
+    item.classList.remove('active');
+    closeAllSubmenus(item);
+  });
+}
+
+function closeAllSubmenus(parentItem) {
+  if (parentItem) {
+    parentItem.querySelectorAll('.dropdown-item.has-submenu').forEach(item => {
+      item.classList.remove('active');
+    });
+  }
+}
+
+initDesktopMenu();
 
 function openModule(title, action = 'workspace', section) {
   if (action === 'info-section') {
