@@ -1428,18 +1428,14 @@ function initDesktopMenu() {
     const dropdown = item.querySelector('.dropdown-menu');
 
     if (link && dropdown) {
-      link.addEventListener('mouseenter', () => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const isActive = item.classList.contains('active');
         closeAllDropdowns();
-        item.classList.add('active');
-      });
-
-      item.addEventListener('mouseleave', () => {
-        setTimeout(() => {
-          if (!item.matches(':hover')) {
-            item.classList.remove('active');
-            closeAllSubmenus(item);
-          }
-        }, 100);
+        if (!isActive) {
+          item.classList.add('active');
+        }
       });
     }
 
@@ -1448,17 +1444,14 @@ function initDesktopMenu() {
       const submenu = submenuItem.querySelector('.submenu-dropdown');
 
       if (submenu) {
-        submenuItem.addEventListener('mouseenter', () => {
+        submenuItem.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const isActive = submenuItem.classList.contains('active');
           closeAllSubmenus(item);
-          submenuItem.classList.add('active');
-        });
-
-        submenuItem.addEventListener('mouseleave', () => {
-          setTimeout(() => {
-            if (!submenuItem.matches(':hover')) {
-              submenuItem.classList.remove('active');
-            }
-          }, 100);
+          if (!isActive) {
+            submenuItem.classList.add('active');
+          }
         });
       }
     });
