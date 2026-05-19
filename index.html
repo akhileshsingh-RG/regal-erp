@@ -183,7 +183,7 @@ body {
   transition: transform 0.3s ease;
 }
 
-.top-nav-item.active .dropdown-arrow {
+.top-nav-item.open .dropdown-arrow {
   transform: rotate(180deg);
 }
 
@@ -210,14 +210,16 @@ body {
   overflow: visible;
 }
 
-.top-nav-item.active .dropdown-menu {
+.top-nav-item.open .dropdown-menu {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
 .dropdown-item {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 12px 20px;
   color: var(--text2);
   text-decoration: none;
@@ -227,6 +229,7 @@ body {
   transition: all 0.2s ease;
   border-left: 3px solid transparent;
   cursor: pointer;
+  position: relative;
 }
 
 .dropdown-item:hover {
@@ -235,7 +238,7 @@ body {
   border-left-color: var(--blue);
 }
 
-.dropdown-item.active {
+.dropdown-item.open {
   color: var(--blue);
   background: rgba(56,189,248,0.06);
   border-left-color: var(--blue);
@@ -245,15 +248,15 @@ body {
   position: relative;
 }
 
-.dropdown-item.has-submenu::after {
-  content: '›';
-  position: absolute;
-  right: 20px;
+.dropdown-item .submenu-indicator {
   font-size: 14px;
   color: var(--text2);
+  transition: transform 0.3s ease;
+  margin-left: 8px;
 }
 
-.dropdown-item.has-submenu.active::after {
+.dropdown-item.open .submenu-indicator {
+  transform: rotate(90deg);
   color: var(--blue);
 }
 
@@ -276,7 +279,7 @@ body {
   overflow: visible;
 }
 
-.dropdown-item.has-submenu.active .submenu-dropdown {
+.dropdown-item.open .submenu-dropdown {
   opacity: 1;
   visibility: visible;
   transform: translateX(0);
@@ -871,7 +874,7 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
   <div class="header-title">REGAL KITCHEN FOODS <span>ERP</span></div>
   <nav class="nav-container">
     <ul class="top-nav" role="menubar">
-      <li class="top-nav-item active" data-menu="corporate-home" role="none">
+      <li class="top-nav-item" data-menu="corporate-home" role="none">
         <button class="nav-link" type="button" role="menuitem">Corporate Home <span class="dropdown-arrow">▼</span></button>
         <div class="dropdown-menu">
           <a href="#hero-sec" class="dropdown-item" onclick="scrollToSection('hero-sec'); return false;">Corporate Home</a>
@@ -887,16 +890,22 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
       <li class="top-nav-item" data-menu="manufacturing-ops" role="none">
         <button class="nav-link" type="button" role="menuitem">Manufacturing & Operation <span class="dropdown-arrow">▼</span></button>
         <div class="dropdown-menu">
-          <div class="dropdown-item has-submenu">Manufacturing Unit-1
+          <div class="dropdown-item has-submenu">
+            <span>Manufacturing Unit-1</span>
+            <span class="submenu-indicator">›</span>
             <div class="submenu-dropdown">
-              <div class="dropdown-item has-submenu">Production Planning
+              <div class="dropdown-item has-submenu">
+                <span>Production Planning</span>
+                <span class="submenu-indicator">›</span>
                 <div class="submenu-dropdown">
                   <div class="dropdown-item" onclick="openModule('Monthly Plan', 'workspace');">Monthly Plan</div>
                   <div class="dropdown-item" onclick="openModule('Weekly Plan', 'workspace');">Weekly Plan</div>
                   <div class="dropdown-item" onclick="openModule('Daily Plan', 'workspace');">Daily Plan</div>
                 </div>
               </div>
-              <div class="dropdown-item has-submenu">Production
+              <div class="dropdown-item has-submenu">
+                <span>Production</span>
+                <span class="submenu-indicator">›</span>
                 <div class="submenu-dropdown">
                   <div class="dropdown-item" onclick="openModule('Kitchen', 'workspace');">Kitchen</div>
                   <div class="dropdown-item" onclick="openModule('Filling', 'workspace');">Filling</div>
@@ -906,16 +915,22 @@ tr:hover td { background: rgba(255, 255, 255, 0.02); }
               </div>
             </div>
           </div>
-          <div class="dropdown-item has-submenu">Manufacturing Unit-3
+          <div class="dropdown-item has-submenu">
+            <span>Manufacturing Unit-2</span>
+            <span class="submenu-indicator">›</span>
             <div class="submenu-dropdown">
-              <div class="dropdown-item has-submenu">Production Planning
+              <div class="dropdown-item has-submenu">
+                <span>Production Planning</span>
+                <span class="submenu-indicator">›</span>
                 <div class="submenu-dropdown">
                   <div class="dropdown-item" onclick="openModule('Monthly Plan - Unit 2', 'workspace');">Monthly Plan</div>
                   <div class="dropdown-item" onclick="openModule('Weekly Plan - Unit 2', 'workspace');">Weekly Plan</div>
                   <div class="dropdown-item" onclick="openModule('Daily Plan - Unit 2', 'workspace');">Daily Plan</div>
                 </div>
               </div>
-              <div class="dropdown-item has-submenu">Production
+              <div class="dropdown-item has-submenu">
+                <span>Production</span>
+                <span class="submenu-indicator">›</span>
                 <div class="submenu-dropdown">
                   <div class="dropdown-item" onclick="openModule('Kitchen - Unit 2', 'workspace');">Kitchen</div>
                   <div class="dropdown-item" onclick="openModule('Filling - Unit 2', 'workspace');">Filling</div>
@@ -1431,49 +1446,35 @@ function initDesktopMenu() {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        const isActive = item.classList.contains('active');
+        const isOpen = item.classList.contains('open');
         closeAllDropdowns();
-        if (!isActive) {
-          item.classList.add('active');
+        if (!isOpen) {
+          item.classList.add('open');
         }
       });
     }
 
-    const submenuItems = item.querySelectorAll('.dropdown-item.has-submenu');
-    submenuItems.forEach(submenuItem => {
-      const submenu = submenuItem.querySelector('.submenu-dropdown');
+    // Handle all dropdown items (both leaf items and items with submenus)
+    const dropdownItems = item.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(dropdownItem => {
+      const hasSubmenu = dropdownItem.classList.contains('has-submenu');
+      const submenu = dropdownItem.querySelector('.submenu-dropdown');
 
-      if (submenu) {
-        submenuItem.addEventListener('click', (e) => {
+      if (hasSubmenu && submenu) {
+        dropdownItem.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
-          const isActive = submenuItem.classList.contains('active');
+          const isOpen = dropdownItem.classList.contains('open');
           closeAllSubmenus(item);
-          if (!isActive) {
-            submenuItem.classList.add('active');
-          }
-        });
-
-        // Handle nested submenus with toggle behavior
-        const nestedSubmenuItems = submenu.querySelectorAll('.dropdown-item.has-submenu');
-        nestedSubmenuItems.forEach(nestedItem => {
-          const nestedSubmenu = nestedItem.querySelector('.submenu-dropdown');
-          if (nestedSubmenu) {
-            nestedItem.addEventListener('click', (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              const isActive = nestedItem.classList.contains('active');
-              closeAllSubmenus(item);
-              if (!isActive) {
-                nestedItem.classList.add('active');
-              }
-            });
+          if (!isOpen) {
+            dropdownItem.classList.add('open');
           }
         });
       }
     });
   });
 
+  // Close all dropdowns when clicking outside
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.top-nav')) {
       closeAllDropdowns();
@@ -1481,25 +1482,19 @@ function initDesktopMenu() {
   });
 }
 
-function closeAllSubmenus(parentItem) {
-  if (parentItem) {
-    parentItem.querySelectorAll('.dropdown-item.has-submenu').forEach(item => {
-      item.classList.remove('active');
-      // Also close nested submenus
-      const nestedSubmenu = item.querySelector('.submenu-dropdown');
-      if (nestedSubmenu) {
-        nestedSubmenu.querySelectorAll('.dropdown-item.has-submenu').forEach(nestedItem => {
-          nestedItem.classList.remove('active');
-        });
-      }
-    });
-  }
-}
-
 function closeAllDropdowns() {
   document.querySelectorAll('.top-nav-item').forEach(item => {
-    item.classList.remove('active');
+    item.classList.remove('open');
     closeAllSubmenus(item);
+  });
+}
+
+function closeAllSubmenus(parentItem) {
+  if (!parentItem) return;
+  
+  // Close all submenus at all levels within this parent
+  parentItem.querySelectorAll('.dropdown-item').forEach(item => {
+    item.classList.remove('open');
   });
 }
 
